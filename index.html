@@ -1,46 +1,244 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CallTechAI – Умные голосовые автоответчики для бизнеса</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
   <style>
     /* Сброс стилей */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body {
-      font-family: Arial, sans-serif;
-      background: linear-gradient(135deg, #0d1b2a, #1b263b);
-      color: #fff;
-      line-height: 1.6;
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
+
+    html, body {
+      font-family: "Montserrat", sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /* Анимации (CSS) */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in-up {
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0; /* чтобы элемент был невидим до анимации */
+    }
+
+    /* Шапка сайта */
     header {
-      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(13, 27, 42, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav a {
+      margin-left: 2rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #a8dadc;
+    }
+    .auth-buttons {
+      margin-left: 2rem;
+    }
+    .auth-buttons button {
+      background-color: #415a77;
+      border: none;
+      padding: 0.6rem 1rem;
+      margin-left: 1rem;
+     
+
+Ниже приведён обновлённый пример сайта для CallTechAI с расширенными разделами, анимациями, кнопками для логина/регистрации и тестового периода, а также дополнительной информацией:
+
+---
+
+```html
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CallTechAI – Умные голосовые автоответчики для бизнеса</title>
+  <!-- Подключаем Google Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* Сброс стилей */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      font-family: "Montserrat", sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+    /* Анимация появления вверх */
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in-up {
+      animation: fadeInUp 1s ease forwards;
+      opacity: 0;
+    }
+    /* Шапка сайта */
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(13, 27, 42, 0.9);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+    }
+    nav a {
+      margin-left: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #a8dadc;
+    }
+    .auth-buttons button {
+      background-color: #415a77;
+      border: none;
+      padding: 0.5rem 1rem;
+      margin-left: 1rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      font-weight: 600;
+    }
+    .auth-buttons button:hover {
+      background-color: #778da9;
+    }
+    /* Hero-секция */
+    .hero {
+      position: relative;
+      height: 80vh;
+      background: url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80") center/cover no-repeat;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-align: center;
     }
-    header h1 {
-      font-size: 3rem;
-      margin-bottom: 0.5rem;
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(13, 27, 42, 0.8), rgba(27, 38, 59, 0.8));
     }
-    header p {
+    .hero-content {
+      position: relative;
+      z-index: 1;
+      max-width: 800px;
+      padding: 2rem;
+    }
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+      animation-delay: 0.3s;
+    }
+    .hero p {
       font-size: 1.2rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 2rem;
+      animation-delay: 0.5s;
     }
     .cta-button {
       background-color: #415a77;
       border: none;
       padding: 1rem 2rem;
-      font-size: 1.2rem;
+      font-size: 1rem;
       color: #fff;
       border-radius: 50px;
       cursor: pointer;
-      transition: background-color 0.3s ease;
+      transition: background-color 0.3s;
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-right: 1rem;
     }
     .cta-button:hover {
       background-color: #778da9;
     }
+    .trial-button {
+      background-color: transparent;
+      border: 2px solid #fff;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s, color 0.3s;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .trial-button:hover {
+      background-color: #fff;
+      color: #0d1b2a;
+    }
+    /* Раздел тарифов */
     section {
       padding: 4rem 2rem;
       text-align: center;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
     }
     .plans {
       display: flex;
@@ -50,13 +248,17 @@
     }
     .plan-card {
       background-color: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(4px);
       border-radius: 10px;
       padding: 2rem;
       width: 300px;
-      transition: transform 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
     .plan-card:hover {
-      transform: scale(1.05);
+      transform: translateY(-5px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
     }
     .plan-card h3 {
       font-size: 1.8rem;
@@ -65,13 +267,15 @@
     .plan-card p {
       font-size: 1rem;
       margin-bottom: 1.5rem;
+      line-height: 1.4;
     }
-    .plan-card .price {
+    .price {
       font-size: 2rem;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       color: #a8dadc;
+      font-weight: 700;
     }
-    .plan-card button {
+    .plan-button {
       background-color: #1b263b;
       border: none;
       padding: 0.8rem 1.5rem;
@@ -81,24 +285,91 @@
       cursor: pointer;
       transition: background-color 0.3s ease;
     }
-    .plan-card button:hover {
+    .plan-button:hover {
       background-color: #415a77;
     }
+    /* Секция "Как работает" */
     .info-section {
       max-width: 800px;
       margin: 0 auto;
       text-align: left;
+      padding: 2rem;
     }
     .info-section h2 {
       margin-bottom: 1rem;
+      font-size: 1.8rem;
+      font-weight: 700;
     }
     .info-section p {
       margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
     }
+    /* Секция "Панель кастомизации" */
+    .customization {
+      background-color: rgba(255, 255, 255, 0.05);
+      padding: 2rem;
+      border-radius: 10px;
+      margin: 2rem 0;
+    }
+    .customization h2 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .customization p {
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+    .customization button {
+      background-color: #415a77;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .customization button:hover {
+      background-color: #778da9;
+    }
+    /* FAQ */
+    .faq {
+      text-align: left;
+      max-width: 800px;
+      margin: 2rem auto;
+    }
+    .faq h2 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .faq-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 5px;
+    }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+    .faq-item p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: none;
+    }
+    .faq-item.active p {
+      display: block;
+    }
+    /* Контактная форма */
     .contact-form {
       max-width: 600px;
       margin: 0 auto;
       text-align: left;
+      margin-top: 2rem;
     }
     .contact-form input, .contact-form textarea {
       width: 100%;
@@ -106,6 +377,7 @@
       margin-bottom: 1rem;
       border: none;
       border-radius: 5px;
+      font-size: 1rem;
     }
     .contact-form button {
       background-color: #415a77;
@@ -120,86 +392,155 @@
     .contact-form button:hover {
       background-color: #778da9;
     }
+    /* Футер */
     footer {
       text-align: center;
       padding: 1rem;
       background-color: rgba(0, 0, 0, 0.2);
+      margin-top: 2rem;
+      font-size: 0.9rem;
     }
+    /* Адаптивность */
     @media (max-width: 768px) {
-      .plans {
-        flex-direction: column;
-        align-items: center;
-      }
+      .hero h1 { font-size: 2.2rem; }
+      .plans { flex-direction: column; align-items: center; }
+      header { flex-direction: column; gap: 1rem; }
+      nav { flex-wrap: wrap; justify-content: center; }
+      nav a { margin: 0.5rem; }
     }
   </style>
 </head>
 <body>
-  <!-- Главная страница -->
-  <header>
-    <h1>CallTechAI</h1>
-    <p>Умные голосовые автоответчики для бизнеса</p>
-    <button class="cta-button" onclick="document.getElementById('plans').scrollIntoView({behavior: 'smooth'});">Выбрать тариф</button>
+
+  <!-- Шапка сайта -->
+  <header class="fade-in-up">
+    <div class="logo">CallTechAI</div>
+    <nav>
+      <a href="#plans">Тарифы</a>
+      <a href="#how-it-works">Как работает</a>
+      <a href="#customization">Кастомизация</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacts">Контакты</a>
+      <div class="auth-buttons">
+        <button onclick="alert('Login Page (placeholder)')">Login</button>
+        <button onclick="alert('Register Page (placeholder)')">Register</button>
+      </div>
+    </nav>
   </header>
-  
-  <!-- Раздел "Планы и тарифы" -->
-  <section id="plans">
-    <h2>Планы и тарифы</h2>
+
+  <!-- Hero-секция -->
+  <section class="hero">
+    <div class="hero-content fade-in-up">
+      <h1>Умные голосовые автоответчики для бизнеса</h1>
+      <p>Автоматизируйте поддержку клиентов и приём звонков с помощью ИИ-технологий</p>
+      <button class="cta-button" onclick="document.getElementById('plans').scrollIntoView({behavior: 'smooth'});">
+        Выбрать тариф
+      </button>
+      <button class="trial-button" onclick="alert('7-дневный тестовый период активирован!');">
+        7-дневный тестовый период
+      </button>
+    </div>
+  </section>
+
+  <!-- Раздел тарифов -->
+  <section id="plans" class="fade-in-up">
+    <h2 class="section-title">Тарифы</h2>
     <div class="plans">
-      <div class="plan-card">
+      <div class="plan-card fade-in-up">
         <h3>Базовый</h3>
         <p>Основной функционал автоответчика для малого бизнеса.</p>
-        <div class="price">12$/мес</div>
-        <button>Выбрать</button>
+        <div class="price">$12/мес</div>
+        <button class="plan-button" onclick="alert('Базовый тариф выбран!');">Выбрать</button>
       </div>
-      <div class="plan-card">
+      <div class="plan-card fade-in-up">
         <h3>Продвинутый</h3>
         <p>Расширенные возможности и интеграция с CRM.</p>
-        <div class="price">29$/мес</div>
-        <button>Выбрать</button>
+        <div class="price">$29/мес</div>
+        <button class="plan-button" onclick="alert('Продвинутый тариф выбран!');">Выбрать</button>
       </div>
-      <div class="plan-card">
+      <div class="plan-card fade-in-up">
         <h3>Премиум</h3>
-        <p>Полный пакет автоматизации с аналитикой и кастомизацией.</p>
-        <div class="price">49$/мес</div>
-        <button>Выбрать</button>
+        <p>Полная автоматизация, аналитика и кастомизация под бизнес.</p>
+        <div class="price">$49/мес</div>
+        <button class="plan-button" onclick="alert('Премиум тариф выбран!');">Выбрать</button>
       </div>
     </div>
   </section>
-<!-- Раздел "Как это работает" -->
-  <section>
+
+  <!-- Как это работает -->
+  <section id="how-it-works" class="fade-in-up">
     <div class="info-section">
       <h2>Как это работает</h2>
-      <p>Наш сервис интегрируется с вашими телефонными системами и AI-ботами для автоматизации обработки звонков.</p>
-      <p>Автоответчик анализирует входящие звонки, предоставляет нужную информацию и при необходимости перенаправляет на оператора.</p>
+      <p>CallTechAI интегрируется с вашей телефонной системой через облачный сервис Twilio.
+        Наш ИИ анализирует входящие звонки, отвечает на вопросы клиентов и при необходимости перенаправляет звонок на оператора.</p>
+      <p>Поддержка нескольких языков, адаптация под разные бизнес-сценарии и простая интеграция – всё это делает наш сервис незаменимым инструментом для современных компаний.</p>
     </div>
   </section>
-  
-  <!-- Раздел "Преимущества" -->
-  <section>
+
+  <!-- Панель кастомизации -->
+  <section id="customization" class="fade-in-up">
     <div class="info-section">
-      <h2>Преимущества</h2>
-      <p>✔️ Инновационные голосовые технологии</p>
-      <p>✔️ Гибкая интеграция с бизнес-системами</p>
-      <p>✔️ Круглосуточная поддержка и автоматизация процессов</p>
+      <h2>Панель кастомизации</h2>
+      <p>Настройте работу голосового бота под особенности вашего бизнеса:</p>
+      <ul>
+        <li>Изменение сценариев диалогов</li>
+        <li>Поддержка нескольких языков</li>
+        <li>Интеграция с CRM и аналитикой звонков</li>
+      </ul>
+      <button class="plan-button" onclick="alert('Панель кастомизации (placeholder)');">
+        Перейти в панель
+      </button>
     </div>
   </section>
-  
-  <!-- Раздел "Контакты" -->
-  <section>
-    <div class="info-section">
-      <h2>Контакты</h2>
-      <div class="contact-form">
-        <input type="text" placeholder="Ваше имя">
-        <input type="email" placeholder="Ваш email">
-        <textarea rows="4" placeholder="Ваше сообщение"></textarea>
-        <button>Отправить</button>
+
+  <!-- FAQ -->
+  <section id="faq" class="fade-in-up">
+    <div class="faq">
+      <h2>Часто задаваемые вопросы</h2>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>Как работает автоответчик?</h3>
+        <p>Наш сервис анализирует входящие звонки с помощью ИИ и автоматически отвечает на вопросы клиентов, используя заранее настроенные сценарии.</p>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>Можно ли интегрировать с моей CRM?</h3>
+        <p>Да, наш сервис поддерживает интеграцию с большинством CRM-систем, что позволяет легко синхронизировать данные клиентов и заказы.</p>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>Какой срок тестового периода?</h3>
+        <p>Мы предлагаем 7-дневный тестовый период, чтобы вы могли оценить все возможности нашего сервиса без обязательств.</p>
       </div>
     </div>
   </section>
-  
+
+  <!-- Контакты -->
+  <section id="contacts" class="fade-in-up">
+    <div class="info-section">
+      <h2>Свяжитесь с нами</h2>
+      <p>Оставьте заявку, и мы свяжемся с вами для подключения сервиса CallTechAI к вашему бизнесу.</p>
+      <div class="contact-form">
+        <input type="text" placeholder="Ваше имя" />
+        <input type="email" placeholder="Ваш email" />
+        <textarea rows="4" placeholder="Ваше сообщение"></textarea>
+        <button onclick="alert('Заявка отправлена!');">Отправить</button>
+      </div>
+    </div>
+  </section>
+
   <!-- Футер -->
-  <footer>
-    <p>&copy; 2025 CallTechAI. Все права защищены.</p>
+  <footer class="fade-in-up">
+    <p>&copy; 2025 CallTechAI. Все права защищены. | <a href="#" style="color: #a8dadc; text-decoration: none;">Политика конфиденциальности</a></p>
   </footer>
+
+  <!-- Простой JS для анимации FAQ -->
+  <script>
+    // Запуск анимации для элементов с классом fade-in-up после загрузки страницы
+    document.addEventListener("DOMContentLoaded", function() {
+      const elements = document.querySelectorAll(".fade-in-up");
+      elements.forEach((el, index) => {
+        el.style.animationDelay = (index * 0.2) + "s";
+        el.style.opacity = 1;
+      });
+    });
+  </script>
 </body>
 </html>
