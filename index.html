@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CallTechAI – Умные голосовые автоответчики для бизнеса</title>
+  <style>
+    /* Сброс стилей */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #0d1b2a, #1b263b);
+      color: #fff;
+      line-height: 1.6;
+    }
+    header {
+      padding: 2rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+    header p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    .cta-button {
+      background-color: #415a77;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .cta-button:hover {
+      background-color: #778da9;
+    }
+    section {
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    .plans {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .plan-card {
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+      padding: 2rem;
+      width: 300px;
+      transition: transform 0.3s ease;
+    }
+    .plan-card:hover {
+      transform: scale(1.05);
+    }
+    .plan-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .plan-card p {
+      font-size: 1rem;
+      margin-bottom: 1.5rem;
+    }
+    .plan-card .price {
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
+      color: #a8dadc;
+    }
+    .plan-card button {
+      background-color: #1b263b;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .plan-card button:hover {
+      background-color: #415a77;
+    }
+    .info-section {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .info-section h2 {
+      margin-bottom: 1rem;
+    }
+    .info-section p {
+      margin-bottom: 1rem;
+    }
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 5px;
+    }
+    .contact-form button {
+      background-color: #415a77;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .contact-form button:hover {
+      background-color: #778da9;
+    }
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+    @media (max-width: 768px) {
+      .plans {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Главная страница -->
+  <header>
+    <h1>CallTechAI</h1>
+    <p>Умные голосовые автоответчики для бизнеса</p>
+    <button class="cta-button" onclick="document.getElementById('plans').scrollIntoView({behavior: 'smooth'});">Выбрать тариф</button>
+  </header>
+  
+  <!-- Раздел "Планы и тарифы" -->
+  <section id="plans">
+    <h2>Планы и тарифы</h2>
+    <div class="plans">
+      <div class="plan-card">
+        <h3>Базовый</h3>
+        <p>Основной функционал автоответчика для малого бизнеса.</p>
+        <div class="price">12$/мес</div>
+        <button>Выбрать</button>
+      </div>
+      <div class="plan-card">
+        <h3>Продвинутый</h3>
+        <p>Расширенные возможности и интеграция с CRM.</p>
+        <div class="price">29$/мес</div>
+        <button>Выбрать</button>
+      </div>
+      <div class="plan-card">
+        <h3>Премиум</h3>
+        <p>Полный пакет автоматизации с аналитикой и кастомизацией.</p>
+        <div class="price">49$/мес</div>
+        <button>Выбрать</button>
+      </div>
+    </div>
+  </section>
+<!-- Раздел "Как это работает" -->
+  <section>
+    <div class="info-section">
+      <h2>Как это работает</h2>
+      <p>Наш сервис интегрируется с вашими телефонными системами и AI-ботами для автоматизации обработки звонков.</p>
+      <p>Автоответчик анализирует входящие звонки, предоставляет нужную информацию и при необходимости перенаправляет на оператора.</p>
+    </div>
+  </section>
+  
+  <!-- Раздел "Преимущества" -->
+  <section>
+    <div class="info-section">
+      <h2>Преимущества</h2>
+      <p>✔️ Инновационные голосовые технологии</p>
+      <p>✔️ Гибкая интеграция с бизнес-системами</p>
+      <p>✔️ Круглосуточная поддержка и автоматизация процессов</p>
+    </div>
+  </section>
+  
+  <!-- Раздел "Контакты" -->
+  <section>
+    <div class="info-section">
+      <h2>Контакты</h2>
+      <div class="contact-form">
+        <input type="text" placeholder="Ваше имя">
+        <input type="email" placeholder="Ваш email">
+        <textarea rows="4" placeholder="Ваше сообщение"></textarea>
+        <button>Отправить</button>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Футер -->
+  <footer>
+    <p>&copy; 2025 CallTechAI. Все права защищены.</p>
+  </footer>
+</body>
+</html>
