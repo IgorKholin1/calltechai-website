@@ -53,7 +53,7 @@
     nav a:hover {
       color: #a8dadc;
     }
-    /* Panel link (hidden unless logged in) */
+    /* Panel link (hidden if not logged in) */
     #panelLink {
       margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 600;
       background-color: #778da9; padding: 0.5rem 1rem; border-radius: 5px; display: none;
@@ -88,13 +88,13 @@
     }
     /* Smaller main heading */
     .hero h1 {
-      font-size: 2.4rem;  /* was 3rem */
+      font-size: 2.4rem;
       margin-bottom: 1rem;
       font-weight: 700;
     }
     /* Slightly smaller text */
     .hero p {
-      font-size: 1.1rem; /* was 1.2rem */
+      font-size: 1.1rem;
       margin-bottom: 2rem;
       font-weight: 400;
     }
@@ -103,7 +103,6 @@
     .hero-buttons {
       display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;
     }
-
     .cta-button, .trial-button {
       border: none; padding: 1rem 2rem; font-size: 1rem; border-radius: 50px; cursor: pointer;
       transition: background-color 0.3s, box-shadow 0.3s; text-transform: uppercase; font-weight: 700;
@@ -139,9 +138,8 @@
       text-align: center;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    /* Slightly smaller section titles */
     .section-title {
-      font-size: 1.6rem; /* was 2rem */
+      font-size: 1.6rem;
       margin-bottom: 2rem;
       font-weight: 700;
     }
@@ -197,13 +195,20 @@
 
     /* MODAL: PLANS */
     .modal {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background-color: rgba(0, 0, 0, 0.5); align-items: center; justify-content: center; z-index: 9999;
+      display: none;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      align-items: center; justify-content: center;
+      z-index: 9999;
+      overscroll-behavior: contain; /* For mobile scrolling */
+      touch-action: none; /* Prevent background swipe */
     }
     .modal-content {
       background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
       border-radius: 15px; padding: 2rem; width: 90%; max-width: 800px; text-align: center; position: relative;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      max-height: 90vh; /* to allow internal scroll if content is large */
+      overflow-y: auto; /* scroll inside modal if needed */
     }
     .modal-close {
       position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; color: #fff;
@@ -234,6 +239,7 @@
       background-color: #415a77; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 20px;
       cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s;
       box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      margin-top: 0.5rem;
     }
     .modal-plan-button:hover {
       background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
@@ -254,7 +260,7 @@
 
     /* CUSTOMIZATION PANEL */
     #panel {
-      display: none; /* hidden unless logged in */
+      display: none;
       width: 90%; margin: 2rem auto; padding: 2rem;
       background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
       border-radius: 15px; text-align: center; box-shadow: 0 5px 10px rgba(0,0,0,0.3);
@@ -266,6 +272,7 @@
     .login-modal {
       display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 9999;
+      overscroll-behavior: contain; touch-action: none;
     }
     .login-content {
       background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
@@ -290,6 +297,7 @@
 </head>
 <body onload="checkLoginState()">
 
+  <!-- HEADER -->
   <header class="fade-in-up">
     <div class="logo">CallTechAI</div>
     <nav>
@@ -411,6 +419,7 @@
             </ul>
           </div>
           <button class="modal-plan-button" onclick="choosePlan('Basic')">Select</button>
+          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Basic')">Subscribe</button>
         </div>
         <!-- Plan 2: Advanced -->
         <div class="modal-plan-card">
@@ -427,6 +436,7 @@
             </ul>
           </div>
           <button class="modal-plan-button" onclick="choosePlan('Advanced')">Select</button>
+          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Advanced')">Subscribe</button>
         </div>
         <!-- Plan 3: Premium -->
         <div class="modal-plan-card">
@@ -443,6 +453,7 @@
             </ul>
           </div>
           <button class="modal-plan-button" onclick="choosePlan('Premium')">Select</button>
+          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Premium')">Subscribe</button>
         </div>
       </div>
     </div>
@@ -480,14 +491,12 @@
       // Check current plan
       let plan = localStorage.getItem("currentPlan");
       if (plan) {
-        // If leftover from Russian version
-        if (plan === "Базовый") {
-          plan = "Basic"; localStorage.setItem("currentPlan", plan);
-        } else if (plan === "Продвинутый") {
-          plan = "Advanced"; localStorage.setItem("currentPlan", plan);
-        } else if (plan === "Премиум") {
-          plan = "Premium"; localStorage.setItem("currentPlan", plan);
-        }
+        // If leftover from old version
+        if (plan === "Базовый") plan = "Basic";
+        if (plan === "Продвинутый") plan = "Advanced";
+        if (plan === "Премиум") plan = "Premium";
+        localStorage.setItem("currentPlan", plan);
+
         document.getElementById("currentPlan").textContent = "You selected plan: " + plan;
       }
 
@@ -505,15 +514,25 @@
       plansModal.style.display = "flex";
       plansModal.style.alignItems = "center";
       plansModal.style.justifyContent = "center";
+
+      // Lock background scroll
+      document.body.style.overflow = "hidden";
     }
     function closePlansModal() {
       plansModal.style.display = "none";
+      // Unlock background scroll
+      document.body.style.overflow = "";
     }
     function choosePlan(planName) {
       localStorage.setItem("currentPlan", planName);
       alert("Plan “" + planName + "” selected!");
       closePlansModal();
       document.getElementById("currentPlan").textContent = "You selected plan: " + planName;
+    }
+    // Fake "subscribe" button
+    function subscribePlan(planName) {
+      alert("Proceed to checkout for plan: " + planName + " (fake)...");
+      closePlansModal();
     }
     function toggleFeatures(id) {
       const block = document.getElementById(id);
@@ -533,9 +552,14 @@
       loginModal.style.display = "flex";
       loginModal.style.alignItems = "center";
       loginModal.style.justifyContent = "center";
+
+      // Lock background scroll
+      document.body.style.overflow = "hidden";
     }
     function closeLogin() {
       loginModal.style.display = "none";
+      // Unlock background scroll
+      document.body.style.overflow = "";
     }
     function doLogin() {
       // Accept any email/password for this demo
