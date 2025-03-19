@@ -43,12 +43,16 @@
     .logo {
       font-size: 1.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
     }
-    nav { display: flex; align-items: center; }
+    nav {
+      display: flex; align-items: center;
+    }
     nav a {
       margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 500;
       transition: color 0.3s;
     }
-    nav a:hover { color: #a8dadc; }
+    nav a:hover {
+      color: #a8dadc;
+    }
     /* Panel link (hidden unless logged in) */
     #panelLink {
       margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 600;
@@ -79,11 +83,23 @@
       padding: 2rem;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    .hero-content { max-width: 800px; margin: 0 auto; }
-    .hero h1 { font-size: 3rem; margin-bottom: 1rem; font-weight: 700; }
-    .hero p { font-size: 1.2rem; margin-bottom: 2rem; font-weight: 400; }
+    .hero-content {
+      max-width: 800px; margin: 0 auto;
+    }
+    /* Smaller main heading */
+    .hero h1 {
+      font-size: 2.4rem;  /* was 3rem */
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    /* Slightly smaller text */
+    .hero p {
+      font-size: 1.1rem; /* was 1.2rem */
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
 
-    /* HERO BUTTONS (gap) */
+    /* HERO BUTTONS with gap */
     .hero-buttons {
       display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;
     }
@@ -107,8 +123,12 @@
     }
 
     /* WAVES */
-    .wave { margin-top: -1px; }
-    .wave svg { display: block; width: 100%; height: auto; }
+    .wave {
+      margin-top: -1px;
+    }
+    .wave svg {
+      display: block; width: 100%; height: auto;
+    }
 
     /* SECTION CARD */
     .section-card {
@@ -119,13 +139,20 @@
       text-align: center;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    .section-title { font-size: 2rem; margin-bottom: 2rem; font-weight: 700; }
+    /* Slightly smaller section titles */
+    .section-title {
+      font-size: 1.6rem; /* was 2rem */
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
 
     /* INFO-SECTIONS */
     .info-section {
       max-width: 800px; margin: 0 auto; text-align: left;
     }
-    .info-section p { margin-bottom: 1rem; font-size: 1rem; line-height: 1.6; }
+    .info-section p {
+      margin-bottom: 1rem; font-size: 1rem; line-height: 1.6;
+    }
 
     /* FAQ */
     .faq-item {
@@ -133,11 +160,15 @@
       background-color: rgba(255, 255, 255, 0.2);
       border-radius: 10px; cursor: pointer;
     }
-    .faq-item h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+    .faq-item h3 {
+      font-size: 1.1rem; margin-bottom: 0.5rem;
+    }
     .faq-item p {
       font-size: 0.95rem; line-height: 1.4; display: none; margin-top: 0.5rem;
     }
-    .faq-item.active p { display: block; }
+    .faq-item.active p {
+      display: block;
+    }
 
     /* CONTACT FORM */
     .contact-form {
@@ -160,7 +191,9 @@
       text-align: center; padding: 1rem; background-color: rgba(0, 0, 0, 0.2);
       margin-top: 2rem; font-size: 0.9rem;
     }
-    footer a { color: #a8dadc; text-decoration: none; }
+    footer a {
+      color: #a8dadc; text-decoration: none;
+    }
 
     /* MODAL: PLANS */
     .modal {
@@ -205,15 +238,21 @@
     .modal-plan-button:hover {
       background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
-    .extra-features { display: none; text-align: left; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.4; }
-    .extra-features ul { list-style-type: disc; margin-left: 1.2rem; margin-top: 0.5rem; }
+    .extra-features {
+      display: none; text-align: left; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.4;
+    }
+    .extra-features ul {
+      list-style-type: disc; margin-left: 1.2rem; margin-top: 0.5rem;
+    }
     .show-more-btn {
       background: none; border: none; color: #fff; text-decoration: underline; cursor: pointer; font-size: 0.9rem;
       margin-bottom: 0.5rem;
     }
-    .show-more-btn:hover { color: #a8dadc; }
+    .show-more-btn:hover {
+      color: #a8dadc;
+    }
 
-    /* PANEL (Customization) */
+    /* CUSTOMIZATION PANEL */
     #panel {
       display: none; /* hidden unless logged in */
       width: 90%; margin: 2rem auto; padding: 2rem;
@@ -251,7 +290,6 @@
 </head>
 <body onload="checkLoginState()">
 
-  <!-- HEADER -->
   <header class="fade-in-up">
     <div class="logo">CallTechAI</div>
     <nav>
@@ -268,7 +306,7 @@
     </nav>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- HERO -->
   <section class="hero fade-in-up">
     <div class="hero-content">
       <h1>Intelligent Voice Auto-Attendants for Business</h1>
@@ -292,8 +330,8 @@
   <div class="section-card fade-in-up" id="how-it-works">
     <h2 class="section-title">How It Works</h2>
     <div class="info-section">
-      <p>CallTechAI integrates with your phone system through Twilio Cloud Service. Our AI analyzes incoming calls, answers customer questions, and redirects to a live operator if needed.</p>
-      <p>Support for multiple languages, custom scenarios, and easy integration make our service an indispensable tool for modern companies.</p>
+      <p>CallTechAI integrates with your phone system through the Twilio Cloud Service. Our AI analyzes incoming calls, answers customer questions, and redirects to a live operator if needed.</p>
+      <p>Support for multiple languages, custom scenarios, and easy integration make our service an indispensable tool for modern businesses.</p>
       <p id="currentPlan" style="color:#a8dadc; margin-top:1rem;"></p>
     </div>
   </div>
@@ -311,15 +349,15 @@
     <div class="info-section">
       <div class="faq-item" onclick="this.classList.toggle('active')">
         <h3>How does the auto-attendant work?</h3>
-        <p>Our service uses AI to analyze incoming calls and automatically answer customer inquiries based on pre-configured scenarios.</p>
+        <p>Our service uses AI to analyze incoming calls and automatically respond based on configured scenarios.</p>
       </div>
       <div class="faq-item" onclick="this.classList.toggle('active')">
         <h3>Can I integrate with my CRM?</h3>
-        <p>Yes, our service supports integration with most CRM systems, allowing easy synchronization of customer data and orders.</p>
+        <p>Yes, we support integration with most CRMs, allowing easy synchronization of customer data and orders.</p>
       </div>
       <div class="faq-item" onclick="this.classList.toggle('active')">
         <h3>What is the trial period?</h3>
-        <p>We offer a 7-day trial period so you can evaluate all features without commitment.</p>
+        <p>We offer a 7-day trial so you can test all features without any commitment.</p>
       </div>
     </div>
   </div>
@@ -410,7 +448,7 @@
     </div>
   </div>
 
-  <!-- CUSTOMIZATION PANEL (hidden unless logged in) -->
+  <!-- CUSTOMIZATION PANEL -->
   <div id="panel" class="section-card fade-in-up">
     <h2>Customization Panel</h2>
     <p>Here you can adjust call scenarios, add languages, and view analytics.</p>
@@ -429,7 +467,7 @@
   </div>
 
   <script>
-    // Check login state on load
+    // On load, check login state & fix old Russian plans
     function checkLoginState() {
       const isLoggedIn = localStorage.getItem("isLoggedIn");
       const panelLink = document.getElementById("panelLink");
@@ -440,8 +478,16 @@
       }
 
       // Check current plan
-      const plan = localStorage.getItem("currentPlan");
+      let plan = localStorage.getItem("currentPlan");
       if (plan) {
+        // If leftover from Russian version
+        if (plan === "Базовый") {
+          plan = "Basic"; localStorage.setItem("currentPlan", plan);
+        } else if (plan === "Продвинутый") {
+          plan = "Advanced"; localStorage.setItem("currentPlan", plan);
+        } else if (plan === "Премиум") {
+          plan = "Premium"; localStorage.setItem("currentPlan", plan);
+        }
         document.getElementById("currentPlan").textContent = "You selected plan: " + plan;
       }
 
