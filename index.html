@@ -13,7 +13,9 @@
   <style>
     /* RESET */
     * {
-      margin: 0; padding: 0; box-sizing: border-box;
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
     }
     html, body {
       font-family: "Poppins", sans-serif;
@@ -25,29 +27,47 @@
 
     /* ANIMATION: fadeInUp */
     @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(30px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% {
+        opacity: 0; 
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1; 
+        transform: translateY(0);
+      }
     }
     .fade-in-up {
-      opacity: 0; animation: fadeInUp 0.8s ease forwards;
+      opacity: 0; 
+      animation: fadeInUp 0.8s ease forwards;
     }
 
     /* HEADER */
     header {
-      display: flex; align-items: center; justify-content: space-between;
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between;
       padding: 1rem 2rem;
       background: rgba(10, 15, 31, 0.8);
-      position: sticky; top: 0; z-index: 1000;
+      position: sticky; 
+      top: 0; 
+      z-index: 1000;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
     .logo {
-      font-size: 1.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      font-size: 1.4rem; /* Smaller logo */
+      font-weight: 700; 
+      letter-spacing: 1px; 
+      text-transform: uppercase;
     }
     nav {
-      display: flex; align-items: center;
+      display: flex; 
+      align-items: center;
     }
     nav a {
-      margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 500;
+      margin-left: 1.5rem; 
+      color: #fff; 
+      text-decoration: none; 
+      font-weight: 500;
       transition: color 0.3s;
     }
     nav a:hover {
@@ -55,28 +75,46 @@
     }
     /* Panel link (hidden if not logged in) */
     #panelLink {
-      margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 600;
-      background-color: #778da9; padding: 0.5rem 1rem; border-radius: 5px; display: none;
+      margin-left: 1.5rem; 
+      color: #fff; 
+      text-decoration: none; 
+      font-weight: 600;
+      background-color: #778da9; 
+      padding: 0.5rem 1rem; 
+      border-radius: 5px; 
+      display: none;
     }
     #panelLink:hover {
-      background-color: #a8dadc; color: #0a0f1f;
+      background-color: #a8dadc; 
+      color: #0a0f1f;
     }
 
     .auth-buttons button {
-      background-color: #415a77; border: none; padding: 0.6rem 1.2rem; margin-left: 1.2rem;
-      border-radius: 5px; cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s;
-      font-weight: 600; box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      background-color: #415a77; 
+      border: none; 
+      padding: 0.6rem 1.2rem; 
+      margin-left: 1.2rem;
+      border-radius: 5px; 
+      cursor: pointer; 
+      transition: background-color 0.3s, box-shadow 0.3s;
+      font-weight: 600; 
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     }
     .auth-buttons button:hover {
-      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; 
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
 
     /* HERO SECTION */
     .hero {
       position: relative;
       height: 70vh;
-      display: flex; align-items: center; justify-content: center; text-align: center;
-      margin: 2rem auto; width: 90%;
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      text-align: center;
+      margin: 2rem auto; 
+      width: 90%;
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(8px);
       border-radius: 15px;
@@ -84,41 +122,59 @@
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
     .hero-content {
-      max-width: 800px; margin: 0 auto;
+      max-width: 800px; 
+      margin: 0 auto;
     }
     /* Smaller main heading */
     .hero h1 {
-      font-size: 2.4rem;
+      font-size: 2.4rem; /* was 3rem, then 2.4rem */
       margin-bottom: 1rem;
       font-weight: 700;
     }
     /* Slightly smaller text */
     .hero p {
-      font-size: 1.1rem;
+      font-size: 1.1rem; /* was 1.2rem, then 1.1rem */
       margin-bottom: 2rem;
       font-weight: 400;
     }
 
     /* HERO BUTTONS with gap */
     .hero-buttons {
-      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;
+      display: flex; 
+      gap: 1rem; 
+      justify-content: center; 
+      flex-wrap: wrap; 
+      margin-top: 1rem;
     }
+
     .cta-button, .trial-button {
-      border: none; padding: 1rem 2rem; font-size: 1rem; border-radius: 50px; cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s; text-transform: uppercase; font-weight: 700;
+      border: none; 
+      padding: 1rem 2rem; 
+      font-size: 1rem; 
+      border-radius: 50px; 
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s; 
+      text-transform: uppercase; 
+      font-weight: 700;
       box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     }
     .cta-button {
-      background-color: #415a77; color: #fff;
+      background-color: #415a77; 
+      color: #fff;
     }
     .cta-button:hover {
-      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; 
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
     .trial-button {
-      background-color: transparent; border: 2px solid #fff; color: #fff;
+      background-color: transparent; 
+      border: 2px solid #fff; 
+      color: #fff;
     }
     .trial-button:hover {
-      background-color: #fff; color: #0a0f1f; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #fff; 
+      color: #0a0f1f; 
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
 
     /* WAVES */
@@ -126,12 +182,16 @@
       margin-top: -1px;
     }
     .wave svg {
-      display: block; width: 100%; height: auto;
+      display: block; 
+      width: 100%; 
+      height: auto;
     }
 
     /* SECTION CARD */
     .section-card {
-      width: 90%; margin: 2rem auto; padding: 2rem;
+      width: 90%; 
+      margin: 2rem auto; 
+      padding: 2rem;
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(8px);
       border-radius: 15px;
@@ -139,30 +199,40 @@
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
     .section-title {
-      font-size: 1.6rem;
+      font-size: 1.6rem; /* was 2rem, then 1.6rem */
       margin-bottom: 2rem;
       font-weight: 700;
     }
 
     /* INFO-SECTIONS */
     .info-section {
-      max-width: 800px; margin: 0 auto; text-align: left;
+      max-width: 800px; 
+      margin: 0 auto; 
+      text-align: left;
     }
     .info-section p {
-      margin-bottom: 1rem; font-size: 1rem; line-height: 1.6;
+      margin-bottom: 1rem; 
+      font-size: 1rem; 
+      line-height: 1.6;
     }
 
     /* FAQ */
     .faq-item {
-      margin-bottom: 1rem; padding: 1rem;
+      margin-bottom: 1rem; 
+      padding: 1rem;
       background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 10px; cursor: pointer;
+      border-radius: 10px; 
+      cursor: pointer;
     }
     .faq-item h3 {
-      font-size: 1.1rem; margin-bottom: 0.5rem;
+      font-size: 1.1rem; 
+      margin-bottom: 0.5rem;
     }
     .faq-item p {
-      font-size: 0.95rem; line-height: 1.4; display: none; margin-top: 0.5rem;
+      font-size: 0.95rem; 
+      line-height: 1.4; 
+      display: none; 
+      margin-top: 0.5rem;
     }
     .faq-item.active p {
       display: block;
@@ -170,88 +240,158 @@
 
     /* CONTACT FORM */
     .contact-form {
-      max-width: 600px; margin: 0 auto; text-align: left; margin-top: 2rem;
+      max-width: 600px; 
+      margin: 0 auto; 
+      text-align: left; 
+      margin-top: 2rem;
     }
-    .contact-form input, .contact-form textarea {
-      width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: none; border-radius: 5px; font-size: 1rem;
+    .contact-form input, 
+    .contact-form textarea {
+      width: 100%; 
+      padding: 0.8rem; 
+      margin-bottom: 1rem; 
+      border: none; 
+      border-radius: 5px; 
+      font-size: 1rem;
     }
     .contact-form button {
-      background-color: #415a77; border: none; padding: 1rem 2rem; font-size: 1rem; color: #fff;
-      border-radius: 50px; cursor: pointer; transition: background-color 0.3s ease, box-shadow 0.3s;
+      background-color: #415a77; 
+      border: none; 
+      padding: 1rem 2rem; 
+      font-size: 1rem; 
+      color: #fff;
+      border-radius: 50px; 
+      cursor: pointer; 
+      transition: background-color 0.3s ease, box-shadow 0.3s;
       box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     }
     .contact-form button:hover {
-      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; 
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
 
     /* FOOTER */
     footer {
-      text-align: center; padding: 1rem; background-color: rgba(0, 0, 0, 0.2);
-      margin-top: 2rem; font-size: 0.9rem;
+      text-align: center; 
+      padding: 1rem; 
+      background-color: rgba(0, 0, 0, 0.2);
+      margin-top: 2rem; 
+      font-size: 0.9rem;
     }
     footer a {
-      color: #a8dadc; text-decoration: none;
+      color: #a8dadc; 
+      text-decoration: none;
     }
 
     /* MODAL: PLANS */
     .modal {
       display: none;
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%;
       background-color: rgba(0, 0, 0, 0.5);
-      align-items: center; justify-content: center;
+      align-items: center; 
+      justify-content: center;
       z-index: 9999;
-      overscroll-behavior: contain; /* For mobile scrolling */
-      touch-action: none; /* Prevent background swipe */
+      overscroll-behavior: contain; 
+      touch-action: none;
     }
     .modal-content {
-      background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
-      border-radius: 15px; padding: 2rem; width: 90%; max-width: 800px; text-align: center; position: relative;
+      background-color: rgba(255,255,255,0.1); 
+      backdrop-filter: blur(10px);
+      border-radius: 15px; 
+      padding: 2rem; 
+      width: 90%; 
+      max-width: 800px; 
+      text-align: center; 
+      position: relative;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-      max-height: 90vh; /* to allow internal scroll if content is large */
-      overflow-y: auto; /* scroll inside modal if needed */
+      max-height: 90vh; 
+      overflow-y: auto; 
     }
     .modal-close {
-      position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; color: #fff;
+      position: absolute; 
+      top: 1rem; 
+      right: 1rem; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+      color: #fff;
     }
     .modal h2 {
-      margin-bottom: 1rem; font-size: 1.8rem; font-weight: 700;
+      margin-bottom: 1rem; 
+      font-size: 1.8rem; 
+      font-weight: 700;
     }
     .modal-plans {
-      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;
+      display: flex; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+      gap: 1rem; 
+      margin-top: 2rem;
     }
     .modal-plan-card {
-      background-color: rgba(255,255,255,0.2); border-radius: 10px; padding: 1rem; width: 220px;
+      background-color: rgba(255,255,255,0.2); 
+      border-radius: 10px; 
+      padding: 1rem; 
+      width: 220px;
       transition: transform 0.3s, box-shadow 0.3s;
     }
     .modal-plan-card:hover {
-      transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      transform: translateY(-3px); 
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     }
     .modal-plan-card h3 {
-      font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 700;
+      font-size: 1.4rem; 
+      margin-bottom: 0.5rem; 
+      font-weight: 700;
     }
     .modal-plan-card p {
-      font-size: 0.95rem; line-height: 1.4; margin-bottom: 0.8rem;
+      font-size: 0.95rem; 
+      line-height: 1.4; 
+      margin-bottom: 0.8rem;
     }
     .modal-plan-price {
-      font-size: 1.4rem; margin-bottom: 0.8rem; color: #a8dadc; font-weight: 700;
+      font-size: 1.4rem; 
+      margin-bottom: 0.8rem; 
+      color: #a8dadc; 
+      font-weight: 700;
     }
     .modal-plan-button {
-      background-color: #415a77; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 20px;
-      cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s;
+      background-color: #415a77; 
+      color: #fff; 
+      border: none; 
+      padding: 0.5rem 1rem; 
+      border-radius: 20px;
+      cursor: pointer; 
+      transition: background-color 0.3s, box-shadow 0.3s;
       box-shadow: 0 3px 5px rgba(0,0,0,0.2);
       margin-top: 0.5rem;
     }
     .modal-plan-button:hover {
-      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; 
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
     .extra-features {
-      display: none; text-align: left; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.4;
+      display: none; 
+      text-align: left; 
+      margin-top: 0.5rem; 
+      font-size: 0.9rem; 
+      line-height: 1.4;
     }
     .extra-features ul {
-      list-style-type: disc; margin-left: 1.2rem; margin-top: 0.5rem;
+      list-style-type: disc; 
+      margin-left: 1.2rem; 
+      margin-top: 0.5rem;
     }
     .show-more-btn {
-      background: none; border: none; color: #fff; text-decoration: underline; cursor: pointer; font-size: 0.9rem;
+      background: none; 
+      border: none; 
+      color: #fff; 
+      text-decoration: underline; 
+      cursor: pointer; 
+      font-size: 0.9rem;
       margin-bottom: 0.5rem;
     }
     .show-more-btn:hover {
@@ -261,37 +401,78 @@
     /* CUSTOMIZATION PANEL */
     #panel {
       display: none;
-      width: 90%; margin: 2rem auto; padding: 2rem;
-      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
-      border-radius: 15px; text-align: center; box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      width: 90%; 
+      margin: 2rem auto; 
+      padding: 2rem;
+      background: rgba(255,255,255,0.1); 
+      backdrop-filter: blur(8px);
+      border-radius: 15px; 
+      text-align: center; 
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    #panel h2 { font-size: 2rem; margin-bottom: 1rem; }
-    #panel p { margin-bottom: 1rem; }
+    #panel h2 { 
+      font-size: 2rem; 
+      margin-bottom: 1rem; 
+    }
+    #panel p { 
+      margin-bottom: 1rem; 
+    }
 
     /* LOGIN MODAL */
     .login-modal {
-      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5); align-items: center; justify-content: center; z-index: 9999;
-      overscroll-behavior: contain; touch-action: none;
+      display: none; 
+      position: fixed; 
+      top: 0; 
+      left: 0; 
+      width: 100%; 
+      height: 100%;
+      background: rgba(0,0,0,0.5); 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 9999;
+      overscroll-behavior: contain; 
+      touch-action: none;
     }
     .login-content {
-      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
-      border-radius: 15px; padding: 2rem; width: 300px; text-align: center; position: relative;
+      background: rgba(255,255,255,0.1); 
+      backdrop-filter: blur(8px);
+      border-radius: 15px; 
+      padding: 2rem; 
+      width: 300px; 
+      text-align: center; 
+      position: relative;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    .login-content h2 { margin-bottom: 1rem; }
+    .login-content h2 { 
+      margin-bottom: 1rem; 
+    }
     .login-content input {
-      width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: none; border-radius: 5px;
+      width: 100%; 
+      padding: 0.5rem; 
+      margin-bottom: 1rem; 
+      border: none; 
+      border-radius: 5px;
     }
     .login-content button {
-      background-color: #415a77; color: #fff; border: none; padding: 0.6rem 1.2rem; border-radius: 5px;
-      cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s;
+      background-color: #415a77; 
+      color: #fff; 
+      border: none; 
+      padding: 0.6rem 1.2rem; 
+      border-radius: 5px;
+      cursor: pointer; 
+      transition: background-color 0.3s, box-shadow 0.3s;
     }
     .login-content button:hover {
-      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; 
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
     .login-close {
-      position: absolute; top: 1rem; right: 1rem; font-size: 1.2rem; cursor: pointer; color: #fff;
+      position: absolute; 
+      top: 1rem; 
+      right: 1rem; 
+      font-size: 1.2rem; 
+      cursor: pointer; 
+      color: #fff;
     }
   </style>
 </head>
@@ -308,8 +489,9 @@
       <a href="#panel" id="panelLink">Panel</a>
 
       <div class="auth-buttons">
-        <button onclick="openLogin()">Login</button>
-        <button onclick="alert('Register Page (placeholder)')">Register</button>
+        <!-- Updated: "Log In" / "Sign Up" -->
+        <button onclick="openLogin()">Log In</button>
+        <button onclick="alert('Sign Up Page (placeholder)')">Sign Up</button>
       </div>
     </nav>
   </header>
@@ -470,15 +652,15 @@
   <div class="login-modal" id="loginModal">
     <div class="login-content fade-in-up">
       <span class="login-close" onclick="closeLogin()">&times;</span>
-      <h2>Login</h2>
+      <h2>Log In</h2>
       <input type="email" id="loginEmail" placeholder="Email"/>
       <input type="password" id="loginPassword" placeholder="Password"/>
-      <button onclick="doLogin()">Login</button>
+      <button onclick="doLogin()">Log In</button>
     </div>
   </div>
 
   <script>
-    // On load, check login state & fix old Russian plans
+    // On load, check login state & fix old plan names
     function checkLoginState() {
       const isLoggedIn = localStorage.getItem("isLoggedIn");
       const panelLink = document.getElementById("panelLink");
@@ -491,7 +673,6 @@
       // Check current plan
       let plan = localStorage.getItem("currentPlan");
       if (plan) {
-        // If leftover from old version
         if (plan === "Базовый") plan = "Basic";
         if (plan === "Продвинутый") plan = "Advanced";
         if (plan === "Премиум") plan = "Premium";
