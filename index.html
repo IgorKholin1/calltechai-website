@@ -4,358 +4,244 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>CallTechAI – Умные голосовые автоответчики для бизнеса</title>
-  <style>
-    /* Сброс стилей */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
 
-    /* Шрифты: используем системный sans-serif, чтобы не зависеть от Google Fonts */
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /* СБРОС СТИЛЕЙ */
+    * {
+      margin: 0; padding: 0; box-sizing: border-box;
+    }
     html, body {
-      font-family: Arial, sans-serif;
+      font-family: "Poppins", sans-serif;
       color: #fff;
-      background: linear-gradient(135deg, #0d1b2a 0%, #1b263b 100%);
+      background: linear-gradient(135deg, #0a0f1f 0%, #131a3a 100%);
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
 
-    /* Анимация появления (fade in + сдвиг вверх) */
+    /* АНИМАЦИЯ fadeInUp */
     @keyframes fadeInUp {
       0% {
-        opacity: 0;
-        transform: translateY(30px);
+        opacity: 0; transform: translateY(30px);
       }
       100% {
-        opacity: 1;
-        transform: translateY(0);
+        opacity: 1; transform: translateY(0);
       }
     }
     .fade-in-up {
-      opacity: 0; /* скрыто до старта анимации */
-      animation: fadeInUp 1s ease forwards;
+      opacity: 0; animation: fadeInUp 0.8s ease forwards;
     }
 
-    /* Шапка (header) */
+    /* ШАПКА (HEADER) */
     header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       padding: 1rem 2rem;
-      background: rgba(13, 27, 42, 0.9);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      background: rgba(10, 15, 31, 0.8);
+      position: sticky; top: 0; z-index: 1000;
     }
     .logo {
-      font-size: 1.5rem;
-      font-weight: bold;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      font-size: 1.6rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
     }
     nav {
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
     }
     nav a {
-      margin-left: 1.5rem;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
+      margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 500;
       transition: color 0.3s;
     }
     nav a:hover {
       color: #a8dadc;
     }
-    /* Кнопки Login / Register */
-    .auth-buttons {
-      margin-left: 1.5rem;
-    }
     .auth-buttons button {
-      background-color: #415a77;
-      border: none;
-      padding: 0.5rem 1rem;
-      margin-left: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      font-weight: 600;
+      background-color: #415a77; border: none; padding: 0.5rem 1rem; margin-left: 1rem;
+      border-radius: 5px; cursor: pointer; transition: background-color 0.3s; font-weight: 600;
     }
     .auth-buttons button:hover {
       background-color: #778da9;
     }
 
-    /* Hero-секция (без внешней картинки, чисто градиент) */
+    /* HERO-СЕКЦИЯ */
     .hero {
       position: relative;
-      height: 80vh;
-      background: linear-gradient(135deg, #1b263b, #2b3c54);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      overflow: hidden;
-    }
-    .hero-content {
-      z-index: 1;
-      max-width: 800px;
+      height: 70vh;
+      display: flex; align-items: center; justify-content: center; text-align: center;
+      margin: 2rem auto; width: 90%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
       padding: 2rem;
     }
+    .hero-content {
+      max-width: 800px; margin: 0 auto;
+    }
     .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 1rem;
-      font-weight: bold;
+      font-size: 3rem; margin-bottom: 1rem; font-weight: 700;
     }
     .hero p {
-      font-size: 1.2rem;
-      margin-bottom: 2rem;
+      font-size: 1.2rem; margin-bottom: 2rem; font-weight: 400;
     }
     .cta-button, .trial-button {
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      text-transform: uppercase;
-      font-weight: 700;
-      margin-right: 1rem;
+      border: none; padding: 1rem 2rem; font-size: 1rem; border-radius: 50px; cursor: pointer;
+      transition: background-color 0.3s; text-transform: uppercase; font-weight: 700; margin-right: 1rem;
     }
     .cta-button {
-      background-color: #415a77;
-      color: #fff;
+      background-color: #415a77; color: #fff;
     }
     .cta-button:hover {
       background-color: #778da9;
     }
     .trial-button {
-      background-color: transparent;
-      color: #fff;
-      border: 2px solid #fff;
+      background-color: transparent; border: 2px solid #fff; color: #fff;
     }
     .trial-button:hover {
-      background-color: #fff;
-      color: #0d1b2a;
+      background-color: #fff; color: #0a0f1f;
     }
 
-    /* Общий section */
-    section {
-      padding: 4rem 2rem;
+    /* ОБЩИЙ КОНТЕЙНЕР ДЛЯ СЕКЦИЙ (section-card) */
+    .section-card {
+      width: 90%; margin: 2rem auto; padding: 2rem;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
       text-align: center;
-      max-width: 1200px;
-      margin: 0 auto;
     }
     .section-title {
-      font-size: 2rem;
-      margin-bottom: 2rem;
-      font-weight: bold;
+      font-size: 2rem; margin-bottom: 2rem; font-weight: 700;
     }
 
-    /* Тарифы (plans) */
-    .plans {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 2rem;
-    }
-    .plan-card {
-      background-color: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(4px);
-      border-radius: 10px;
-      padding: 2rem;
-      width: 300px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      position: relative;
-      overflow: hidden;
-    }
-    .plan-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
-    }
-    .plan-card h3 {
-      font-size: 1.8rem;
-      margin-bottom: 1rem;
-    }
-    .plan-card p {
-      font-size: 1rem;
-      margin-bottom: 1.5rem;
-      line-height: 1.4;
-    }
-    .price {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-      color: #a8dadc;
-      font-weight: bold;
-    }
-    .plan-button {
-      background-color: #1b263b;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      color: #fff;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .plan-button:hover {
-      background-color: #415a77;
-    }
-
-    /* Блоки info-section (Как работает, Преимущества и т.д.) */
+    /* INFO-SECTIONS */
     .info-section {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: left;
-      padding: 2rem;
+      max-width: 800px; margin: 0 auto; text-align: left;
     }
     .info-section h2 {
-      margin-bottom: 1rem;
-      font-size: 1.8rem;
-      font-weight: bold;
+      margin-bottom: 1rem; font-size: 1.8rem; font-weight: 700;
     }
     .info-section p {
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    /* Панель кастомизации */
-    .customization {
-      background-color: rgba(255, 255, 255, 0.05);
-      padding: 2rem;
-      border-radius: 10px;
-      margin: 2rem 0;
-    }
-    .customization h2 {
-      margin-bottom: 1rem;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
-    .customization p {
-      font-size: 1rem;
-      margin-bottom: 1rem;
-    }
-    .customization button {
-      background-color: #415a77;
-      border: none;
-      padding: 0.8rem 1.5rem;
-      font-size: 1rem;
-      color: #fff;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-    .customization button:hover {
-      background-color: #778da9;
+      margin-bottom: 1rem; font-size: 1rem; line-height: 1.6;
     }
 
     /* FAQ */
-    .faq {
-      text-align: left;
-      max-width: 800px;
-      margin: 2rem auto;
-    }
-    .faq h2 {
-      margin-bottom: 1rem;
-      font-size: 1.8rem;
-      font-weight: bold;
-    }
     .faq-item {
-      margin-bottom: 1rem;
-      padding: 1rem;
-      background-color: rgba(255, 255, 255, 0.05);
-      border-radius: 5px;
-      cursor: pointer;
+      margin-bottom: 1rem; padding: 1rem;
+      background-color: rgba(255, 255, 255, 0.2);
+      border-radius: 10px; cursor: pointer;
     }
     .faq-item h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.1rem; margin-bottom: 0.5rem;
     }
     .faq-item p {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      display: none;
-      margin-top: 0.5rem;
+      font-size: 0.95rem; line-height: 1.4; display: none; margin-top: 0.5rem;
     }
     .faq-item.active p {
       display: block;
     }
 
-    /* Контактная форма */
+    /* КОНТАКТНАЯ ФОРМА */
     .contact-form {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: left;
-      margin-top: 2rem;
+      max-width: 600px; margin: 0 auto; text-align: left; margin-top: 2rem;
     }
     .contact-form input, .contact-form textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
+      width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: none; border-radius: 5px; font-size: 1rem;
     }
     .contact-form button {
-      background-color: #415a77;
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      color: #fff;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
+      background-color: #415a77; border: none; padding: 1rem 2rem; font-size: 1rem; color: #fff;
+      border-radius: 50px; cursor: pointer; transition: background-color 0.3s ease;
     }
     .contact-form button:hover {
       background-color: #778da9;
     }
 
-    /* Футер */
+    /* ФУТЕР */
     footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: rgba(0, 0, 0, 0.2);
-      margin-top: 2rem;
-      font-size: 0.9rem;
+      text-align: center; padding: 1rem; background-color: rgba(0, 0, 0, 0.2);
+      margin-top: 2rem; font-size: 0.9rem;
     }
     footer a {
-      color: #a8dadc;
-      text-decoration: none;
+      color: #a8dadc; text-decoration: none;
     }
 
-    /* Адаптивность для мобильных */
+    /* АДАПТИВНОСТЬ (mobile) */
     @media (max-width: 768px) {
-      .hero h1 {
-        font-size: 2.2rem;
-      }
-      .plans {
-        flex-direction: column;
-        align-items: center;
-      }
-      header {
-        flex-direction: column;
-        gap: 1rem;
-      }
-      nav {
-        flex-wrap: wrap;
-        justify-content: center;
-      }
-      nav a {
-        margin: 0.5rem;
-      }
+      .hero h1 { font-size: 2.2rem; }
+      header { flex-direction: column; gap: 1rem; }
+      nav { flex-wrap: wrap; justify-content: center; }
+      nav a { margin: 0.5rem; }
+    }
+
+    /* ======= МОДАЛЬНОЕ ОКНО ДЛЯ ТАРИФОВ ======= */
+    .modal {
+      display: none; /* скрыто по умолчанию */
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.5); /* полупрозрачный фон */
+      align-items: center; justify-content: center; z-index: 9999;
+    }
+    .modal-content {
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2rem;
+      width: 90%; max-width: 800px; text-align: center; position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem; cursor: pointer; color: #fff;
+    }
+    .modal h2 {
+      margin-bottom: 1rem; font-size: 1.8rem; font-weight: 700;
+    }
+    .modal-plans {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;
+    }
+    .modal-plan-card {
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 10px; padding: 1rem; width: 220px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .modal-plan-card:hover {
+      transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    .modal-plan-card h3 {
+      font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 700;
+    }
+    .modal-plan-card p {
+      font-size: 0.95rem; line-height: 1.4; margin-bottom: 0.8rem;
+    }
+    .modal-plan-price {
+      font-size: 1.4rem; margin-bottom: 0.8rem; color: #a8dadc; font-weight: 700;
+    }
+    .modal-plan-button {
+      background-color: #415a77; color: #fff; border: none; padding: 0.5rem 1rem; border-radius: 20px;
+      cursor: pointer; transition: background-color 0.3s;
+    }
+    .modal-plan-button:hover {
+      background-color: #778da9;
+    }
+    /* "Показать ещё" */
+    .extra-features {
+      display: none; text-align: left; margin-top: 0.5rem; font-size: 0.9rem; line-height: 1.4;
+    }
+    .extra-features ul {
+      list-style-type: disc; margin-left: 1.2rem; margin-top: 0.5rem;
+    }
+    .show-more-btn {
+      background: none; border: none; color: #fff; text-decoration: underline; cursor: pointer; font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .show-more-btn:hover {
+      color: #a8dadc;
     }
   </style>
 </head>
 <body>
 
-  <!-- Шапка сайта -->
+  <!-- ШАПКА -->
   <header class="fade-in-up">
     <div class="logo">CallTechAI</div>
     <nav>
-      <a href="#plans">Тарифы</a>
       <a href="#how-it-works">Как работает</a>
-      <a href="#customization">Кастомизация</a>
       <a href="#faq">FAQ</a>
       <a href="#contacts">Контакты</a>
       <div class="auth-buttons">
@@ -364,117 +250,154 @@
       </div>
     </nav>
   </header>
-  <!-- Hero-секция (градиент, без внешней картинки) -->
+
+  <!-- HERO -->
   <section class="hero fade-in-up">
     <div class="hero-content">
       <h1>Умные голосовые автоответчики для бизнеса</h1>
       <p>Автоматизируйте поддержку клиентов и приём звонков с помощью ИИ-технологий</p>
-      <button class="cta-button" onclick="document.getElementById('plans').scrollIntoView({behavior: 'smooth'});">
-        Выбрать тариф
-      </button>
-      <button class="trial-button" onclick="alert('7-дневный тестовый период активирован!');">
-        7-дневный тест
-      </button>
+      <button class="cta-button" onclick="openPlansModal()">Выбрать тариф</button>
+      <button class="trial-button" onclick="alert('7-дневный тестовый период активирован!');">7-дневный тест</button>
     </div>
   </section>
 
-  <!-- Тарифы -->
-  <section id="plans" class="fade-in-up">
-    <h2 class="section-title">Тарифы</h2>
-    <div class="plans">
-      <div class="plan-card">
-        <h3>Базовый</h3>
-        <p>Основной функционал автоответчика для малого бизнеса.</p>
-        <div class="price">$12/мес</div>
-        <button class="plan-button" onclick="alert('Базовый тариф выбран!');">Выбрать</button>
-      </div>
-      <div class="plan-card">
-        <h3>Продвинутый</h3>
-        <p>Расширенные возможности и интеграция с CRM.</p>
-        <div class="price">$29/мес</div>
-        <button class="plan-button" onclick="alert('Продвинутый тариф выбран!');">Выбрать</button>
-      </div>
-      <div class="plan-card">
-        <h3>Премиум</h3>
-        <p>Полная автоматизация, аналитика и кастомизация под бизнес.</p>
-        <div class="price">$49/мес</div>
-        <button class="plan-button" onclick="alert('Премиум тариф выбран!');">Выбрать</button>
-      </div>
-    </div>
-  </section>
-
-  <!-- Как это работает -->
-  <section id="how-it-works" class="fade-in-up">
+  <!-- КАК ЭТО РАБОТАЕТ -->
+  <div class="section-card fade-in-up" id="how-it-works">
+    <h2 class="section-title">Как это работает</h2>
     <div class="info-section">
-      <h2>Как это работает</h2>
       <p>CallTechAI интегрируется с вашей телефонной системой через облачный сервис Twilio. Наш ИИ анализирует входящие звонки, отвечает на вопросы клиентов и при необходимости перенаправляет звонок на оператора.</p>
       <p>Поддержка нескольких языков, адаптация под разные бизнес-сценарии и простая интеграция — всё это делает наш сервис незаменимым инструментом для современных компаний.</p>
     </div>
-  </section>
-
-  <!-- Панель кастомизации -->
-  <section id="customization" class="fade-in-up">
-    <div class="info-section customization">
-      <h2>Панель кастомизации</h2>
-      <p>Настройте работу голосового бота под особенности вашего бизнеса:</p>
-      <ul>
-        <li>Изменение сценариев диалогов</li>
-        <li>Поддержка нескольких языков</li>
-        <li>Интеграция с CRM и аналитикой звонков</li>
-      </ul>
-      <button onclick="alert('Переход в панель кастомизации!');">
-        Перейти в панель
-      </button>
-    </div>
-  </section>
+  </div>
 
   <!-- FAQ -->
-  <section id="faq" class="fade-in-up">
-    <div class="faq">
-      <h2>Часто задаваемые вопросы</h2>
+  <div class="section-card fade-in-up" id="faq">
+    <h2 class="section-title">Часто задаваемые вопросы</h2>
+    <div class="info-section">
       <div class="faq-item" onclick="this.classList.toggle('active')">
         <h3>Как работает автоответчик?</h3>
         <p>Наш сервис анализирует входящие звонки с помощью ИИ и автоматически отвечает на вопросы клиентов, используя заранее настроенные сценарии.</p>
       </div>
       <div class="faq-item" onclick="this.classList.toggle('active')">
         <h3>Можно ли интегрировать с моей CRM?</h3>
-        <p>Да, наш сервис поддерживает интеграцию с большинством CRM-систем, что позволяет синхронизировать данные клиентов и заказы.</p>
+        <p>Да, наш сервис поддерживает интеграцию с большинством CRM-систем, что позволяет легко синхронизировать данные клиентов и заказы.</p>
       </div>
       <div class="faq-item" onclick="this.classList.toggle('active')">
         <h3>Какой срок тестового периода?</h3>
-        <p>Мы предлагаем 7-дневный тестовый период, чтобы вы могли оценить все возможности CallTechAI без обязательств.</p>
+        <p>Мы предлагаем 7-дневный тестовый период, чтобы вы могли оценить все возможности нашего сервиса без обязательств.</p>
       </div>
     </div>
-  </section>
+  </div>
 
-  <!-- Контакты -->
-  <section id="contacts" class="fade-in-up">
+  <!-- КОНТАКТЫ (форма отправки на почту через Formspree) -->
+  <div class="section-card fade-in-up" id="contacts">
+    <h2 class="section-title">Свяжитесь с нами</h2>
     <div class="info-section">
-      <h2>Свяжитесь с нами</h2>
       <p>Оставьте заявку, и мы свяжемся с вами для подключения сервиса CallTechAI к вашему бизнесу.</p>
-      <div class="contact-form">
-        <input type="text" placeholder="Ваше имя" />
-        <input type="email" placeholder="Ваш email" />
-        <textarea rows="4" placeholder="Ваше сообщение"></textarea>
-        <button onclick="alert('Заявка отправлена!');">Отправить</button>
-      </div>
+      <form class="contact-form"
+        action="https://formspree.io/f/xkgjgdel"
+        method="POST"
+      
+        <input type="text" name="name" placeholder="Ваше имя" required/>
+        <input type="email" name="email" placeholder="Ваш email" required/>
+        <textarea rows="4" name="message" placeholder="Ваше сообщение"></textarea>
+        <button type="submit">Отправить</button>
+      </form>
     </div>
-  </section>
+  </div>
 
-  <!-- Футер -->
+  <!-- ФУТЕР -->
   <footer class="fade-in-up">
     <p>&copy; 2025 CallTechAI. Все права защищены. | <a href="#">Политика конфиденциальности</a></p>
   </footer>
 
-  <!-- JS для анимации и FAQ -->
+  <!-- МОДАЛЬНОЕ ОКНО С ТАРИФАМИ -->
+  <div id="plansModal" class="modal">
+    <div class="modal-content fade-in-up">
+      <span class="modal-close" onclick="closePlansModal()">&times;</span>
+      <h2>Выберите тариф</h2>
+      <div class="modal-plans">
+        <!-- Тариф 1: Базовый -->
+        <div class="modal-plan-card">
+          <h3>Базовый</h3>
+          <p>Основной функционал для малого бизнеса.</p>
+          <div class="modal-plan-price">$12/мес</div>
+          <button class="show-more-btn" onclick="toggleFeatures('basicFeatures')">Показать ещё</button>
+          <div id="basicFeatures" class="extra-features">
+            <ul>
+              <li>Поддержка 1 языка</li>
+              <li>Базовый сценарий диалогов</li>
+              <li>Ограниченная аналитика звонков</li>
+            </ul>
+          </div>
+          <button class="modal-plan-button" onclick="alert('Базовый тариф выбран!');">Выбрать</button>
+        </div>
+        <!-- Тариф 2: Продвинутый -->
+        <div class="modal-plan-card">
+          <h3>Продвинутый</h3>
+          <p>Расширенные возможности и интеграция с CRM.</p>
+          <div class="modal-plan-price">$29/мес</div>
+          <button class="show-more-btn" onclick="toggleFeatures('advancedFeatures')">Показать ещё</button>
+          <div id="advancedFeatures" class="extra-features">
+            <ul>
+              <li>Поддержка до 3 языков</li>
+              <li>Настраиваемые сценарии</li>
+              <li>Интеграция с популярными CRM</li>
+              <li>Расширенная аналитика</li>
+            </ul>
+          </div>
+          <button class="modal-plan-button" onclick="alert('Продвинутый тариф выбран!');">Выбрать</button>
+        </div>
+        <!-- Тариф 3: Премиум -->
+        <div class="modal-plan-card">
+          <h3>Премиум</h3>
+          <p>Полная автоматизация, аналитика и кастомизация.</p>
+          <div class="modal-plan-price">$49/мес</div>
+          <button class="show-more-btn" onclick="toggleFeatures('premiumFeatures')">Показать ещё</button>
+          <div id="premiumFeatures" class="extra-features">
+            <ul>
+              <li>Неограниченное количество языков</li>
+              <li>Глубокая кастомизация сценариев</li>
+              <li>Полная аналитика и отчёты</li>
+              <li>Приоритетная поддержка 24/7</li>
+            </ul>
+          </div>
+          <button class="modal-plan-button" onclick="alert('Премиум тариф выбран!');">Выбрать</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JS: анимация fade-in-up, FAQ, логика модального окна и "Показать ещё" -->
   <script>
-    // Запуск анимации для элементов с классом fade-in-up при загрузке
     document.addEventListener("DOMContentLoaded", function() {
-      const fadeElements = document.querySelectorAll(".fade-in-up");
-      fadeElements.forEach((el, idx) => {
-        el.style.animationDelay = (idx * 0.15) + "s";
+      // Анимация fade-in-up
+      const fadeEls = document.querySelectorAll(".fade-in-up");
+      fadeEls.forEach((el, idx) => {
+        el.style.animationDelay = (idx * 0.2) + "s";
       });
     });
+
+    // Модальное окно тарифов
+    const plansModal = document.getElementById("plansModal");
+    function openPlansModal() {
+      plansModal.style.display = "flex";
+      plansModal.style.alignItems = "center";
+      plansModal.style.justifyContent = "center";
+    }
+    function closePlansModal() {
+      plansModal.style.display = "none";
+    }
+
+    // "Показать ещё" для тарифов
+    function toggleFeatures(id) {
+      const block = document.getElementById(id);
+      if (block.style.display === "block") {
+        block.style.display = "none";
+      } else {
+        block.style.display = "block";
+      }
+    }
   </script>
 </body>
 </html>
