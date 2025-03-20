@@ -12,11 +12,7 @@
 
   <style>
     /* RESET */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       font-family: "Poppins", sans-serif;
       color: #fff;
@@ -24,540 +20,247 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
-    /* ANIMATION: fadeInUp */
+    /* ANIMATION */
     @keyframes fadeInUp {
       0% { opacity: 0; transform: translateY(30px); }
       100% { opacity: 1; transform: translateY(0); }
     }
-    .fade-in-up {
-      opacity: 0;
-      animation: fadeInUp 0.8s ease forwards;
-    }
+    .fade-in-up { opacity: 0; animation: fadeInUp 0.8s ease forwards; }
 
     /* HEADER */
     header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
-      background: rgba(10, 15, 31, 0.8);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 2rem; background: rgba(10,15,31,0.8);
+      position: sticky; top: 0; z-index: 1000;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
     .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      font-size: 1.4rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
     }
     nav {
-      display: flex;
-      align-items: center;
-      position: relative;
+      display: flex; align-items: center; position: relative;
     }
     nav a {
-      margin-left: 1.5rem;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
+      margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 500;
       transition: color 0.3s;
     }
-    nav a:hover {
-      color: #a8dadc;
-    }
-    /* "Customization Center" link (hidden if not logged in) */
+    nav a:hover { color: #a8dadc; }
+    /* Customization Center Link */
     #customLink {
-      margin-left: 1.5rem;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      background-color: #778da9;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      display: none;
+      margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 600;
+      background-color: #778da9; padding: 0.5rem 1rem; border-radius: 5px; display: none;
     }
-    #customLink:hover {
-      background-color: #a8dadc;
-      color: #0a0f1f;
-    }
-
+    #customLink:hover { background-color: #a8dadc; color: #0a0f1f; }
+    /* Auth Buttons */
     .auth-buttons button {
-      background-color: #415a77;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      margin-left: 1.2rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      font-weight: 600;
+      background-color: #415a77; border: none; padding: 0.6rem 1.2rem;
+      margin-left: 1.2rem; border-radius: 5px; cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s; font-weight: 600;
       box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     }
     .auth-buttons button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
-
-    /* User Icon / Account Dropdown */
+    /* User Icon / Dropdown */
     #userIcon {
-      display: none; /* Скрыт по умолчанию */
-      position: relative;
-      margin-left: 1.5rem;
-      cursor: pointer;
-      font-weight: 600;
-      background-color: #415a77;
-      padding: 0.6rem 1.2rem;
-      border-radius: 5px;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      display: none; position: relative; margin-left: 1.5rem; cursor: pointer;
+      font-weight: 600; background-color: #415a77; padding: 0.6rem 1.2rem;
+      border-radius: 5px; box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     }
-    #userIcon:hover {
-      background-color: #778da9;
-    }
+    #userIcon:hover { background-color: #778da9; }
     #userDropdown {
-      display: none;
-      position: absolute;
-      top: 50px;
-      right: 0;
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 5px;
-      padding: 1rem;
-      width: 200px;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
-      z-index: 999;
+      display: none; position: absolute; top: 50px; right: 0;
+      background-color: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+      border-radius: 5px; padding: 1rem; width: 200px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.3); z-index: 999;
     }
     #userDropdown a, #userDropdown button {
-      display: block;
-      color: #fff;
-      text-decoration: none;
-      margin-bottom: 0.5rem;
-      background: none;
-      border: none;
-      text-align: left;
-      width: 100%;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 500;
-      padding: 0.3rem 0;
+      display: block; color: #fff; text-decoration: none; margin-bottom: 0.5rem;
+      background: none; border: none; text-align: left; width: 100%; cursor: pointer;
+      font-size: 0.95rem; font-weight: 500; padding: 0.3rem 0;
     }
-    #userDropdown a:hover, #userDropdown button:hover {
-      color: #a8dadc;
-    }
-
+    #userDropdown a:hover, #userDropdown button:hover { color: #a8dadc; }
     /* HERO SECTION */
     .hero {
-      position: relative;
-      height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      margin: 2rem auto;
-      width: 90%;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      padding: 2rem;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      position: relative; height: 70vh; display: flex; align-items: center;
+      justify-content: center; text-align: center; margin: 2rem auto; width: 90%;
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+      border-radius: 15px; padding: 2rem; box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .hero h1 {
-      font-size: 2.4rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      margin-bottom: 2rem;
-      font-weight: 400;
-    }
-    /* HERO BUTTONS with gap */
+    .hero-content { max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-size: 2.4rem; margin-bottom: 1rem; font-weight: 700; }
+    .hero p { font-size: 1.1rem; margin-bottom: 2rem; font-weight: 400; }
+    /* HERO BUTTONS */
     .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 1rem;
+      display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-top: 1rem;
     }
     .cta-button, .trial-button {
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      text-transform: uppercase;
-      font-weight: 700;
+      border: none; padding: 1rem 2rem; font-size: 1rem; border-radius: 50px; cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s; text-transform: uppercase; font-weight: 700;
       box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     }
-    .cta-button {
-      background-color: #415a77;
-      color: #fff;
-    }
-    .cta-button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
-    }
+    .cta-button { background-color: #415a77; color: #fff; }
+    .cta-button:hover { background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3); }
     .trial-button {
-      background-color: transparent;
-      border: 2px solid #fff;
-      color: #fff;
+      background-color: transparent; border: 2px solid #fff; color: #fff;
     }
-    .trial-button:hover {
-      background-color: #fff;
-      color: #0a0f1f;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
-    }
-
+    .trial-button:hover { background-color: #fff; color: #0a0f1f; box-shadow: 0 4px 7px rgba(0,0,0,0.3); }
     /* WAVES */
-    .wave {
-      margin-top: -1px;
-    }
-    .wave svg {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
+    .wave { margin-top: -1px; }
+    .wave svg { display: block; width: 100%; height: auto; }
     /* SECTION CARD */
     .section-card {
-      width: 90%;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      text-align: center;
+      width: 90%; margin: 2rem auto; padding: 2rem; background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px); border-radius: 15px; text-align: center;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    .section-title {
-      font-size: 1.6rem;
-      margin-bottom: 2rem;
-      font-weight: 700;
-    }
-
+    .section-title { font-size: 1.6rem; margin-bottom: 2rem; font-weight: 700; }
     /* INFO-SECTIONS */
     .info-section {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: left;
+      max-width: 800px; margin: 0 auto; text-align: left;
     }
-    .info-section p {
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
+    .info-section p { margin-bottom: 1rem; font-size: 1rem; line-height: 1.6; }
     /* FAQ */
     .faq-item {
-      margin-bottom: 1rem;
-      padding: 1rem;
-      background-color: rgba(255, 255, 255, 0.2);
-      border-radius: 10px;
-      cursor: pointer;
+      margin-bottom: 1rem; padding: 1rem; background-color: rgba(255,255,255,0.2);
+      border-radius: 10px; cursor: pointer;
     }
-    .faq-item h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
+    .faq-item h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
     .faq-item p {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      display: none;
-      margin-top: 0.5rem;
+      font-size: 0.95rem; line-height: 1.4; display: none; margin-top: 0.5rem;
     }
-    .faq-item.active p {
-      display: block;
-    }
-
+    .faq-item.active p { display: block; }
     /* CONTACT FORM */
     .contact-form {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: left;
-      margin-top: 2rem;
+      max-width: 600px; margin: 0 auto; text-align: left; margin-top: 2rem;
     }
     .contact-form input,
     .contact-form textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
+      width: 100%; padding: 0.8rem; margin-bottom: 1rem; border: none;
+      border-radius: 5px; font-size: 1rem;
     }
     .contact-form button {
-      background-color: #415a77;
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      color: #fff;
-      border-radius: 50px;
-      cursor: pointer;
+      background-color: #415a77; border: none; padding: 1rem 2rem;
+      font-size: 1rem; color: #fff; border-radius: 50px; cursor: pointer;
       transition: background-color 0.3s ease, box-shadow 0.3s;
       box-shadow: 0 3px 5px rgba(0,0,0,0.2);
     }
     .contact-form button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
-
     /* FOOTER */
     footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: rgba(0, 0, 0, 0.2);
-      margin-top: 2rem;
-      font-size: 0.9rem;
+      text-align: center; padding: 1rem; background-color: rgba(0,0,0,0.2);
+      margin-top: 2rem; font-size: 0.9rem;
     }
-    footer a {
-      color: #a8dadc;
-      text-decoration: none;
-    }
-
-    /* MODAL: PLANS */
+    footer a { color: #a8dadc; text-decoration: none; }
+    /* MODALS */
     .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0, 0, 0, 0.5);
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      overscroll-behavior: contain;
-      touch-action: none;
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+      z-index: 9999; overscroll-behavior: contain; touch-action: none;
     }
     .modal-content {
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 800px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-      max-height: 90vh;
-      overflow-y: auto;
+      background-color: rgba(255,255,255,0.1); backdrop-filter: blur(10px);
+      border-radius: 15px; padding: 2rem; width: 90%; max-width: 800px;
+      text-align: center; position: relative; box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      max-height: 90vh; overflow-y: auto;
     }
     .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #fff;
+      position: absolute; top: 1rem; right: 1rem; font-size: 1.5rem;
+      cursor: pointer; color: #fff;
     }
-    .modal h2 {
-      margin-bottom: 1rem;
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
+    .modal h2 { margin-bottom: 1rem; font-size: 1.8rem; font-weight: 700; }
     .modal-plans {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 2rem;
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; margin-top: 2rem;
     }
     .modal-plan-card {
-      background-color: rgba(255,255,255,0.2);
-      border-radius: 10px;
-      padding: 1rem;
-      width: 220px;
-      transition: transform 0.3s, box-shadow 0.3s;
+      background-color: rgba(255,255,255,0.2); border-radius: 10px;
+      padding: 1rem; width: 220px; transition: transform 0.3s, box-shadow 0.3s;
     }
     .modal-plan-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+      transform: translateY(-3px); box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     }
-    .modal-plan-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-    }
+    .modal-plan-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; font-weight: 700; }
     .modal-plan-card p {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      margin-bottom: 0.8rem;
+      font-size: 0.95rem; line-height: 1.4; margin-bottom: 0.8rem;
     }
     .modal-plan-price {
-      font-size: 1.4rem;
-      margin-bottom: 0.8rem;
-      color: #a8dadc;
-      font-weight: 700;
+      font-size: 1.4rem; margin-bottom: 0.8rem; color: #a8dadc; font-weight: 700;
     }
     .modal-plan-button {
-      background-color: #415a77;
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-      margin-top: 0.5rem;
+      background-color: #415a77; color: #fff; border: none; padding: 0.5rem 1rem;
+      border-radius: 20px; cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2); margin-top: 0.5rem;
     }
     .modal-plan-button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
     .extra-features {
-      display: none;
-      text-align: left;
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      line-height: 1.4;
+      display: none; text-align: left; margin-top: 0.5rem;
+      font-size: 0.9rem; line-height: 1.4;
     }
     .extra-features ul {
-      list-style-type: disc;
-      margin-left: 1.2rem;
-      margin-top: 0.5rem;
+      list-style-type: disc; margin-left: 1.2rem; margin-top: 0.5rem;
     }
     .show-more-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
+      background: none; border: none; color: #fff; text-decoration: underline;
+      cursor: pointer; font-size: 0.9rem; margin-bottom: 0.5rem;
     }
-    .show-more-btn:hover {
-      color: #a8dadc;
-    }
+    .show-more-btn:hover { color: #a8dadc; }
 
     /* CUSTOMIZATION CENTER */
     #customizationCenter {
-      display: none;
-      width: 90%;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      display: none; width: 90%; margin: 2rem auto; padding: 2rem;
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+      border-radius: 15px; text-align: center; box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    #customizationCenter h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-    #customizationCenter p {
-      margin-bottom: 1rem;
-    }
-    /* Example: Bot Settings block */
+    #customizationCenter h2 { font-size: 2rem; margin-bottom: 1rem; }
+    #customizationCenter p { margin-bottom: 1rem; }
+    /* Bot Settings Block */
     .bot-settings {
-      background-color: rgba(255,255,255,0.2);
-      padding: 1rem;
-      border-radius: 10px;
-      margin-top: 1rem;
-      text-align: left;
-      max-width: 600px;
-      margin: 1rem auto;
+      background-color: rgba(255,255,255,0.2); padding: 1rem; border-radius: 10px;
+      margin: 1rem auto; text-align: left; max-width: 600px;
     }
-    .bot-settings h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-    .bot-settings label {
-      display: block;
-      margin: 0.5rem 0 0.2rem 0;
-    }
+    .bot-settings h3 { margin-bottom: 0.5rem; font-size: 1.2rem; font-weight: 600; }
+    .bot-settings label { display: block; margin: 0.5rem 0 0.2rem 0; }
     .bot-settings input, .bot-settings select {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-      border: none;
-      border-radius: 5px;
+      width: 100%; padding: 0.5rem; margin-bottom: 0.5rem; border: none; border-radius: 5px;
     }
 
-    /* LOGIN MODAL + SIGNUP MODAL */
+    /* LOGIN & SIGNUP MODALS */
     .login-modal, .signup-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.5);
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      overscroll-behavior: contain;
-      touch-action: none;
+      display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); align-items: center; justify-content: center;
+      z-index: 9999; overscroll-behavior: contain; touch-action: none;
     }
     .login-content, .signup-content {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      padding: 2rem;
-      width: 300px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      background: rgba(255,255,255,0.1); backdrop-filter: blur(8px);
+      border-radius: 15px; padding: 2rem; width: 300px; text-align: center;
+      position: relative; box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    .login-content h2, .signup-content h2 {
-      margin-bottom: 1rem;
-    }
+    .login-content h2, .signup-content h2 { margin-bottom: 1rem; }
     .login-content input, .signup-content input {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
+      width: 100%; padding: 0.5rem; margin-bottom: 1rem; border: none; border-radius: 5px;
     }
     .login-content button, .signup-content button {
-      background-color: #415a77;
-      color: #fff;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
+      background-color: #415a77; color: #fff; border: none; padding: 0.6rem 1.2rem;
+      border-radius: 5px; cursor: pointer; transition: background-color 0.3s, box-shadow 0.3s;
     }
     .login-content button:hover, .signup-content button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+      background-color: #778da9; box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
     .login-close, .signup-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: #fff;
+      position: absolute; top: 1rem; right: 1rem; font-size: 1.2rem;
+      cursor: pointer; color: #fff;
     }
 
-    /* MEDIA QUERY for mobile screens (max-width: 768px) */
+    /* MEDIA QUERY */
     @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: center;
-      }
-      nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 0.5rem;
-      }
-      nav a {
-        margin: 0.5rem;
-      }
-      .auth-buttons {
-        margin-left: 0;
-        margin-top: 0.5rem;
-        display: flex;
-        gap: 0.5rem;
-        justify-content: center;
-      }
+      header { flex-direction: column; align-items: center; }
+      nav { flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; position: static; }
+      nav a { margin: 0.5rem; }
+      .auth-buttons { margin-left: 0; margin-top: 0.5rem; display: flex; gap: 0.5rem; justify-content: center; }
     }
   </style>
 </head>
@@ -624,17 +327,17 @@
   </div>
 
   <!-- USE CASES -->
-  <div class="section-card fade-in-up" style="margin-top:1rem;">
+  <div class="section-card fade-in-up">
     <h2 class="section-title">Use Cases</h2>
     <div class="info-section">
       <p><strong>Dental Clinics:</strong> Automate appointment scheduling and reduce receptionist workload.</p>
-      <p><strong>Food Delivery:</strong> Handle high-volume calls for tracking orders and updating addresses.</p>
-      <p><strong>E-commerce:</strong> Manage customer inquiries 24/7 without hiring more support agents.</p>
+      <p><strong>Food Delivery:</strong> Handle high-volume calls for order tracking and updates.</p>
+      <p><strong>E-commerce:</strong> Provide 24/7 customer support without hiring additional agents.</p>
     </div>
   </div>
 
   <!-- TESTIMONIALS -->
-  <div class="section-card fade-in-up" style="margin-top:1rem;">
+  <div class="section-card fade-in-up">
     <h2 class="section-title">What Our Clients Say</h2>
     <div class="info-section">
       <p><em>"CallTechAI saved us from hiring 3 more operators!"</em> – Sarah, Dental Clinic Manager</p>
@@ -644,7 +347,7 @@
   </div>
 
   <!-- FAQ -->
-  <div class="section-card fade-in-up" id="faq" style="margin-top:1rem;">
+  <div class="section-card fade-in-up" id="faq">
     <h2 class="section-title">FAQ</h2>
     <div class="info-section">
       <div class="faq-item" onclick="this.classList.toggle('active')">
@@ -752,23 +455,19 @@
   <div id="customizationCenter" class="section-card fade-in-up">
     <h2>Customization Center</h2>
     <p>Configure your AI call scenarios, add languages, and view analytics here.</p>
-
     <!-- Пример расширенного блока Bot Settings -->
     <div class="bot-settings">
       <h3>Bot Scenarios</h3>
       <label for="scenarioName">Scenario Name</label>
       <input type="text" id="scenarioName" placeholder="e.g. Appointment Booking"/>
-
       <label for="languageSelect">Language</label>
       <select id="languageSelect">
         <option>English</option>
         <option>Spanish</option>
         <option>French</option>
       </select>
-
       <label for="scenarioDesc">Scenario Description</label>
       <input type="text" id="scenarioDesc" placeholder="Describe the scenario..."/>
-
       <button onclick="alert('Scenario saved (demo)')">Save Scenario</button>
     </div>
   </div>
@@ -780,7 +479,9 @@
       <h2>Log In</h2>
       <input type="email" id="loginEmail" placeholder="Email"/>
       <input type="password" id="loginPassword" placeholder="Password"/>
-      <button onclick="doLogin()">Log In</button>
+      <button id="loginBtn" onclick="doLogin()">Log In</button>
+      <!-- Здесь вывод статуса входа -->
+      <div id="loginStatus" style="margin-top: 0.5rem;"></div>
     </div>
   </div>
 
@@ -793,6 +494,8 @@
       <input type="password" id="signupPassword" placeholder="Password"/>
       <input type="password" id="signupPasswordConfirm" placeholder="Confirm Password"/>
       <button onclick="doSignUp()">Sign Up</button>
+      <!-- Вывод статуса регистрации -->
+      <div id="signupStatus" style="margin-top: 0.5rem;"></div>
     </div>
   </div>
 
@@ -913,10 +616,10 @@
       dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
     }
     function goToAccountSettings() {
-      alert("Account Settings page (placeholder) - Here you can update your profile, password, etc.");
+      alert("Account Settings page (placeholder)");
     }
     function goToBilling() {
-      alert("Billing page (placeholder) - Manage your subscriptions and invoices here.");
+      alert("Billing page (placeholder)");
     }
 
     // =====================
@@ -936,15 +639,15 @@
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
     import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
-    // ЗАМЕНИ на свои данные из Firebase Console
+    // Firebase configuration (замените на реальные данные из вашего проекта)
     const firebaseConfig = {
-      apiKey: "YOUR_API_KEY",
-      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-      projectId: "YOUR_PROJECT_ID",
-      storageBucket: "YOUR_PROJECT_ID.appspot.com",
-      messagingSenderId: "SENDER_ID",
-      appId: "APP_ID",
-      measurementId: "G-XXXX"
+      apiKey: "AIzaSyBVYpupWLu8KtaOvC5jnXJE2_bzimIzTyQ",
+      authDomain: "calltechai.firebaseapp.com",
+      projectId: "calltechai",
+      storageBucket: "calltechai.firebasestorage.app",
+      messagingSenderId: "835676076075",
+      appId: "1:835676076075:web:63f155b187cd1646b9926e",
+      measurementId: "G-EGWWQ9H9EK"
     };
 
     // Инициализация Firebase
@@ -961,13 +664,16 @@
       const email = document.getElementById("signupEmail").value;
       const pass = document.getElementById("signupPassword").value;
       const passConfirm = document.getElementById("signupPasswordConfirm").value;
+      const signupStatus = document.getElementById("signupStatus");
+
+      signupStatus.innerHTML = "";
 
       if (!email || !pass) {
-        alert("Please fill all fields!");
+        signupStatus.innerHTML = `<span style="color: red;">Please fill all fields!</span>`;
         return;
       }
       if (pass !== passConfirm) {
-        alert("Passwords do not match!");
+        signupStatus.innerHTML = `<span style="color: red;">Passwords do not match!</span>`;
         return;
       }
 
@@ -978,19 +684,19 @@
         // Отправляем письмо для верификации
         await sendEmailVerification(user);
 
-        alert("Registration successful! Please check your email for a verification link.");
+        signupStatus.innerHTML = `<span style="color: #4CAF50; font-weight:600;">Registration successful! Check your email for verification.</span>`;
 
-        // Сохраняем пользователя (хотя он может быть unverified)
+        // Сохраняем данные пользователя (он пока не верифицирован)
         localStorage.setItem("firebaseUser", JSON.stringify({
           uid: user.uid,
           email: user.email,
           verified: user.emailVerified
         }));
 
-        closeSignUp();
-        checkLoginState();
+        // Закрываем Sign Up окно через несколько секунд (по желанию)
+        setTimeout(() => { closeSignUp(); checkLoginState(); }, 3000);
       } catch (err) {
-        alert("Sign Up error: " + err.message);
+        signupStatus.innerHTML = `<span style="color: red;">Sign Up error: ${err.message}</span>`;
       }
     };
 
@@ -1000,9 +706,15 @@
     window.doLogin = async function() {
       const email = document.getElementById("loginEmail").value;
       const pass = document.getElementById("loginPassword").value;
+      const loginStatus = document.getElementById("loginStatus");
+      const loginBtn = document.getElementById("loginBtn");
+
+      loginStatus.innerHTML = "";
+      loginBtn.textContent = "Log In";
+      loginBtn.style.backgroundColor = "#415a77";
 
       if (!email || !pass) {
-        alert("Please enter email and password!");
+        loginStatus.innerHTML = `<span style="color: red;">Please enter email and password!</span>`;
         return;
       }
 
@@ -1010,31 +722,32 @@
         const userCredential = await signInWithEmailAndPassword(auth, email, pass);
         const user = userCredential.user;
 
-        // Проверяем, верифицирован ли email
         if (!user.emailVerified) {
-          alert("Your email is not verified! Please check your inbox or spam folder.");
+          loginStatus.innerHTML = `<span style="color: orange; font-weight:600;">Email not verified!</span>`;
+        } else {
+          loginStatus.innerHTML = `<span style="color: #4CAF50; font-weight:600;">Success &#10004;</span>`;
+          loginBtn.textContent = "Success ✅";
+          loginBtn.style.backgroundColor = "#4CAF50";
         }
 
-        // Сохраняем данные пользователя (с флагом verified)
         localStorage.setItem("firebaseUser", JSON.stringify({
           uid: user.uid,
           email: user.email,
           verified: user.emailVerified
         }));
 
-        closeLogin();
-        checkLoginState();
+        // По желанию, можно закрыть окно через несколько секунд:
+        // setTimeout(() => { closeLogin(); checkLoginState(); }, 2000);
       } catch (err) {
-        alert("Login error: " + err.message);
+        loginStatus.innerHTML = `<span style="color: red;">Login error: ${err.message}</span>`;
       }
     };
 
     // =====================
-    // Отслеживание статуса
+    // Отслеживание состояния аутентификации
     // =====================
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // Если пользователь залогинен
         const userData = {
           uid: user.uid,
           email: user.email,
@@ -1042,7 +755,6 @@
         };
         localStorage.setItem("firebaseUser", JSON.stringify(userData));
       } else {
-        // Если пользователь разлогинен
         localStorage.removeItem("firebaseUser");
       }
       checkLoginState();
