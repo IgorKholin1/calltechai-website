@@ -33,6 +33,7 @@
       opacity: 0;
       animation: fadeInUp 0.8s ease forwards;
     }
+
     /* HEADER */
     header {
       display: flex;
@@ -54,6 +55,7 @@
     nav {
       display: flex;
       align-items: center;
+      position: relative;
     }
     nav a {
       margin-left: 1.5rem;
@@ -65,8 +67,8 @@
     nav a:hover {
       color: #a8dadc;
     }
-    /* Panel link (hidden if not logged in) */
-    #panelLink {
+    /* "Customization Center" link (hidden if not logged in) */
+    #customLink {
       margin-left: 1.5rem;
       color: #fff;
       text-decoration: none;
@@ -76,10 +78,11 @@
       border-radius: 5px;
       display: none;
     }
-    #panelLink:hover {
+    #customLink:hover {
       background-color: #a8dadc;
       color: #0a0f1f;
     }
+
     .auth-buttons button {
       background-color: #415a77;
       border: none;
@@ -95,6 +98,53 @@
       background-color: #778da9;
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
+
+    /* User Icon / Account Dropdown */
+    #userIcon {
+      display: none; /* Скрыт по умолчанию */
+      position: relative;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      background-color: #415a77;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    #userIcon:hover {
+      background-color: #778da9;
+    }
+    #userDropdown {
+      display: none;
+      position: absolute;
+      top: 50px;
+      right: 0;
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 5px;
+      padding: 1rem;
+      width: 200px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+      z-index: 999;
+    }
+    #userDropdown a, #userDropdown button {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      background: none;
+      border: none;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.3rem 0;
+    }
+    #userDropdown a:hover, #userDropdown button:hover {
+      color: #a8dadc;
+    }
+
     /* HERO SECTION */
     .hero {
       position: relative;
@@ -125,7 +175,7 @@
       margin-bottom: 2rem;
       font-weight: 400;
     }
-    /* HERO BUTTONS */
+    /* HERO BUTTONS with gap */
     .hero-buttons {
       display: flex;
       gap: 1rem;
@@ -162,6 +212,7 @@
       color: #0a0f1f;
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
+
     /* WAVES */
     .wave {
       margin-top: -1px;
@@ -171,6 +222,7 @@
       width: 100%;
       height: auto;
     }
+
     /* SECTION CARD */
     .section-card {
       width: 90%;
@@ -187,6 +239,7 @@
       margin-bottom: 2rem;
       font-weight: 700;
     }
+
     /* INFO-SECTIONS */
     .info-section {
       max-width: 800px;
@@ -198,6 +251,7 @@
       font-size: 1rem;
       line-height: 1.6;
     }
+
     /* FAQ */
     .faq-item {
       margin-bottom: 1rem;
@@ -219,6 +273,7 @@
     .faq-item.active p {
       display: block;
     }
+
     /* CONTACT FORM */
     .contact-form {
       max-width: 600px;
@@ -250,6 +305,7 @@
       background-color: #778da9;
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
+
     /* FOOTER */
     footer {
       text-align: center;
@@ -262,6 +318,7 @@
       color: #a8dadc;
       text-decoration: none;
     }
+
     /* MODAL: PLANS */
     .modal {
       display: none;
@@ -376,8 +433,9 @@
     .show-more-btn:hover {
       color: #a8dadc;
     }
-    /* CUSTOMIZATION PANEL */
-    #panel {
+
+    /* CUSTOMIZATION CENTER */
+    #customizationCenter {
       display: none;
       width: 90%;
       margin: 2rem auto;
@@ -388,13 +446,40 @@
       text-align: center;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    #panel h2 {
+    #customizationCenter h2 {
       font-size: 2rem;
       margin-bottom: 1rem;
     }
-    #panel p {
+    #customizationCenter p {
       margin-bottom: 1rem;
     }
+    /* Example: Bot Settings block */
+    .bot-settings {
+      background-color: rgba(255,255,255,0.2);
+      padding: 1rem;
+      border-radius: 10px;
+      margin-top: 1rem;
+      text-align: left;
+      max-width: 600px;
+      margin: 1rem auto;
+    }
+    .bot-settings h3 {
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+    .bot-settings label {
+      display: block;
+      margin: 0.5rem 0 0.2rem 0;
+    }
+    .bot-settings input, .bot-settings select {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 0.5rem;
+      border: none;
+      border-radius: 5px;
+    }
+
     /* LOGIN MODAL + SIGNUP MODAL */
     .login-modal, .signup-modal {
       display: none;
@@ -451,6 +536,7 @@
       cursor: pointer;
       color: #fff;
     }
+
     /* MEDIA QUERY for mobile screens (max-width: 768px) */
     @media (max-width: 768px) {
       header {
@@ -484,12 +570,18 @@
       <a href="#how-it-works">How It Works</a>
       <a href="#faq">FAQ</a>
       <a href="#contacts">Contacts</a>
-      <!-- Link to Panel, hidden if not logged in -->
-      <a href="#panel" id="panelLink">Panel</a>
+      <a href="#customizationCenter" id="customLink">Customization Center</a>
 
-      <div class="auth-buttons">
+      <div class="auth-buttons" id="authButtons">
         <button onclick="openLogin()">Log In</button>
         <button onclick="openSignUp()">Sign Up</button>
+      </div>
+
+      <div id="userIcon" onclick="toggleUserDropdown()">Account</div>
+      <div id="userDropdown">
+        <button onclick="goToAccountSettings()">Account Settings</button>
+        <button onclick="goToBilling()">Billing</button>
+        <button onclick="doLogout()">Log Out</button>
       </div>
     </nav>
   </header>
@@ -531,8 +623,28 @@
     </svg>
   </div>
 
+  <!-- USE CASES -->
+  <div class="section-card fade-in-up" style="margin-top:1rem;">
+    <h2 class="section-title">Use Cases</h2>
+    <div class="info-section">
+      <p><strong>Dental Clinics:</strong> Automate appointment scheduling and reduce receptionist workload.</p>
+      <p><strong>Food Delivery:</strong> Handle high-volume calls for tracking orders and updating addresses.</p>
+      <p><strong>E-commerce:</strong> Manage customer inquiries 24/7 without hiring more support agents.</p>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section-card fade-in-up" style="margin-top:1rem;">
+    <h2 class="section-title">What Our Clients Say</h2>
+    <div class="info-section">
+      <p><em>"CallTechAI saved us from hiring 3 more operators!"</em> – Sarah, Dental Clinic Manager</p>
+      <p><em>"Our customers love the instant answers and order updates."</em> – Tom, Food Delivery Startup</p>
+      <p><em>"We've integrated with our CRM in no time, boosting sales efficiency."</em> – Linda, E-commerce Owner</p>
+    </div>
+  </div>
+
   <!-- FAQ -->
-  <div class="section-card fade-in-up" id="faq">
+  <div class="section-card fade-in-up" id="faq" style="margin-top:1rem;">
     <h2 class="section-title">FAQ</h2>
     <div class="info-section">
       <div class="faq-item" onclick="this.classList.toggle('active')">
@@ -636,11 +748,29 @@
     </div>
   </div>
 
-  <!-- CUSTOMIZATION PANEL -->
-  <div id="panel" class="section-card fade-in-up">
-    <h2>Customization Panel</h2>
-    <p>Here you can adjust call scenarios, add languages, and view analytics.</p>
-    <button onclick="alert('Open Bot Settings (demo)')">Configure Bot</button>
+  <!-- CUSTOMIZATION CENTER -->
+  <div id="customizationCenter" class="section-card fade-in-up">
+    <h2>Customization Center</h2>
+    <p>Configure your AI call scenarios, add languages, and view analytics here.</p>
+
+    <!-- Пример расширенного блока Bot Settings -->
+    <div class="bot-settings">
+      <h3>Bot Scenarios</h3>
+      <label for="scenarioName">Scenario Name</label>
+      <input type="text" id="scenarioName" placeholder="e.g. Appointment Booking"/>
+
+      <label for="languageSelect">Language</label>
+      <select id="languageSelect">
+        <option>English</option>
+        <option>Spanish</option>
+        <option>French</option>
+      </select>
+
+      <label for="scenarioDesc">Scenario Description</label>
+      <input type="text" id="scenarioDesc" placeholder="Describe the scenario..."/>
+
+      <button onclick="alert('Scenario saved (demo)')">Save Scenario</button>
+    </div>
   </div>
 
   <!-- LOGIN MODAL -->
@@ -666,23 +796,28 @@
     </div>
   </div>
 
-  <!-- MAIN JS -->
   <script>
     // =======================
     // State Checking & Panels
     // =======================
     function checkLoginState() {
-      const panelLink = document.getElementById("panelLink");
+      const customLink = document.getElementById("customLink");
+      const authButtons = document.getElementById("authButtons");
+      const userIcon = document.getElementById("userIcon");
 
-      // Если Firebase user есть, показываем панель, иначе прячем
+      // Проверяем, залогинен ли пользователь (есть ли firebaseUser)
       const userJson = localStorage.getItem("firebaseUser");
       if (userJson) {
-        panelLink.style.display = "inline-block";
+        customLink.style.display = "inline-block";
+        authButtons.style.display = "none";
+        userIcon.style.display = "inline-block";
       } else {
-        panelLink.style.display = "none";
+        customLink.style.display = "none";
+        authButtons.style.display = "flex";
+        userIcon.style.display = "none";
       }
 
-      // Check current plan
+      // Проверяем текущий план
       let plan = localStorage.getItem("currentPlan");
       if (plan) {
         if (plan === "Базовый") plan = "Basic";
@@ -695,7 +830,7 @@
         }
       }
 
-      // Check trial
+      // Проверка триала
       const hasTrial = localStorage.getItem("hasTrial");
       const trialInfo = document.getElementById("trialInfo");
       if (hasTrial === "true" && trialInfo) {
@@ -744,7 +879,7 @@
     }
 
     // =====================
-    // Login Modal
+    // Modals: Login & Sign Up
     // =====================
     const loginModal = document.getElementById("loginModal");
     function openLogin() {
@@ -758,9 +893,6 @@
       document.body.style.overflow = "";
     }
 
-    // =====================
-    // Sign Up Modal
-    // =====================
     const signupModal = document.getElementById("signupModal");
     function openSignUp() {
       signupModal.style.display = "flex";
@@ -774,16 +906,18 @@
     }
 
     // =====================
-    // Panel Link Check
+    // User icon / account dropdown
     // =====================
-    document.getElementById("panelLink").addEventListener("click", function(e) {
-      // Проверяем, залогинен ли пользователь в Firebase
-      const userJson = localStorage.getItem("firebaseUser");
-      if (!userJson) {
-        e.preventDefault();
-        alert("Please log in to open the panel!");
-      }
-    });
+    function toggleUserDropdown() {
+      const dropdown = document.getElementById("userDropdown");
+      dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
+    function goToAccountSettings() {
+      alert("Account Settings page (placeholder) - Here you can update your profile, password, etc.");
+    }
+    function goToBilling() {
+      alert("Billing page (placeholder) - Manage your subscriptions and invoices here.");
+    }
 
     // =====================
     // Animate on DOMContentLoaded
@@ -800,18 +934,17 @@
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-    // Если понадобится Firestore: import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
-    // Твой объект конфигурации Firebase
+    // ЗАМЕНИ на свои данные из Firebase Console
     const firebaseConfig = {
-      apiKey: "AIzaSyBVYpupWLu8KtaOvC5jnXJE2_bzimIzTyQ",
-      authDomain: "calltechai.firebaseapp.com",
-      projectId: "calltechai",
-      storageBucket: "calltechai.appspot.com",
-      messagingSenderId: "835676076075",
-      appId: "1:835676076075:web:63f155b187cd1646b9926e",
-      measurementId: "G-EGWWQ9H9EK"
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID",
+      measurementId: "G-XXXX"
     };
 
     // Инициализация Firebase
@@ -819,10 +952,10 @@
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
 
-    console.log("Firebase initialized!");
+    console.log("Firebase initialized with real email verification!");
 
     // =====================
-    // Реальная логика Sign Up
+    // Реальная логика Sign Up (с верификацией email)
     // =====================
     window.doSignUp = async function() {
       const email = document.getElementById("signupEmail").value;
@@ -841,13 +974,23 @@
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
         const user = userCredential.user;
-        // Сохраняем данные пользователя в localStorage (для проверки входа)
-        localStorage.setItem("firebaseUser", JSON.stringify({ uid: user.uid, email: user.email }));
-        alert("Registration successful! You are now logged in with Firebase.");
+
+        // Отправляем письмо для верификации
+        await sendEmailVerification(user);
+
+        alert("Registration successful! Please check your email for a verification link.");
+
+        // Сохраняем пользователя (хотя он может быть unverified)
+        localStorage.setItem("firebaseUser", JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          verified: user.emailVerified
+        }));
+
         closeSignUp();
         checkLoginState();
       } catch (err) {
-        alert("Error: " + err.message);
+        alert("Sign Up error: " + err.message);
       }
     };
 
@@ -866,9 +1009,19 @@
       try {
         const userCredential = await signInWithEmailAndPassword(auth, email, pass);
         const user = userCredential.user;
-        // Сохраняем данные пользователя
-        localStorage.setItem("firebaseUser", JSON.stringify({ uid: user.uid, email: user.email }));
-        alert("You are now logged in with Firebase!");
+
+        // Проверяем, верифицирован ли email
+        if (!user.emailVerified) {
+          alert("Your email is not verified! Please check your inbox or spam folder.");
+        }
+
+        // Сохраняем данные пользователя (с флагом verified)
+        localStorage.setItem("firebaseUser", JSON.stringify({
+          uid: user.uid,
+          email: user.email,
+          verified: user.emailVerified
+        }));
+
         closeLogin();
         checkLoginState();
       } catch (err) {
@@ -877,26 +1030,31 @@
     };
 
     // =====================
-    // Отслеживание статуса (опционально)
+    // Отслеживание статуса
     // =====================
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        // Пользователь залогинен
-        localStorage.setItem("firebaseUser", JSON.stringify({ uid: user.uid, email: user.email }));
+        // Если пользователь залогинен
+        const userData = {
+          uid: user.uid,
+          email: user.email,
+          verified: user.emailVerified
+        };
+        localStorage.setItem("firebaseUser", JSON.stringify(userData));
       } else {
-        // Пользователь разлогинен
+        // Если пользователь разлогинен
         localStorage.removeItem("firebaseUser");
       }
       checkLoginState();
     });
 
     // =====================
-    // Функция logout (если нужна)
+    // Logout
     // =====================
     window.doLogout = async function() {
       await signOut(auth);
       localStorage.removeItem("firebaseUser");
-      alert("Logged out!");
+      alert("You have logged out!");
       checkLoginState();
     };
   </script>
