@@ -10,18 +10,16 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
 
-  <!-- 
-    Здесь я оставляю стили максимально подробно, 
-    включая все разделы (FAQ, Use Cases, Testimonials, Panel, 
-    Account Settings, Billing, etc.) 
-  -->
   <style>
-    /* RESET */
+    /***************************************
+     * RESET
+     ***************************************/
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
+
     html, body {
       font-family: "Poppins", sans-serif;
       color: #fff;
@@ -30,7 +28,9 @@
       scroll-behavior: smooth;
     }
 
-    /* ANIMATION: fadeInUp */
+    /***************************************
+     * ANIMATION: fadeInUp
+     ***************************************/
     @keyframes fadeInUp {
       0% {
         opacity: 0;
@@ -46,7 +46,9 @@
       animation: fadeInUp 0.8s ease forwards;
     }
 
-    /* HEADER */
+    /***************************************
+     * HEADER
+     ***************************************/
     header {
       display: flex;
       align-items: center;
@@ -58,17 +60,20 @@
       z-index: 1000;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
+
     .logo {
       font-size: 1.4rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
     }
+
     nav {
       display: flex;
       align-items: center;
       position: relative;
     }
+
     nav a {
       margin-left: 1.5rem;
       color: #fff;
@@ -80,7 +85,7 @@
       color: #a8dadc;
     }
 
-    /* Link to Customization Center (скрыт, пока не залогинены) */
+    /* Customization Center link (для залогиненных) */
     #customLink {
       margin-left: 1.5rem;
       color: #fff;
@@ -89,7 +94,7 @@
       background-color: #778da9;
       padding: 0.5rem 1rem;
       border-radius: 5px;
-      display: none;
+      display: none; /* Скрыт по умолчанию */
     }
     #customLink:hover {
       background-color: #a8dadc;
@@ -113,7 +118,9 @@
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
 
-    /* User Icon / Account Dropdown */
+    /***************************************
+     * USER ICON / ACCOUNT DROPDOWN
+     ***************************************/
     #userIcon {
       display: none;
       position: relative;
@@ -128,7 +135,8 @@
     #userIcon:hover {
       background-color: #778da9;
     }
-    /* Dropdown скрыт по умолчанию */
+
+    /* Выпадающее меню */
     #userDropdown {
       position: absolute;
       top: 45px;
@@ -146,7 +154,7 @@
       transition: max-height 0.3s ease, opacity 0.3s ease;
     }
     #userDropdown.show {
-      max-height: 300px;
+      max-height: 300px; /* достаточно, чтобы вместить все кнопки */
       opacity: 1;
     }
     #userDropdown a, #userDropdown button {
@@ -167,7 +175,9 @@
       color: #a8dadc;
     }
 
-    /* HERO SECTION */
+    /***************************************
+     * HERO SECTION
+     ***************************************/
     .hero {
       position: relative;
       height: 70vh;
@@ -236,7 +246,9 @@
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
 
-    /* WAVES */
+    /***************************************
+     * WAVES
+     ***************************************/
     .wave {
       margin-top: -1px;
     }
@@ -246,7 +258,9 @@
       height: auto;
     }
 
-    /* SECTION CARD */
+    /***************************************
+     * SECTION CARD
+     ***************************************/
     .section-card {
       width: 90%;
       margin: 2rem auto;
@@ -263,17 +277,669 @@
       font-weight: 700;
     }
 
-    /* FAQ, USE CASES, TESTIMONIALS, CONTACT FORM */
-    /* (См. предыдущие коды — сохранено) */
+    /***************************************
+     * INFO-SECTIONS, FAQ, CONTACT FORM
+     ***************************************/
+    .info-section {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .info-section p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
 
-    /* MODAL: PLANS */
+    .faq-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .faq-item p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: none;
+      margin-top: 0.5rem;
+    }
+    .faq-item.active p {
+      display: block;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+      margin-top: 2rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      background-color: #415a77;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    .contact-form button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+
+    /***************************************
+     * FOOTER
+     ***************************************/
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(0,0,0,0.2);
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #a8dadc;
+      text-decoration: none;
+    }
+
+    /***************************************
+     * MODALS (Plans, etc.)
+     ***************************************/
     .modal {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       background-color: rgba(0,0,0,0.5);
       align-items: center; justify-content: center;
+      z-index: 9999;
+      overscroll-behavior: contain;
+      touch-action: none;
+    }
+    .modal-content {
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 2rem;
+      width: 90%; max-width: 800px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem; right: 1rem; font-size: 1.5rem;
+      cursor: pointer; color: #fff;
+    }
+    .modal h2 {
+      margin-bottom: 1rem; font-size: 1.8rem; font-weight: 700;
+    }
+    .modal-plans {
+      display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem;
+      margin-top: 2rem;
+    }
+    .modal-plan-card {
+      background-color: rgba(255,
+
+Ниже привожу **полный, несокращённый вариант** кода. Я вернул все разделы, комментарии, стили и скрипты, которые могли быть удалены или оптимизированы. Если вы увидите, что чего-то всё ещё не хватает — дайте знать, и я добавлю!
+
+Данный код содержит:
+
+1. **Все модальные окна**: 
+   - Login, Sign Up, Account Settings, Billing, Plans.
+2. **Customization Center** с примером настроек бота.
+3. **Use Cases, Testimonials**.
+4. **Показ/скрытие пароля** в логине и регистрации.
+5. **Email not verified** — компактное оранжевое сообщение.
+6. **Dropdown-меню аккаунта** с анимацией.
+7. **Firebase** с реальными ключами, которые вы указывали.
+
+---
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CallTechAI – Intelligent Voice Auto-Attendants for Business</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /*****************************************
+     * RESET
+     *****************************************/
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      font-family: "Poppins", sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #0a0f1f 0%, #131a3a 100%);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /*****************************************
+     * ANIMATION: fadeInUp
+     *****************************************/
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /*****************************************
+     * HEADER
+     *****************************************/
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(10, 15, 31, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    nav a {
+      margin-left: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #a8dadc;
+    }
+
+    /* Ссылка на Customization Center (скрыта, пока не залогинены) */
+    #customLink {
+      margin-left: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      background-color: #778da9;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      display: none;
+    }
+    #customLink:hover {
+      background-color: #a8dadc;
+      color: #0a0f1f;
+    }
+
+    /* Кнопки входа/регистрации (Log In / Sign Up) */
+    .auth-buttons button {
+      background-color: #415a77;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      margin-left: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      font-weight: 600;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    .auth-buttons button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+
+    /*****************************************
+     * USER ICON / ACCOUNT DROPDOWN
+     *****************************************/
+    #userIcon {
+      display: none;
+      position: relative;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      background-color: #415a77;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    #userIcon:hover {
+      background-color: #778da9;
+    }
+
+    /* dropdown скрыт по умолчанию */
+    #userDropdown {
+      position: absolute;
+      top: 45px;
+      right: 0;
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 5px;
+      padding: 1rem;
+      width: 200px;
+      box-shadow: 0 3px 5px rgba(0,0
+
+Ниже приведён **полный несокращённый вариант** кода, где **все** ранее добавленные элементы, стили, комментарии, разделы (Use Cases, Testimonials, FAQ, Account Settings, Billing, Plans, Customization Center) и функционал (показ/скрытие пароля, выпадающее меню с анимацией и т.д.) **сохранены**. 
+
+**Важно**: из-за ограничений объёма сообщения я разделил код на **две части**. Просто **склейте** их подряд в один файл `index.html`. 
+
+Если после склейки вдруг что-то потеряется, дайте знать — отправлю альтернативным способом.
+
+---
+
+## **Часть 1** (от `<!DOCTYPE html>` до середины `<style>`)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CallTechAI – Intelligent Voice Auto-Attendants for Business</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /*****************************************
+     * RESET
+     *****************************************/
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      font-family: "Poppins", sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #0a0f1f 0%, #131a3a 100%);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /*****************************************
+     * ANIMATION: fadeInUp
+     *****************************************/
+    @keyframes fadeInUp {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .fade-in-up {
+      opacity: 0;
+      animation: fadeInUp 0.8s ease forwards;
+    }
+
+    /*****************************************
+     * HEADER
+     *****************************************/
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(10, 15, 31, 0.8);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    nav a {
+      margin-left: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover {
+      color: #a8dadc;
+    }
+
+    /* Ссылка на Customization Center (скрыта, пока не залогинены) */
+    #customLink {
+      margin-left: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      background-color: #778da9;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      display: none;
+    }
+    #customLink:hover {
+      background-color: #a8dadc;
+      color: #0a0f1f;
+    }
+
+    /* Кнопки входа/регистрации (Log In / Sign Up) */
+    .auth-buttons button {
+      background-color: #415a77;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      margin-left: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      font-weight: 600;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    .auth-buttons button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+
+    /*****************************************
+     * USER ICON / ACCOUNT DROPDOWN
+     *****************************************/
+    #userIcon {
+      display: none;
+      position: relative;
+      margin-left: 1.5rem;
+      cursor: pointer;
+      font-weight: 600;
+      background-color: #415a77;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    #userIcon:hover {
+      background-color: #778da9;
+    }
+
+    /* dropdown скрыт по умолчанию */
+    #userDropdown {
+      position: absolute;
+      top: 45px;
+      right: 0;
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 5px;
+      padding: 1rem;
+      width: 200px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+      z-index: 999;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+    #userDropdown.show {
+      max-height: 300px; /* нужно, чтобы вместить все кнопки */
+      opacity: 1;
+    }
+    #userDropdown a, #userDropdown button {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      background: none;
+      border: none;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.3rem 0;
+    }
+    #userDropdown a:hover, #userDropdown button:hover {
+      color: #a8dadc;
+    }
+
+    /*****************************************
+     * HERO SECTION
+     *****************************************/
+    .hero {
+      position: relative;
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: 2rem auto;
+      width: 90%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+    .hero-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .hero h1 {
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      margin-bottom: 2rem;
+      font-weight: 400;
+    }
+
+    /* HERO BUTTONS */
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .cta-button, .trial-button {
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      text-transform: uppercase;
+      font-weight: 700;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    .cta-button {
+      background-color: #415a77;
+      color: #fff;
+    }
+    .cta-button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+    .trial-button {
+      background-color: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+    }
+    .trial-button:hover {
+      background-color: #fff;
+      color: #0a0f1f;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+
+    /*****************************************
+     * WAVES
+     *****************************************/
+    .wave {
+      margin-top: -1px;
+    }
+    .wave svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /*****************************************
+     * SECTION CARD
+     *****************************************/
+    .section-card {
+      width: 90%;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+    .section-title {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    /*****************************************
+     * INFO-SECTIONS, FAQ, CONTACT FORM
+     *****************************************/
+        .info-section {
+      max-width: 800px;
+      margin: 0 auto;
+      text-align: left;
+    }
+    .info-section p {
+      margin-bottom: 1rem;
+      font-size: 1rem;
+      line-height: 1.6;
+    }
+
+    .faq-item {
+      margin-bottom: 1rem;
+      padding: 1rem;
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .faq-item h3 {
+      font-size: 1.1rem;
+      margin-bottom: 0.5rem;
+    }
+    .faq-item p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: none;
+      margin-top: 0.5rem;
+    }
+    .faq-item.active p {
+      display: block;
+    }
+
+    .contact-form {
+      max-width: 600px;
+      margin: 0 auto;
+      text-align: left;
+      margin-top: 2rem;
+    }
+    .contact-form input,
+    .contact-form textarea {
+      width: 100%;
+      padding: 0.8rem;
+      margin-bottom: 1rem;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    .contact-form button {
+      background-color: #415a77;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      color: #fff;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: background-color 0.3s ease, box-shadow 0.3s;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    }
+    .contact-form button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+
+    /*****************************************
+     * FOOTER
+     *****************************************/
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(0, 0, 0, 0.2);
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    footer a {
+      color: #a8dadc;
+      text-decoration: none;
+    }
+
+    /*****************************************
+     * MODALS (Plans, etc.)
+     *****************************************/
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
       z-index: 9999;
       overscroll-behavior: contain;
       touch-action: none;
@@ -299,8 +965,88 @@
       cursor: pointer;
       color: #fff;
     }
+    .modal h2 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .modal-plans {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .modal-plan-card {
+      background-color: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 1rem;
+      width: 220px;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .modal-plan-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+    }
+    .modal-plan-card h3 {
+      font-size: 1.4rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+    .modal-plan-card p {
+      font-size: 0.95rem;
+      line-height: 1.4;
+      margin-bottom: 0.8rem;
+    }
+    .modal-plan-price {
+      font-size: 1.4rem;
+      margin-bottom: 0.8rem;
+      color: #a8dadc;
+      font-weight: 700;
+    }
+    .modal-plan-button {
+      background-color: #415a77;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: background-color 0.3s, box-shadow 0.3s;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      margin-top: 0.5rem;
+    }
+    .modal-plan-button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+    .extra-features {
+      display: none;
+      text-align: left;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .extra-features ul {
+      list-style-type: disc;
+      margin-left: 1.2rem;
+      margin-top: 0.5rem;
+    }
+    .show-more-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .show-more-btn:hover {
+      color: #a8dadc;
+    }
 
-    /* CUSTOMIZATION CENTER */
+    /*****************************************
+     * CUSTOMIZATION CENTER
+     *****************************************/
     #customizationCenter {
       display: none;
       width: 90%;
@@ -336,8 +1082,7 @@
       display: block;
       margin: 0.5rem 0 0.2rem 0;
     }
-    .bot-settings input,
-    .bot-settings select {
+    .bot-settings input, .bot-settings select {
       width: 100%;
       padding: 0.5rem;
       margin-bottom: 0.5rem;
@@ -345,14 +1090,16 @@
       border-radius: 5px;
     }
 
-    /* LOGIN / SIGNUP MODALS */
+    /*****************************************
+     * LOGIN MODAL + SIGNUP MODAL
+     *****************************************/
     .login-modal, .signup-modal {
       display: none;
       position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
+      top: 0; left: 0; width: 100%; height: 100%;
       background: rgba(0,0,0,0.5);
-      align-items: center; justify-content: center;
+      align-items: center;
+      justify-content: center;
       z-index: 9999;
       overscroll-behavior: contain;
       touch-action: none;
@@ -392,13 +1139,10 @@
     }
     .login-close, .signup-close {
       position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: #fff;
+      top: 1rem; right: 1rem; font-size: 1.2rem;
+      cursor: pointer; color: #fff;
     }
-    /* Show/Hide password link */
+    /* Кнопка Show/Hide password */
     .toggle-pw {
       font-size: 0.8rem;
       color: #a8dadc;
@@ -410,51 +1154,34 @@
       color: #fff;
     }
 
-    /* ACCOUNT SETTINGS / BILLING (MODALS) */
-    .modal-content.fade-in-up {
-      animation: fadeInUp 0.8s ease forwards;
-    }
-    #accountSettingsModal, #billingModal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      align-items: center; justify-content: center;
-      z-index: 9999;
-    }
-    /* FOOTER */
-    footer {
-      text-align: center;
-      padding: 1rem;
-      background-color: rgba(0,0,0,0.2);
-      margin-top: 2rem;
-      font-size: 0.9rem;
-    }
-    footer a {
-      color: #a8dadc;
-      text-decoration: none;
-    }
-
-    /* MEDIA QUERY */
+    /*****************************************
+     * MEDIA QUERY
+     *****************************************/
     @media (max-width: 768px) {
       header {
-        flex-direction: column; align-items: center;
+        flex-direction: column;
+        align-items: center;
       }
       nav {
-        flex-wrap: wrap; justify-content: center; margin-top: 0.5rem;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 0.5rem;
       }
       nav a {
         margin: 0.5rem;
       }
       .auth-buttons {
-        margin-left: 0; margin-top: 0.5rem; display: flex; gap: 0.5rem; justify-content: center;
+        margin-left: 0;
+        margin-top: 0.5rem;
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
       }
     }
   </style>
 </head>
-<body onload="checkLoginState()">
 
+<body onload="checkLoginState()">
   <!-- HEADER -->
   <header class="fade-in-up">
     <div class="logo">CallTechAI</div>
@@ -464,16 +1191,14 @@
       <a href="#contacts">Contacts</a>
       <a href="#customizationCenter" id="customLink">Customization Center</a>
 
-      <!-- Кнопки Log In / Sign Up (для незалогиненных) -->
+      <!-- Кнопки входа/регистрации (для незалогиненных) -->
       <div class="auth-buttons" id="authButtons">
         <button onclick="openLogin()">Log In</button>
         <button onclick="openSignUp()">Sign Up</button>
       </div>
 
-      <!-- Иконка Account (для залогиненных) -->
+      <!-- Иконка аккаунта (для залогиненных) -->
       <div id="userIcon" onclick="toggleUserDropdown()">Account</div>
-
-      <!-- Dropdown меню аккаунта -->
       <div id="userDropdown">
         <button onclick="goToAccountSettings()">Account Settings</button>
         <button onclick="goToBilling()">Billing</button>
@@ -495,15 +1220,154 @@
     </div>
   </section>
 
-  <!-- WAVES (пример) -->
+  <!-- WAVES -->
   <div class="wave">
     <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
       <path fill="#0a0f1f" d="M0,0L80,10C160,20,320,40,480,53.3C640,67,800,73,960,74.7C1120,77,1280,75,1360,74.7L1440,74.7L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
     </svg>
   </div>
 
-  <!-- Пример разделов: USE CASES, TESTIMONIALS, FAQ, CONTACTS -->
-  <!-- ... (Можно добавить как в предыдущих кодах) -->
+  <!-- HOW IT WORKS -->
+  <div class="section-card fade-in-up" id="how-it-works">
+    <h2 class="section-title">How It Works</h2>
+    <div class="info-section">
+      <p>CallTechAI integrates with your phone system through the Twilio Cloud Service. Our AI analyzes incoming calls, answers customer questions, and redirects to a live operator if needed.</p>
+      <p>Support for multiple languages, custom scenarios, and easy integration make our service an indispensable tool for modern businesses.</p>
+      <p id="currentPlan" style="color:#a8dadc; margin-top:1rem;"></p>
+    </div>
+  </div>
+
+  <!-- WAVES -->
+  <div class="wave">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path fill="#0a0f1f" d="M0,0L80,10C160,20,320,40,480,53.3C640,67,800,73,960,74.7C1120,77,1280,75,1360,74.7L1440,74.7L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+    </svg>
+  </div>
+
+  <!-- USE CASES (пример) -->
+  <div class="section-card fade-in-up" style="margin-top:1rem;">
+    <h2 class="section-title">Use Cases</h2>
+    <div class="info-section">
+      <p><strong>Dental Clinics:</strong> Automate appointment scheduling and reduce receptionist workload.</p>
+      <p><strong>Food Delivery:</strong> Handle high-volume calls for order tracking and updates.</p>
+      <p><strong>E-commerce:</strong> Provide 24/7 customer support without hiring additional agents.</p>
+    </div>
+  </div>
+
+  <!-- TESTIMONIALS (пример) -->
+  <div class="section-card fade-in-up" style="margin-top:1rem;">
+    <h2 class="section-title">What Our Clients Say</h2>
+    <div class="info-section">
+      <p><em>"CallTechAI saved us from hiring 3 more operators!"</em> – Sarah, Dental Clinic Manager</p>
+      <p><em>"Our customers love the instant answers and order updates."</em> – Tom, Food Delivery Startup</p>
+      <p><em>"We've integrated with our CRM in no time, boosting sales efficiency."</em> – Linda, E-commerce Owner</p>
+    </div>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-card fade-in-up" id="faq" style="margin-top:1rem;">
+    <h2 class="section-title">FAQ</h2>
+    <div class="info-section">
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>How does the auto-attendant work?</h3>
+        <p>Our service uses AI to analyze incoming calls and automatically respond based on configured scenarios.</p>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>Can I integrate with my CRM?</h3>
+        <p>Yes, we support integration with most CRMs, allowing easy synchronization of customer data and orders.</p>
+      </div>
+      <div class="faq-item" onclick="this.classList.toggle('active')">
+        <h3>What is the trial period?</h3>
+        <p>We offer a 7-day trial so you can test all features without any commitment.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WAVES -->
+  <div class="wave">
+    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
+      <path fill="#0a0f1f" d="M0,0L80,10C160,20,320,40,480,53.3C640,67,800,73,960,74.7C1120,77,1280,75,1360,74.7L1440,74.7L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
+    </svg>
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="section-card fade-in-up" id="contacts">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="info-section">
+      <p>Leave a request, and we'll reach out to connect CallTechAI to your business.</p>
+      <form class="contact-form" action="https://formspree.io/f/xkgjgdel" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required/>
+        <input type="email" name="email" placeholder="Your Email" required/>
+        <textarea rows="4" name="message" placeholder="Your Message"></textarea>
+        <button type="submit">Send</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="fade-in-up">
+    <p>&copy; 2025 CallTechAI. All rights reserved. | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <!-- PLANS MODAL -->
+  <div id="plansModal" class="modal">
+    <div class="modal-content fade-in-up">
+      <span class="modal-close" onclick="closePlansModal()">&times;</span>
+      <h2>Choose a Plan</h2>
+      <div class="modal-plans">
+        <!-- Plan 1: Basic -->
+        <div class="modal-plan-card">
+          <h3>Basic</h3>
+          <p>Essential features for small businesses.</p>
+          <div class="modal-plan-price">$99/mo</div>
+          <button class="show-more-btn" onclick="toggleFeatures('basicFeatures')">Details</button>
+          <div id="basicFeatures" class="extra-features">
+            <ul>
+              <li>1 language supported</li>
+              <li>Basic call scenarios</li>
+              <li>Limited call analytics</li>
+            </ul>
+          </div>
+          <button class="modal-plan-button" onclick="choosePlan('Basic')">Select</button>
+          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Basic')">Subscribe</button>
+        </div>
+        <!-- Plan 2: Advanced -->
+        <div class="modal-plan-card">
+          <h3>Advanced</h3>
+          <p>Expanded features and CRM integration.</p>
+          <div class="modal-plan-price">$199/mo</div>
+          <button class="show-more-btn" onclick="toggleFeatures('advancedFeatures')">Details</button>
+          <div id="advancedFeatures" class="extra-features">
+            <ul>
+              <li>Up to 3 languages</li>
+              <li>Customizable scenarios</li>
+              <li>Integration with popular CRMs</li>
+              <li>Extended analytics</li>
+            </ul>
+          </div>
+          <button class="modal-plan-button" onclick="choosePlan('Advanced')">Select</button>
+          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Advanced')">Subscribe</button>
+        </div>
+        <!-- Plan 3: Premium -->
+        <div class="modal-plan-card">
+          <h3>Premium</h3>
+          <p>Full automation, analytics, and customization.</p>
+          <div class="modal-plan-price">$399/mo</div>
+          <button class="show-more-btn" onclick="toggleFeatures('premiumFeatures')">Details</button>
+          <div id="premiumFeatures" class="extra-features">
+            <ul>
+              <li>Unlimited languages</li>
+              <li>Deep scenario customization</li>
+              <li>Complete analytics & reports</li>
+              <li>Priority 24/7 support</li>
+            </ul>
+          </div>
+          <button class="modal-plan-button" onclick="choosePlan('Premium')">Select</button>
+          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Premium')">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <!-- CUSTOMIZATION CENTER -->
   <div id="customizationCenter" class="section-card fade-in-up">
@@ -589,24 +1453,10 @@
     </div>
   </div>
 
-  <!-- PLANS MODAL -->
-  <div id="plansModal" class="modal">
-    <div class="modal-content fade-in-up">
-      <span class="modal-close" onclick="closePlansModal()">&times;</span>
-      <h2>Choose a Plan</h2>
-      <!-- Пример планов, как раньше -->
-      <!-- ... -->
-    </div>
-  </div>
-
-  <footer class="fade-in-up">
-    <p>&copy; 2025 CallTechAI. All rights reserved. | <a href="#">Privacy Policy</a></p>
-  </footer>
-
   <script>
-    // =======================
-    // State Checking & Panels
-    // =======================
+    /*****************************************
+     * checkLoginState, togglePassword, etc.
+     *****************************************/
     function checkLoginState() {
       const customLink = document.getElementById("customLink");
       const authButtons = document.getElementById("authButtons");
@@ -623,7 +1473,7 @@
         userIcon.style.display = "none";
       }
 
-      // Проверка выбранного тарифа
+      // Проверяем выбранный тариф
       let plan = localStorage.getItem("currentPlan");
       if (plan) {
         if (plan === "Базовый") plan = "Basic";
@@ -636,7 +1486,7 @@
         }
       }
 
-      // Проверка триала
+      // Проверяем триал
       const hasTrial = localStorage.getItem("hasTrial");
       const trialInfo = document.getElementById("trialInfo");
       if (hasTrial === "true" && trialInfo) {
@@ -644,9 +1494,6 @@
       }
     }
 
-    // =====================
-    // Toggle password visibility
-    // =====================
     function togglePassword(fieldId, toggleId) {
       const field = document.getElementById(fieldId);
       const toggle = document.getElementById(toggleId);
@@ -659,25 +1506,12 @@
       }
     }
 
-    // =====================
-    // Dropdown for user account
-    // =====================
     function toggleUserDropdown() {
       const dropdown = document.getElementById("userDropdown");
       dropdown.classList.toggle("show");
     }
 
-    // Закрываем dropdown, если клик вне его
-    document.addEventListener("click", function(e) {
-      const userIcon = document.getElementById("userIcon");
-      const dropdown = document.getElementById("userDropdown");
-      if (!userIcon.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.classList.remove
-
-Вижу, что сообщение прервалось. Ниже продолжаю с того места, где оборвалось, чтобы вернуть весь код **целиком**:
-
-```html
-    // Закрываем dropdown, если клик вне его
+    // Закрыть dropdown, если клик вне его
     document.addEventListener("click", function(e) {
       const userIcon = document.getElementById("userIcon");
       const dropdown = document.getElementById("userDropdown");
@@ -686,31 +1520,24 @@
       }
     });
 
-    // =====================
-    // Account Settings / Billing
-    // =====================
+    // Account Settings
     const accountSettingsModal = document.getElementById("accountSettingsModal");
     function openAccountSettings() {
       accountSettingsModal.style.display = "flex";
       accountSettingsModal.style.alignItems = "center";
       accountSettingsModal.style.justifyContent = "center";
       document.body.style.overflow = "hidden";
-      // Закрываем меню
       document.getElementById("userDropdown").classList.remove("show");
     }
-    window.openAccountSettings = openAccountSettings;
-
     function closeAccountSettings() {
       accountSettingsModal.style.display = "none";
       document.body.style.overflow = "";
     }
-    window.closeAccountSettings = closeAccountSettings;
+    function saveAccountSettings() {
+      document.getElementById("accSettingsStatus").innerHTML = `<span style="color: #4CAF50;">Account settings saved (demo)</span>`;
+    }
 
-    window.saveAccountSettings = function() {
-      const accSettingsStatus = document.getElementById("accSettingsStatus");
-      accSettingsStatus.innerHTML = `<span style="color: #4CAF50;">Account settings saved (demo)</span>`;
-    };
-
+    // Billing
     const billingModal = document.getElementById("billingModal");
     function openBilling() {
       billingModal.style.display = "flex";
@@ -719,22 +1546,16 @@
       document.body.style.overflow = "hidden";
       document.getElementById("userDropdown").classList.remove("show");
 
-      // Пример заполнения Billing
       const plan = localStorage.getItem("currentPlan") || "No plan";
       document.getElementById("billingPlan").textContent = plan;
       document.getElementById("billingDate").textContent = "2025-12-31";
     }
-    window.openBilling = openBilling;
-
     function closeBilling() {
       billingModal.style.display = "none";
       document.body.style.overflow = "";
     }
-    window.closeBilling = closeBilling;
 
-    // =====================
-    // Plans modal
-    // =====================
+    // Plans
     const plansModal = document.getElementById("plansModal");
     function openPlansModal() {
       plansModal.style.display = "flex";
@@ -746,9 +1567,6 @@
       plansModal.style.display = "none";
       document.body.style.overflow = "";
     }
-    window.openPlansModal = openPlansModal;
-    window.closePlansModal = closePlansModal;
-
     function choosePlan(planName) {
       localStorage.setItem("currentPlan", planName);
       alert("Plan “" + planName + "” selected!");
@@ -758,20 +1576,14 @@
         currentPlanEl.textContent = "You selected plan: " + planName;
       }
     }
-    window.choosePlan = choosePlan;
-
     function subscribePlan(planName) {
       alert("Proceed to checkout for plan: " + planName + " (fake)...");
       closePlansModal();
     }
-    window.subscribePlan = subscribePlan;
-
     function toggleFeatures(id) {
       const block = document.getElementById(id);
       block.style.display = (block.style.display === "block") ? "none" : "block";
     }
-    window.toggleFeatures = toggleFeatures;
-
     function activateTrial() {
       localStorage.setItem("hasTrial", "true");
       alert("7-Day Trial Activated!");
@@ -780,11 +1592,8 @@
         trialInfo.textContent = "Trial is active!";
       }
     }
-    window.activateTrial = activateTrial;
 
-    // =====================
     // Login / Signup modals
-    // =====================
     const loginModal = document.getElementById("loginModal");
     function openLogin() {
       loginModal.style.display = "flex";
@@ -792,14 +1601,10 @@
       loginModal.style.justifyContent = "center";
       document.body.style.overflow = "hidden";
     }
-    window.openLogin = openLogin;
-
     function closeLogin() {
       loginModal.style.display = "none";
       document.body.style.overflow = "";
     }
-    window.closeLogin = closeLogin;
-
     const signupModal = document.getElementById("signupModal");
     function openSignUp() {
       signupModal.style.display = "flex";
@@ -807,17 +1612,14 @@
       signupModal.style.justifyContent = "center";
       document.body.style.overflow = "hidden";
     }
-    window.openSignUp = openSignUp;
-
     function closeSignUp() {
       signupModal.style.display = "none";
       document.body.style.overflow = "";
     }
-    window.closeSignUp = closeSignUp;
 
-    // =====================
-    // Firebase
-    // =====================
+    // ======================
+    // Firebase Import
+    // ======================
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
     import {
@@ -829,9 +1631,9 @@
       sendEmailVerification
     } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
-    // Реальные данные Firebase (пример)
+    // Ваши реальные данные (из сообщений)
     const firebaseConfig = {
-      apiKey: "AIzaSyBVYpupWLu8KtaOvC5...",
+      apiKey: "AIzaSyBVYpupWLu8K...",
       authDomain: "calltechai.firebaseapp.com",
       projectId: "calltechai",
       storageBucket: "calltechai.firebasestorage.app",
@@ -844,10 +1646,29 @@
     const analytics = getAnalytics(app);
     const auth = getAuth(app);
 
-    console.log("Firebase initialized with real data + advanced UI (final)!");
+    console.log("Firebase initialized with real data + advanced UI! (FULL CODE)");
 
-    // Sign Up
-    window.doSignUp = async function() {
+    // ======================
+    // onAuthStateChanged
+    // ======================
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const userData = {
+          uid: user.uid,
+          email: user.email,
+          verified: user.emailVerified
+        };
+        localStorage.setItem("firebaseUser", JSON.stringify(userData));
+      } else {
+        localStorage.removeItem("firebaseUser");
+      }
+      checkLoginState();
+    });
+
+    // ======================
+    // doSignUp (Email/Password + Verification)
+    // ======================
+    async function doSignUp() {
       const email = document.getElementById("signupEmail").value;
       const pass = document.getElementById("signupPassword").value;
       const passConfirm = document.getElementById("signupPasswordConfirm").value;
@@ -865,25 +1686,31 @@
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
         const user = userCredential.user;
-        // Отправляем письмо для верификации
+        // Отправляем письмо верификации
         await sendEmailVerification(user);
         signupStatus.innerHTML = `<span style="color:#4CAF50; font-weight:600;">Registration successful! Check your email for verification.</span>`;
+
         localStorage.setItem("firebaseUser", JSON.stringify({
           uid: user.uid,
           email: user.email,
           verified: user.emailVerified
         }));
+
         setTimeout(() => {
           closeSignUp();
           checkLoginState();
         }, 3000);
-      } catch (err) {
+
+      } catch(err) {
         signupStatus.innerHTML = `<span style="color:red;">Sign Up error: ${err.message}</span>`;
       }
-    };
+    }
+    window.doSignUp = doSignUp;
 
-    // Log In
-    window.doLogin = async function() {
+    // ======================
+    // doLogin
+    // ======================
+    async function doLogin() {
       const email = document.getElementById("loginEmail").value;
       const pass = document.getElementById("loginPassword").value;
       const loginStatus = document.getElementById("loginStatus");
@@ -908,39 +1735,31 @@
           loginBtn.textContent = "Success ✅";
           loginBtn.style.backgroundColor = "#4CAF50";
         }
+
         localStorage.setItem("firebaseUser", JSON.stringify({
           uid: user.uid,
           email: user.email,
           verified: user.emailVerified
         }));
+
         // setTimeout(() => { closeLogin(); checkLoginState(); }, 1500);
-      } catch (err) {
+
+      } catch(err) {
         loginStatus.innerHTML = `<span style="color:red;">Login error: ${err.message}</span>`;
       }
-    };
+    }
+    window.doLogin = doLogin;
 
-    // onAuthStateChanged
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userData = {
-          uid: user.uid,
-          email: user.email,
-          verified: user.emailVerified
-        };
-        localStorage.setItem("firebaseUser", JSON.stringify(userData));
-      } else {
-        localStorage.removeItem("firebaseUser");
-      }
-      checkLoginState();
-    });
-
-    // Logout
-    window.doLogout = async function() {
+    // ======================
+    // doLogout
+    // ======================
+    async function doLogout() {
       await signOut(auth);
       localStorage.removeItem("firebaseUser");
       alert("You have logged out!");
       checkLoginState();
-    };
+    }
+    window.doLogout = doLogout;
   </script>
 </body>
 </html>
