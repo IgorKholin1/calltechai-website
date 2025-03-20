@@ -24,23 +24,15 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
-
     /* ANIMATION: fadeInUp */
     @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
     .fade-in-up {
       opacity: 0;
       animation: fadeInUp 0.8s ease forwards;
     }
-
     /* HEADER */
     header {
       display: flex;
@@ -54,7 +46,7 @@
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
     }
     .logo {
-      font-size: 1.4rem; /* Smaller logo */
+      font-size: 1.4rem;
       font-weight: 700;
       letter-spacing: 1px;
       text-transform: uppercase;
@@ -88,7 +80,6 @@
       background-color: #a8dadc;
       color: #0a0f1f;
     }
-
     .auth-buttons button {
       background-color: #415a77;
       border: none;
@@ -104,7 +95,6 @@
       background-color: #778da9;
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
-
     /* HERO SECTION */
     .hero {
       position: relative;
@@ -135,8 +125,7 @@
       margin-bottom: 2rem;
       font-weight: 400;
     }
-
-    /* HERO BUTTONS with gap */
+    /* HERO BUTTONS */
     .hero-buttons {
       display: flex;
       gap: 1rem;
@@ -173,7 +162,6 @@
       color: #0a0f1f;
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
-
     /* WAVES */
     .wave {
       margin-top: -1px;
@@ -183,7 +171,6 @@
       width: 100%;
       height: auto;
     }
-
     /* SECTION CARD */
     .section-card {
       width: 90%;
@@ -200,7 +187,6 @@
       margin-bottom: 2rem;
       font-weight: 700;
     }
-
     /* INFO-SECTIONS */
     .info-section {
       max-width: 800px;
@@ -212,7 +198,6 @@
       font-size: 1rem;
       line-height: 1.6;
     }
-
     /* FAQ */
     .faq-item {
       margin-bottom: 1rem;
@@ -234,7 +219,6 @@
     .faq-item.active p {
       display: block;
     }
-
     /* CONTACT FORM */
     .contact-form {
       max-width: 600px;
@@ -266,7 +250,6 @@
       background-color: #778da9;
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
-
     /* FOOTER */
     footer {
       text-align: center;
@@ -279,7 +262,6 @@
       color: #a8dadc;
       text-decoration: none;
     }
-
     /* MODAL: PLANS */
     .modal {
       display: none;
@@ -394,7 +376,6 @@
     .show-more-btn:hover {
       color: #a8dadc;
     }
-
     /* CUSTOMIZATION PANEL */
     #panel {
       display: none;
@@ -414,9 +395,8 @@
     #panel p {
       margin-bottom: 1rem;
     }
-
-    /* LOGIN MODAL */
-    .login-modal {
+    /* LOGIN MODAL + SIGNUP MODAL */
+    .login-modal, .signup-modal {
       display: none;
       position: fixed;
       top: 0;
@@ -430,7 +410,7 @@
       overscroll-behavior: contain;
       touch-action: none;
     }
-    .login-content {
+    .login-content, .signup-content {
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(8px);
       border-radius: 15px;
@@ -440,17 +420,17 @@
       position: relative;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    .login-content h2 {
+    .login-content h2, .signup-content h2 {
       margin-bottom: 1rem;
     }
-    .login-content input {
+    .login-content input, .signup-content input {
       width: 100%;
       padding: 0.5rem;
       margin-bottom: 1rem;
       border: none;
       border-radius: 5px;
     }
-    .login-content button {
+    .login-content button, .signup-content button {
       background-color: #415a77;
       color: #fff;
       border: none;
@@ -459,11 +439,11 @@
       cursor: pointer;
       transition: background-color 0.3s, box-shadow 0.3s;
     }
-    .login-content button:hover {
+    .login-content button:hover, .signup-content button:hover {
       background-color: #778da9;
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
     }
-    .login-close {
+    .login-close, .signup-close {
       position: absolute;
       top: 1rem;
       right: 1rem;
@@ -471,7 +451,6 @@
       cursor: pointer;
       color: #fff;
     }
-
     /* MEDIA QUERY for mobile screens (max-width: 768px) */
     @media (max-width: 768px) {
       header {
@@ -498,6 +477,7 @@
 </head>
 <body onload="checkLoginState()">
 
+  <!-- HEADER -->
   <header class="fade-in-up">
     <div class="logo">CallTechAI</div>
     <nav>
@@ -509,7 +489,7 @@
 
       <div class="auth-buttons">
         <button onclick="openLogin()">Log In</button>
-        <button onclick="alert('Sign Up Page (placeholder)')">Sign Up</button>
+        <button onclick="openSignUp()">Sign Up</button>
       </div>
     </nav>
   </header>
@@ -582,10 +562,7 @@
     <h2 class="section-title">Contact Us</h2>
     <div class="info-section">
       <p>Leave a request, and we'll reach out to connect CallTechAI to your business.</p>
-      <form class="contact-form"
-        action="https://formspree.io/f/xkgjgdel"
-        method="POST"
-      >
+      <form class="contact-form" action="https://formspree.io/f/xkgjgdel" method="POST">
         <input type="text" name="name" placeholder="Your Name" required/>
         <input type="email" name="email" placeholder="Your Email" required/>
         <textarea rows="4" name="message" placeholder="Your Message"></textarea>
@@ -677,12 +654,29 @@
     </div>
   </div>
 
+  <!-- SIGN UP MODAL -->
+  <div class="signup-modal" id="signupModal">
+    <div class="signup-content fade-in-up">
+      <span class="signup-close" onclick="closeSignUp()">&times;</span>
+      <h2>Sign Up</h2>
+      <input type="email" id="signupEmail" placeholder="Email"/>
+      <input type="password" id="signupPassword" placeholder="Password"/>
+      <input type="password" id="signupPasswordConfirm" placeholder="Confirm Password"/>
+      <button onclick="doSignUp()">Sign Up</button>
+    </div>
+  </div>
+
+  <!-- MAIN JS -->
   <script>
-    // On load, check login state & fix old plan names
+    // =======================
+    // State Checking & Panels
+    // =======================
     function checkLoginState() {
-      const isLoggedIn = localStorage.getItem("isLoggedIn");
       const panelLink = document.getElementById("panelLink");
-      if (isLoggedIn === "true") {
+
+      // Если Firebase user есть, показываем панель, иначе прячем
+      const userJson = localStorage.getItem("firebaseUser");
+      if (userJson) {
         panelLink.style.display = "inline-block";
       } else {
         panelLink.style.display = "none";
@@ -695,40 +689,43 @@
         if (plan === "Продвинутый") plan = "Advanced";
         if (plan === "Премиум") plan = "Premium";
         localStorage.setItem("currentPlan", plan);
-
-        document.getElementById("currentPlan").textContent = "You selected plan: " + plan;
+        const currentPlanEl = document.getElementById("currentPlan");
+        if (currentPlanEl) {
+          currentPlanEl.textContent = "You selected plan: " + plan;
+        }
       }
 
       // Check trial
       const hasTrial = localStorage.getItem("hasTrial");
       const trialInfo = document.getElementById("trialInfo");
-      if (hasTrial === "true") {
+      if (hasTrial === "true" && trialInfo) {
         trialInfo.textContent = "Trial is active!";
       }
     }
 
-    // Plans modal
+    // =====================
+    // Plans Modal
+    // =====================
     const plansModal = document.getElementById("plansModal");
     function openPlansModal() {
       plansModal.style.display = "flex";
       plansModal.style.alignItems = "center";
       plansModal.style.justifyContent = "center";
-
-      // Lock background scroll
       document.body.style.overflow = "hidden";
     }
     function closePlansModal() {
       plansModal.style.display = "none";
-      // Unlock background scroll
       document.body.style.overflow = "";
     }
     function choosePlan(planName) {
       localStorage.setItem("currentPlan", planName);
       alert("Plan “" + planName + "” selected!");
       closePlansModal();
-      document.getElementById("currentPlan").textContent = "You selected plan: " + planName;
+      const currentPlanEl = document.getElementById("currentPlan");
+      if (currentPlanEl) {
+        currentPlanEl.textContent = "You selected plan: " + planName;
+      }
     }
-    // Fake "subscribe" button
     function subscribePlan(planName) {
       alert("Proceed to checkout for plan: " + planName + " (fake)...");
       closePlansModal();
@@ -737,53 +734,171 @@
       const block = document.getElementById(id);
       block.style.display = (block.style.display === "block") ? "none" : "block";
     }
-
-    // Trial
     function activateTrial() {
       localStorage.setItem("hasTrial", "true");
       alert("7-Day Trial Activated!");
-      document.getElementById("trialInfo").textContent = "Trial is active!";
+      const trialInfo = document.getElementById("trialInfo");
+      if (trialInfo) {
+        trialInfo.textContent = "Trial is active!";
+      }
     }
 
-    // Login
+    // =====================
+    // Login Modal
+    // =====================
     const loginModal = document.getElementById("loginModal");
     function openLogin() {
       loginModal.style.display = "flex";
       loginModal.style.alignItems = "center";
       loginModal.style.justifyContent = "center";
-
-      // Lock background scroll
       document.body.style.overflow = "hidden";
     }
     function closeLogin() {
       loginModal.style.display = "none";
-      // Unlock background scroll
       document.body.style.overflow = "";
     }
-    function doLogin() {
-      // Accept any email/password for this demo
-      localStorage.setItem("isLoggedIn", "true");
-      alert("You are now logged in!");
-      closeLogin();
-      checkLoginState();
+
+    // =====================
+    // Sign Up Modal
+    // =====================
+    const signupModal = document.getElementById("signupModal");
+    function openSignUp() {
+      signupModal.style.display = "flex";
+      signupModal.style.alignItems = "center";
+      signupModal.style.justifyContent = "center";
+      document.body.style.overflow = "hidden";
+    }
+    function closeSignUp() {
+      signupModal.style.display = "none";
+      document.body.style.overflow = "";
     }
 
-    // Panel link
+    // =====================
+    // Panel Link Check
+    // =====================
     document.getElementById("panelLink").addEventListener("click", function(e) {
-      const isLoggedIn = localStorage.getItem("isLoggedIn");
-      if (isLoggedIn !== "true") {
+      // Проверяем, залогинен ли пользователь в Firebase
+      const userJson = localStorage.getItem("firebaseUser");
+      if (!userJson) {
         e.preventDefault();
         alert("Please log in to open the panel!");
       }
     });
 
-    // Animate fade-in-up on DOMContentLoaded
+    // =====================
+    // Animate on DOMContentLoaded
+    // =====================
     document.addEventListener("DOMContentLoaded", function() {
       const fadeEls = document.querySelectorAll(".fade-in-up");
       fadeEls.forEach((el, idx) => {
         el.style.animationDelay = (idx * 0.2) + "s";
       });
     });
+  </script>
+
+  <!-- FIREBASE (ES Modules) -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+    // Если понадобится Firestore: import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+
+    // Твой объект конфигурации Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyBVYpupWLu8KtaOvC5jnXJE2_bzimIzTyQ",
+      authDomain: "calltechai.firebaseapp.com",
+      projectId: "calltechai",
+      storageBucket: "calltechai.appspot.com",
+      messagingSenderId: "835676076075",
+      appId: "1:835676076075:web:63f155b187cd1646b9926e",
+      measurementId: "G-EGWWQ9H9EK"
+    };
+
+    // Инициализация Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    const auth = getAuth(app);
+
+    console.log("Firebase initialized!");
+
+    // =====================
+    // Реальная логика Sign Up
+    // =====================
+    window.doSignUp = async function() {
+      const email = document.getElementById("signupEmail").value;
+      const pass = document.getElementById("signupPassword").value;
+      const passConfirm = document.getElementById("signupPasswordConfirm").value;
+
+      if (!email || !pass) {
+        alert("Please fill all fields!");
+        return;
+      }
+      if (pass !== passConfirm) {
+        alert("Passwords do not match!");
+        return;
+      }
+
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
+        const user = userCredential.user;
+        // Сохраняем данные пользователя в localStorage (для проверки входа)
+        localStorage.setItem("firebaseUser", JSON.stringify({ uid: user.uid, email: user.email }));
+        alert("Registration successful! You are now logged in with Firebase.");
+        closeSignUp();
+        checkLoginState();
+      } catch (err) {
+        alert("Error: " + err.message);
+      }
+    };
+
+    // =====================
+    // Реальная логика Log In
+    // =====================
+    window.doLogin = async function() {
+      const email = document.getElementById("loginEmail").value;
+      const pass = document.getElementById("loginPassword").value;
+
+      if (!email || !pass) {
+        alert("Please enter email and password!");
+        return;
+      }
+
+      try {
+        const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+        const user = userCredential.user;
+        // Сохраняем данные пользователя
+        localStorage.setItem("firebaseUser", JSON.stringify({ uid: user.uid, email: user.email }));
+        alert("You are now logged in with Firebase!");
+        closeLogin();
+        checkLoginState();
+      } catch (err) {
+        alert("Login error: " + err.message);
+      }
+    };
+
+    // =====================
+    // Отслеживание статуса (опционально)
+    // =====================
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        // Пользователь залогинен
+        localStorage.setItem("firebaseUser", JSON.stringify({ uid: user.uid, email: user.email }));
+      } else {
+        // Пользователь разлогинен
+        localStorage.removeItem("firebaseUser");
+      }
+      checkLoginState();
+    });
+
+    // =====================
+    // Функция logout (если нужна)
+    // =====================
+    window.doLogout = async function() {
+      await signOut(auth);
+      localStorage.removeItem("firebaseUser");
+      alert("Logged out!");
+      checkLoginState();
+    };
   </script>
 </body>
 </html>
