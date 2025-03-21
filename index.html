@@ -366,7 +366,6 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.4);
       max-height: 90vh;
       overflow-y: auto;
-
       /* Видимая рамка */
       border: 2px solid #778da9;
     }
@@ -463,31 +462,36 @@
       flex-direction: column;
       align-items: center;
     }
-
-    /* =============== ВАЖНО: Новые правки для чекбокса и кнопок =============== */
-
-    /* Чекбокс и подпись в одну строку, без переноса */
-    .checkbox-row {
-      display: flex;
-      align-items: center;
-      flex-wrap: nowrap;      /* не даём переноситься */
-      white-space: nowrap;    /* не переносим слова */
-      gap: 0.4rem;            /* немного уменьшим отступ */
+    /* Инпуты + кнопка - единая ширина */
+    .modal-content input {
       width: 100%;
       max-width: 300px;
       margin-bottom: 1rem;
-      font-size: 0.9rem;
+      padding: 0.6rem;
+      border-radius: 5px;
+      border: none;
+      outline: none;
     }
-
-    /* Кнопки Log In / Sign Up одинаково ровные */
     .modal-content button {
       width: 100%;
       max-width: 300px;
       margin: 0 auto;
       display: block;
-      padding: 0.7rem 1rem;   /* добавим высоты */
+      padding: 0.8rem 1rem; /* немного больше высота */
       border-radius: 5px;
       font-weight: 600;
+    }
+
+    /* Чекбокс + лейбл: не принуждаем одну строку; если не помещается, лейбл уйдёт на новую строку */
+    .checkbox-row {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+      flex-wrap: wrap; /* разрешаем перенос */
     }
 
     /*****************************************
@@ -710,11 +714,7 @@
       <h2>Log In</h2>
       <form onsubmit="event.preventDefault(); doLogin();">
         <input id="loginEmail" type="email" placeholder="Email" />
-        <div style="position: relative; width:100%; max-width:300px; margin-bottom:1rem;">
-          <input id="loginPassword" type="password" placeholder="Password" style="width:100%;" />
-          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;"
-                onclick="togglePassword('loginPassword', this)">Show</span>
-        </div>
+        <input id="loginPassword" type="password" placeholder="Password" />
 
         <!-- Remember me -->
         <div class="checkbox-row">
@@ -725,6 +725,11 @@
         <button id="loginBtn" type="submit">Log In</button>
         <p id="loginStatus" style="margin-top: 1rem;"></p>
       </form>
+
+      <!-- Show/Hide password link (вместо absolute) -->
+      <p style="margin-top:0.5rem; font-size:0.85rem; color:#a8dadc;">
+        <span style="text-decoration:underline; cursor:pointer;" onclick="togglePassword('loginPassword', this)">Show/Hide password</span>
+      </p>
     </div>
   </div>
 
@@ -735,16 +740,8 @@
       <h2>Sign Up</h2>
       <form onsubmit="event.preventDefault(); doSignUp();">
         <input id="signupEmail" type="email" placeholder="Email" required />
-        <div style="position: relative; width:100%; max-width:300px; margin-bottom:1rem;">
-          <input id="signupPassword" type="password" placeholder="Password" style="width:100%;" required />
-          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;"
-                onclick="togglePassword('signupPassword', this)">Show</span>
-        </div>
-        <div style="position: relative; width:100%; max-width:300px; margin-bottom:1rem;">
-          <input id="signupPasswordConfirm" type="password" placeholder="Confirm Password" style="width:100%;" required />
-          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;"
-                onclick="togglePassword('signupPasswordConfirm', this)">Show</span>
-        </div>
+        <input id="signupPassword" type="password" placeholder="Password" required />
+        <input id="signupPasswordConfirm" type="password" placeholder="Confirm Password" required />
 
         <!-- Accept Privacy Policy -->
         <div class="checkbox-row">
@@ -758,6 +755,13 @@
         <button type="submit">Sign Up</button>
         <p id="signupStatus" style="margin-top: 1rem;"></p>
       </form>
+
+      <!-- Show/Hide password link -->
+      <p style="margin-top:0.5rem; font-size:0.85rem; color:#a8dadc;">
+        <span style="text-decoration:underline; cursor:pointer;" onclick="togglePassword('signupPassword', this)">Show/Hide password</span>
+         &nbsp;|&nbsp; 
+        <span style="text-decoration:underline; cursor:pointer;" onclick="togglePassword('signupPasswordConfirm', this)">Show/Hide confirm</span>
+      </p>
     </div>
   </div>
 
@@ -773,7 +777,6 @@
           <h3>Essential</h3>
           <p>Essential features for small businesses</p>
           <div class="modal-plan-price">$12/mo</div>
-
           <button class="show-more-btn" onclick="toggleFeatures('essentialFeatures')">Details</button>
           <div class="extra-features" id="essentialFeatures">
             <ul>
@@ -782,7 +785,6 @@
               <li>Limited call analytics</li>
             </ul>
           </div>
-
           <button class="modal-plan-button" onclick="choosePlan('Essential')">Select</button>
         </div>
 
@@ -791,7 +793,6 @@
           <h3>Advanced</h3>
           <p>Expanded features and CRM integration</p>
           <div class="modal-plan-price">$29/mo</div>
-
           <button class="show-more-btn" onclick="toggleFeatures('advancedFeatures')">Details</button>
           <div class="extra-features" id="advancedFeatures">
             <ul>
@@ -801,7 +802,6 @@
               <li>Extended analytics</li>
             </ul>
           </div>
-
           <button class="modal-plan-button" onclick="choosePlan('Advanced')">Select</button>
         </div>
 
@@ -810,7 +810,6 @@
           <h3>Premium</h3>
           <p>Full automation, analytics, and advanced support</p>
           <div class="modal-plan-price">$59/mo</div>
-
           <button class="show-more-btn" onclick="toggleFeatures('premiumFeatures')">Details</button>
           <div class="extra-features" id="premiumFeatures">
             <ul>
@@ -820,7 +819,6 @@
               <li>Advanced analytics</li>
             </ul>
           </div>
-
           <button class="modal-plan-button" onclick="choosePlan('Premium')">Select</button>
         </div>
 
@@ -963,10 +961,10 @@
       const field = document.getElementById(fieldId);
       if (field.type === "password") {
         field.type = "text";
-        trigger.textContent = "Hide";
+        trigger.textContent = (trigger.textContent.includes('Hide') ? 'Show' : 'Hide');
       } else {
         field.type = "password";
-        trigger.textContent = "Show";
+        trigger.textContent = (trigger.textContent.includes('Show') ? 'Hide' : 'Show');
       }
     }
 
@@ -1102,73 +1100,745 @@
 
       if (!email || !pass || !passConfirm) {
         signupStatus.innerHTML = `<span style="color: red;">Please fill all fields!</span>`;
+       
+
+Вот **упрощённая** версия кода, где:
+
+- **Email** и **Password** идут **вертикально** (не налезают друг на друга).  
+- Чекбокс **“Remember this device”** может переноситься на новую строку, если очень узкий экран.  
+- Кнопка **Log In / Sign Up** имеет одинаковую ширину (до 300px) и удобные отступы.  
+- Кнопка “Show/Hide password” **вынесена** в небольшой текст под полем (чтобы не было перекрытий и сложных позиций).
+
+Такое решение должно **исключить** наложения текста друг на друга на мобильных устройствах.
+
+---
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>CallTechAI – Intelligent Voice Auto-Attendants for Business</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    /*****************************************
+     * RESET
+     *****************************************/
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    html, body {
+      font-family: "Poppins", sans-serif;
+      color: #fff;
+      background: linear-gradient(135deg, #0a0f1f 0%, #131a3a 100%);
+      overflow-x: hidden;
+      scroll-behavior: smooth;
+    }
+
+    /*****************************************
+     * HEADER
+     *****************************************/
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1rem 2rem;
+      background: rgba(10,15,31,0.8);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    }
+    .logo {
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+    nav a {
+      margin-left: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    nav a:hover { color: #a8dadc; }
+
+    #customLink {
+      margin-left: 1.5rem;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      background-color: #778da9;
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      display: none; /* показываем только после логина */
+    }
+    #customLink:hover { background-color: #a8dadc; color: #0a0f1f; }
+
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+    }
+    .auth-buttons button {
+      background-color: #415a77;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      margin-left: 1.2rem;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .auth-buttons button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+
+    .profile-icon {
+      display: inline-flex;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      background-color: #415a77;
+      padding: 0.6rem 1.2rem;
+      border-radius: 5px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      margin-left: 1.5rem;
+    }
+    .profile-icon:hover {
+      background-color: #778da9;
+    }
+    .profile-icon img {
+      height: 20px;
+      margin-right: 6px;
+    }
+    .down-arrow {
+      display: inline-block;
+      border: solid #fff;
+      border-width: 0 2px 2px 0;
+      padding: 3px;
+      transform: rotate(45deg);
+      margin-top: 1px;
+    }
+    #userDropdown {
+      position: absolute;
+      top: 45px;
+      right: 0;
+      background-color: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 5px;
+      padding: 1rem;
+      width: 200px;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
+      z-index: 999;
+      max-height: 0;
+      opacity: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+    }
+    #userDropdown.show {
+      max-height: 300px;
+      opacity: 1;
+    }
+    #userDropdown a, #userDropdown button {
+      display: block;
+      color: #fff;
+      text-decoration: none;
+      margin-bottom: 0.5rem;
+      background: none;
+      border: none;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+      font-size: 0.95rem;
+      font-weight: 500;
+      padding: 0.3rem 0;
+    }
+    #userDropdown a:hover, #userDropdown button:hover { color: #a8dadc; }
+
+    /*****************************************
+     * HERO SECTION
+     *****************************************/
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      width: 90%;
+      margin: 2rem auto;
+      min-height: 60vh;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+    .hero-content { max-width: 800px; margin: 0 auto; }
+    .hero h1 { font-size: 2.4rem; margin-bottom: 1rem; font-weight: 700; }
+    .hero p { font-size: 1.1rem; margin-bottom: 2rem; font-weight: 400; }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 1rem;
+    }
+    .cta-button, .trial-button {
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      border-radius: 50px;
+      cursor: pointer;
+      font-weight: 700;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      text-transform: uppercase;
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .cta-button {
+      background-color: #415a77;
+      color: #fff;
+    }
+    .cta-button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+    .trial-button {
+      background-color: transparent;
+      border: 2px solid #fff;
+      color: #fff;
+    }
+    .trial-button:hover {
+      background-color: #fff;
+      color: #0a0f1f;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+
+    /*****************************************
+     * SECTION CARD
+     *****************************************/
+    .section-card {
+      width: 90%;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(8px);
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    }
+    .section-title {
+      font-size: 1.6rem;
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    /*****************************************
+     * FOOTER
+     *****************************************/
+    footer {
+      text-align: center;
+      padding: 1rem;
+      background-color: rgba(0,0,0,0.2);
+      margin-top: 2rem;
+      font-size: 0.9rem;
+    }
+    footer a { color: #a8dadc; text-decoration: none; }
+
+    /*****************************************
+     * MODALS
+     *****************************************/
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal-content {
+      background-color: rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+      border-radius: 15px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 400px;
+      text-align: center;
+      position: relative;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+      max-height: 90vh;
+      overflow-y: auto;
+      border: 2px solid #778da9; /* видимая рамка */
+    }
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #fff;
+    }
+    .modal-content h2 {
+      margin-bottom: 1rem;
+      font-size: 1.8rem;
+      font-weight: 700;
+    }
+    .modal-content form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .modal-content input {
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1rem;
+      padding: 0.6rem;
+      border-radius: 5px;
+      border: none;
+    }
+    .modal-content button {
+      width: 100%;
+      max-width: 300px;
+      margin: 0 auto;
+      display: block;
+      padding: 0.8rem 1rem;
+      border-radius: 5px;
+      font-weight: 600;
+      border: none;
+      background-color: #415a77;
+      color: #fff;
+      cursor: pointer;
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.3s, box-shadow 0.3s;
+    }
+    .modal-content button:hover {
+      background-color: #778da9;
+      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+    .checkbox-row {
+      display: flex;
+      flex-wrap: wrap; /* разрешаем перенос, чтобы не налезало друг на друга */
+      align-items: center;
+      gap: 0.4rem;
+      width: 100%;
+      max-width: 300px;
+      margin-bottom: 1rem;
+      font-size: 0.9rem;
+    }
+
+    /*****************************************
+     * MEDIA QUERY
+     *****************************************/
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav a {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+      .auth-buttons {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .profile-icon {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+    }
+  </style>
+</head>
+<body onload="if(!location.hash){window.scrollTo(0,0);} checkLoginState();">
+  <!-- HEADER -->
+  <header>
+    <div class="logo">CallTechAI</div>
+    <nav>
+      <a href="#how-it-works">How It Works</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contacts">Contacts</a>
+      <a href="#customizationCenter" id="customLink">Customization Center</a>
+
+      <div class="auth-buttons" id="authButtons">
+        <button onclick="openLogin()">Log In</button>
+        <button onclick="openSignUp()">Sign Up</button>
+      </div>
+
+      <div id="userIcon" class="profile-icon" onclick="toggleUserDropdown()">
+        <img src="images/profileIcon.svg" alt="Profile">
+        <span class="down-arrow"></span>
+      </div>
+      <div id="userDropdown">
+        <button onclick="goToAccountSettings()">Account Settings</button>
+        <button onclick="goToBilling()">Billing</button>
+        <button onclick="doLogout()">Log Out</button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Intelligent Voice Auto-Attendants for Business</h1>
+      <p>Automate customer support and call handling with AI technology</p>
+      <div class="hero-buttons">
+        <button class="cta-button" onclick="openPlansModal()">Choose Plan</button>
+        <button class="trial-button" onclick="activateTrial()">7-Day Trial</button>
+      </div>
+      <p id="trialInfo" style="margin-top:1rem; color:#a8dadc;"></p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <div class="section-card" id="how-it-works">
+    <h2 class="section-title">How It Works</h2>
+    <p id="currentPlan" style="color:#a8dadc; margin-top:1rem;"></p>
+  </div>
+
+  <!-- USE CASES -->
+  <div class="section-card">
+    <h2 class="section-title">Use Cases</h2>
+    <p><strong>Dental Clinics:</strong> Automate appointment scheduling and reduce receptionist workload.</p>
+    <p><strong>Food Delivery:</strong> Handle high-volume calls for order tracking and updates.</p>
+    <p><strong>E-commerce:</strong> Provide 24/7 customer support without hiring additional agents.</p>
+  </div>
+
+  <!-- TESTIMONIALS -->
+  <div class="section-card">
+    <h2 class="section-title">What Our Clients Say</h2>
+    <p><em>"CallTechAI saved us from hiring 3 more operators!"</em> – Sarah, Dental Clinic Manager</p>
+    <p><em>"Our customers love the instant answers and order updates."</em> – Tom, Food Delivery Startup</p>
+    <p><em>"We've integrated with our CRM in no time, boosting sales efficiency."</em> – Linda, E-commerce Owner</p>
+  </div>
+
+  <!-- FAQ -->
+  <div class="section-card" id="faq">
+    <h2 class="section-title">FAQ</h2>
+    <p><strong>How does the auto-attendant work?</strong><br/>Our service uses AI to analyze incoming calls and automatically respond based on configured scenarios.</p>
+    <p><strong>Can I integrate with my CRM?</strong><br/>Yes, we support integration with most CRMs, allowing easy synchronization of customer data and orders.</p>
+    <p><strong>What is the trial period?</strong><br/>We offer a 7-day trial so you can test all features without any commitment.</p>
+  </div>
+
+  <!-- CONTACTS -->
+  <div class="section-card" id="contacts">
+    <h2 class="section-title">Contact Us</h2>
+    <p>Leave a request, and we'll reach out to connect CallTechAI to your business.</p>
+    <form action="https://formspree.io/f/xkgjgdel" method="POST" style="max-width:600px; margin:0 auto;">
+      <input type="text" name="name" placeholder="Your Name" required/>
+      <input type="email" name="email" placeholder="Your Email" required/>
+      <textarea rows="4" name="message" placeholder="Your Message"></textarea>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  <footer>
+    <p>&copy; 2025 CallTechAI. All rights reserved. | <a href="#">Privacy Policy</a></p>
+  </footer>
+
+  <!-- Модальные окна (Login, Signup, Plans, Account Settings, Billing) -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeLogin()">&times;</span>
+      <h2>Log In</h2>
+      <form onsubmit="event.preventDefault(); doLogin();">
+        <input id="loginEmail" type="email" placeholder="Email" />
+        <input id="loginPassword" type="password" placeholder="Password" />
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="rememberMe" />
+          <label for="rememberMe">Remember this device</label>
+        </div>
+
+        <button id="loginBtn" type="submit">Log In</button>
+        <p id="loginStatus" style="margin-top:1rem;"></p>
+      </form>
+      <!-- Show/Hide password link -->
+      <p style="font-size:0.85rem; margin-top:0.5rem; color:#a8dadc;">
+        <span style="text-decoration:underline; cursor:pointer;" onclick="togglePassword('loginPassword', this)">Show/Hide password</span>
+      </p>
+    </div>
+  </div>
+
+  <div id="signupModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeSignUp()">&times;</span>
+      <h2>Sign Up</h2>
+      <form onsubmit="event.preventDefault(); doSignUp();">
+        <input id="signupEmail" type="email" placeholder="Email" required/>
+        <input id="signupPassword" type="password" placeholder="Password" required/>
+        <input id="signupPasswordConfirm" type="password" placeholder="Confirm Password" required/>
+
+        <div class="checkbox-row">
+          <input type="checkbox" id="acceptPolicy" />
+          <label for="acceptPolicy">
+            I agree to the <a href="#" target="_blank">Privacy Policy</a>
+          </label>
+        </div>
+
+        <button type="submit">Sign Up</button>
+        <p id="signupStatus" style="margin-top:1rem;"></p>
+      </form>
+      <p style="font-size:0.85rem; margin-top:0.5rem; color:#a8dadc;">
+        <span style="text-decoration:underline; cursor:pointer;" onclick="togglePassword('signupPassword', this)">Show/Hide password</span>
+         &nbsp;|&nbsp;
+        <span style="text-decoration:underline; cursor:pointer;" onclick="togglePassword('signupPasswordConfirm', this)">Show/Hide confirm</span>
+      </p>
+    </div>
+  </div>
+
+  <div id="plansModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closePlansModal()">&times;</span>
+      <h2>Select a Plan</h2>
+      <!-- Пример планов -->
+      <p>(Essential / Advanced / Premium ...)</p>
+      <!-- ... -->
+    </div>
+  </div>
+
+  <div id="accountSettingsModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeAccountSettings()">&times;</span>
+      <h2>Account Settings</h2>
+      <p id="verificationStatus" style="margin-bottom:1rem;"></p>
+      <label>Display Name</label>
+      <input type="text" placeholder="Your Name"/>
+      <button style="margin-top:1rem;" onclick="saveAccountSettings()">Save</button>
+      <p id="accSettingsStatus" style="margin-top:1rem;"></p>
+    </div>
+  </div>
+
+  <div id="billingModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closeBilling()">&times;</span>
+      <h2>Billing</h2>
+      <p>Your current plan: <span id="billingPlan"></span></p>
+      <p>Next billing date: <span id="billingDate"></span></p>
+      <button style="margin-top:1rem;" onclick="alert('Billing update (demo)')">Update Billing Info</button>
+    </div>
+  </div>
+
+  <script>
+    // --- Basic JS for open/close modals, etc. ---
+
+    function checkLoginState() {
+      const userJson = localStorage.getItem("firebaseUser");
+      document.getElementById("customLink").style.display = userJson ? "inline-block" : "none";
+      document.getElementById("authButtons").style.display = userJson ? "none" : "flex";
+      document.getElementById("userIcon").style.display = userJson ? "inline-flex" : "none";
+
+      let plan = localStorage.getItem("currentPlan");
+      if (plan) {
+        const currentPlanEl = document.getElementById("currentPlan");
+        if (currentPlanEl) currentPlanEl.textContent = "You selected plan: " + plan;
+      }
+      const hasTrial = localStorage.getItem("hasTrial");
+      const trialInfo = document.getElementById("trialInfo");
+      if (trialInfo && hasTrial === "true") {
+        trialInfo.textContent = "Trial is active!";
+      }
+    }
+
+    function openLogin() {
+      loginModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+    function closeLogin() {
+      loginModal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    function openSignUp() {
+      signupModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+    function closeSignUp() {
+      signupModal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    function openPlansModal() {
+      plansModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+    }
+    function closePlansModal() {
+      plansModal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    function choosePlan(planName) {
+      localStorage.setItem("currentPlan", planName);
+      alert("Plan “" + planName + "” selected!");
+      closePlansModal();
+      const currentPlanEl = document.getElementById("currentPlan");
+      if (currentPlanEl) currentPlanEl.textContent = "You selected plan: " + planName;
+    }
+    function activateTrial() {
+      localStorage.setItem("hasTrial", "true");
+      alert("7-Day Trial Activated!");
+      const trialInfo = document.getElementById("trialInfo");
+      if (trialInfo) trialInfo.textContent = "Trial is active!";
+    }
+
+    function toggleUserDropdown() {
+      const dropdown = document.getElementById("userDropdown");
+      dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    }
+
+    document.addEventListener("click", function(e) {
+      const userIcon = document.getElementById("userIcon");
+      const dropdown = document.getElementById("userDropdown");
+      if (!userIcon.contains(e.target) && !dropdown.contains(e.target)) {
+        dropdown.style.display = "none";
+      }
+    });
+
+    function openAccountSettings() {
+      accountSettingsModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      document.getElementById("userDropdown").style.display = "none";
+    }
+    function closeAccountSettings() {
+      accountSettingsModal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+    function saveAccountSettings() {
+      document.getElementById("accSettingsStatus").innerHTML = `<span style="color: #4CAF50;">Account settings saved (demo)</span>`;
+    }
+
+    function openBilling() {
+      billingModal.style.display = "flex";
+      document.body.style.overflow = "hidden";
+      document.getElementById("userDropdown").style.display = "none";
+      const plan = localStorage.getItem("currentPlan") || "No plan";
+      document.getElementById("billingPlan").textContent = plan;
+      document.getElementById("billingDate").textContent = "2025-12-31";
+    }
+    function closeBilling() {
+      billingModal.style.display = "none";
+      document.body.style.overflow = "";
+    }
+
+    // Toggle password
+    function togglePassword(fieldId, trigger) {
+      const field = document.getElementById(fieldId);
+      if (!field) return;
+      if (field.type === "password") {
+        field.type = "text";
+        trigger.textContent = (trigger.textContent.includes('Hide') ? 'Show' : 'Hide');
+      } else {
+        field.type = "password";
+        trigger.textContent = (trigger.textContent.includes('Show') ? 'Hide' : 'Show');
+      }
+    }
+
+    // Basic Firebase Auth
+    async function doLogin() {
+      const email = document.getElementById("loginEmail").value.trim();
+      const pass = document.getElementById("loginPassword").value.trim();
+      const loginStatus = document.getElementById("loginStatus");
+      const remember = document.getElementById("rememberMe").checked;
+
+      loginStatus.innerHTML = "";
+      if (!email || !pass) {
+        loginStatus.innerHTML = `<span style="color:red;">Please enter email and password!</span>`;
+        return;
+      }
+      try {
+        if (remember) {
+          await setPersistence(auth, browserLocalPersistence);
+        } else {
+          await setPersistence(auth, browserSessionPersistence);
+        }
+        const userCredential = await signInWithEmailAndPassword(auth, email, pass);
+        loginStatus.innerHTML = `<span style="color:#4CAF50;">Success!</span>`;
+        localStorage.setItem("firebaseUser", JSON.stringify({
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          verified: userCredential.user.emailVerified
+        }));
+        setTimeout(() => { closeLogin(); checkLoginState(); }, 1000);
+      } catch (err) {
+        loginStatus.innerHTML = `<span style="color:red;">Login error: ${err.message}</span>`;
+      }
+    }
+
+    async function doSignUp() {
+      const email = document.getElementById("signupEmail").value.trim();
+      const pass = document.getElementById("signupPassword").value.trim();
+      const passConfirm = document.getElementById("signupPasswordConfirm").value.trim();
+      const signupStatus = document.getElementById("signupStatus");
+      const policyAccepted = document.getElementById("acceptPolicy").checked;
+
+      signupStatus.innerHTML = "";
+      if (!email || !pass || !passConfirm) {
+        signupStatus.innerHTML = `<span style="color:red;">Please fill all fields!</span>`;
         return;
       }
       if (pass !== passConfirm) {
-        signupStatus.innerHTML = `<span style="color: red;">Passwords do not match!</span>`;
+        signupStatus.innerHTML = `<span style="color:red;">Passwords do not match!</span>`;
         return;
       }
       if (!policyAccepted) {
-        signupStatus.innerHTML = `<span style="color: red;">You must accept the Privacy Policy!</span>`;
+        signupStatus.innerHTML = `<span style="color:red;">You must accept the Privacy Policy!</span>`;
         return;
       }
-
       try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-        const user = userCredential.user;
-
-        // Send verification email
-        await sendEmailVerification(user);
-
-        signupStatus.innerHTML = `<span style="color: #4CAF50; font-weight:600;">Registration successful! Check your email for verification.</span>`;
-
-        // Mark that user accepted policy
+        await sendEmailVerification(userCredential.user);
+        signupStatus.innerHTML = `<span style="color:#4CAF50;">Registration successful! Check your email for verification.</span>`;
         localStorage.setItem("firebaseUser", JSON.stringify({
-          uid: user.uid,
-          email: user.email,
-          verified: user.emailVerified,
+          uid: userCredential.user.uid,
+          email: userCredential.user.email,
+          verified: userCredential.user.emailVerified,
           policyAccepted: true
         }));
-
-        setTimeout(() => { closeSignUp(); checkLoginState(); }, 3000);
+        setTimeout(() => { closeSignUp(); checkLoginState(); }, 2000);
       } catch (err) {
-        signupStatus.innerHTML = `<span style="color: red;">Sign Up error: ${err.message}</span>`;
+        signupStatus.innerHTML = `<span style="color:red;">Sign Up error: ${err.message}</span>`;
       }
-    };
+    }
 
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userData = {
-          uid: user.uid,
-          email: user.email,
-          verified: user.emailVerified
-        };
-        // If localStorage had policyAccepted, keep it
-        const storedUser = localStorage.getItem("firebaseUser");
-        if (storedUser) {
-          const storedObj = JSON.parse(storedUser);
-          if (storedObj.policyAccepted) {
-            userData.policyAccepted = true;
-          }
-        }
-        localStorage.setItem("firebaseUser", JSON.stringify(userData));
-      } else {
-        localStorage.removeItem("firebaseUser");
-      }
-      checkLoginState();
-    });
-
-    window.doLogout = async function() {
+    async function doLogout() {
       await signOut(auth);
       localStorage.removeItem("firebaseUser");
       alert("You have logged out!");
       checkLoginState();
-    };
-  </script>
+    }
 
-  <!-- *****************************************
-       * Firebase Initialization (ES Modules)
-       ***************************************** -->
+    // Firebase
+    let auth;
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (!window.location.hash) window.scrollTo(0,0);
+      checkLoginState();
+    });
+
+  </script>
+  <!-- Firebase initialization (ES modules) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
     import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
@@ -1176,12 +1846,11 @@
       getAuth,
       createUserWithEmailAndPassword,
       signInWithEmailAndPassword,
-      onAuthStateChanged,
-      signOut,
       sendEmailVerification,
       setPersistence,
       browserLocalPersistence,
-      browserSessionPersistence
+      browserSessionPersistence,
+      signOut
     } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
 
     const firebaseConfig = {
@@ -1197,7 +1866,6 @@
     const app = initializeApp(firebaseConfig);
     const analytics = getAnalytics(app);
     window.auth = getAuth(app);
-
     console.log("Firebase initialized with real email verification!");
   </script>
 </body>
