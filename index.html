@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CallTechAI Customization Panel</title>
+  <title>Админ-панель CallTechAI</title>
   <!-- Подключаем Chart.js для аналитики -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
@@ -15,14 +15,14 @@
     }
     body {
       display: flex;
-      height: 100vh;
+      min-height: 100vh;
       background: #121826;
       color: #fff;
       font-family: "Poppins", sans-serif;
     }
-    /* Боковая панель */
+    /* Боковая панель (Sidebar) */
     .sidebar {
-      width: 220px;
+      width: 240px;
       background: #1c2333;
       padding: 20px;
       display: flex;
@@ -30,12 +30,12 @@
       gap: 15px;
     }
     .sidebar h2 {
-      font-size: 20px;
+      font-size: 22px;
       font-weight: bold;
       margin-bottom: 20px;
     }
     .nav-item {
-      padding: 12px;
+      padding: 12px 15px;
       background: #2a3246;
       border-radius: 6px;
       cursor: pointer;
@@ -45,7 +45,7 @@
     .nav-item:hover {
       background: #4a5d87;
     }
-    /* Основная область */
+    /* Основное рабочее пространство */
     .main {
       flex: 1;
       padding: 30px;
@@ -61,20 +61,49 @@
       font-size: 24px;
       margin-bottom: 20px;
     }
-    /* Bot Settings */
-    .settings input,
-    .settings select {
+    /* Блок для управления ботами */
+    .bot-list {
+      margin-bottom: 30px;
+    }
+    .bot-item {
+      padding: 12px;
+      background: #2a3246;
+      border-radius: 6px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .bot-item button {
+      background: #4a5d87;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.3s;
+    }
+    .bot-item button:hover {
+      background: #6f85b6;
+    }
+    /* Глобальные настройки (ключи API и пр.) */
+    .global-settings input {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
       border: none;
       border-radius: 5px;
     }
+    .global-settings label {
+      margin-bottom: 5px;
+      display: block;
+      font-size: 14px;
+    }
     .save-btn {
       background: #4a5d87;
       padding: 10px;
       border: none;
-      color: white;
+      color: #fff;
       font-weight: bold;
       border-radius: 6px;
       cursor: pointer;
@@ -87,6 +116,7 @@
       border-radius: 6px;
       background: #1c2333;
       min-height: 200px;
+      margin-bottom: 20px;
     }
     .message-box {
       background: #2a3246;
@@ -99,41 +129,18 @@
       background: #4a5d87;
       padding: 10px;
       border: none;
-      color: white;
+      color: #fff;
       border-radius: 6px;
       cursor: pointer;
       width: 100%;
+      margin-bottom: 20px;
     }
-    /* Integrations & Webhooks */
-    .integrations input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
-    }
-    /* Analytics */
+    /* Аналитика */
     .chart-container {
       max-width: 600px;
       margin: 20px auto;
     }
-    /* Advanced Settings */
-    .advanced-settings label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    .advanced-settings input[type="checkbox"] {
-      margin-right: 5px;
-    }
-    .advanced-settings select,
-    .advanced-settings input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
-    }
-    /* Адаптация для мобильных устройств */
+    /* Адаптация для мобильных */
     @media (max-width: 768px) {
       body {
         flex-direction: column;
@@ -148,43 +155,73 @@
         padding: 15px;
       }
       .nav-item {
-        padding: 8px;
+        padding: 8px 10px;
         font-size: 14px;
       }
     }
   </style>
 </head>
 <body>
-
   <!-- Sidebar Navigation -->
   <div class="sidebar">
-    <h2>CallTechAI</h2>
-    <div class="nav-item active" onclick="showTab('bot-settings')">Bot Settings</div>
-    <div class="nav-item" onclick="showTab('scenario-builder')">Scenario Builder</div>
-    <div class="nav-item" onclick="showTab('integrations')">Integrations & Webhooks</div>
-    <div class="nav-item" onclick="showTab('analytics')">Analytics</div>
-    <div class="nav-item" onclick="showTab('advanced')">Advanced Settings</div>
+    <h2>CallTechAI Admin</h2>
+    <div class="nav-item active" onclick="switchTab('dashboard')">Dashboard</div>
+    <div class="nav-item" onclick="switchTab('bot-management')">Bot Management</div>
+    <div class="nav-item" onclick="switchTab('global-settings')">Global Settings</div>
+    <div class="nav-item" onclick="switchTab('scenario-builder')">Scenario Builder</div>
+    <div class="nav-item" onclick="switchTab('analytics')">Analytics</div>
   </div>
 
   <!-- Main Content Area -->
   <div class="main">
-    <!-- Bot Settings Section -->
-    <div id="bot-settings" class="content active">
-      <h1>Bot Settings</h1>
-      <div class="settings">
-        <input type="text" id="botName" placeholder="Bot Name">
-        <select id="botLanguage">
-          <option>English</option>
-          <option>Spanish</option>
-          <option>French</option>
-        </select>
-        <input type="text" id="welcomeMsg" placeholder="Welcome Message">
-        <input type="text" id="fallbackMsg" placeholder="Fallback Message">
-        <button class="save-btn" onclick="saveBotSettings()">Save Changes</button>
+    <!-- Dashboard -->
+    <div id="dashboard" class="content active">
+      <h1>Dashboard</h1>
+      <p>Overview of bots and recent activity.</p>
+      <div class="bot-list">
+        <div class="bot-item">
+          <span>Bot #1: Chat Assistant</span>
+          <button onclick="editBot('Chat Assistant')">Edit</button>
+        </div>
+        <div class="bot-item">
+          <span>Bot #2: Support Bot</span>
+          <button onclick="editBot('Support Bot')">Edit</button>
+        </div>
+      </div>
+      <button class="save-btn" onclick="alert('Create new bot (demo)')">Create New Bot</button>
+    </div>
+
+    <!-- Bot Management -->
+    <div id="bot-management" class="content">
+      <h1>Bot Management</h1>
+      <p>Manage and edit your bots. (Demo mode: Data saved locally)</p>
+      <div class="bot-list">
+        <div class="bot-item">
+          <span>Chat Assistant</span>
+          <button onclick="alert('Editing Chat Assistant (demo)')">Edit</button>
+        </div>
+        <div class="bot-item">
+          <span>Support Bot</span>
+          <button onclick="alert('Editing Support Bot (demo)')">Edit</button>
+        </div>
       </div>
     </div>
 
-    <!-- Scenario Builder Section -->
+    <!-- Global Settings -->
+    <div id="global-settings" class="content">
+      <h1>Global Settings</h1>
+      <div class="global-settings">
+        <label>Twilio API Key</label>
+        <input type="text" id="twilioKey" placeholder="Your Twilio API Key" value="YOUR_TWILIO_API_KEY">
+        <label>OpenAI API Key</label>
+        <input type="text" id="openaiKey" placeholder="Your OpenAI API Key" value="YOUR_OPENAI_API_KEY">
+        <label>Dialogflow API Key</label>
+        <input type="text" id="dialogflowKey" placeholder="Your Dialogflow API Key" value="YOUR_DIALOGFLOW_API_KEY">
+        <button class="save-btn" onclick="saveGlobalSettings()">Save Global Settings</button>
+      </div>
+    </div>
+
+    <!-- Scenario Builder -->
     <div id="scenario-builder" class="content">
       <h1>Scenario Builder</h1>
       <div class="scenario-builder" id="scenarioContainer">
@@ -192,114 +229,57 @@
         <div class="message-box" draggable="true">Bot: "Hi! How can I help?"</div>
       </div>
       <button class="add-response" onclick="addResponse()">+ Add Response</button>
-      <button class="save-btn" style="margin-top:15px;">Save Scenario</button>
+      <button class="save-btn" onclick="saveScenario()">Save Scenario</button>
     </div>
 
-    <!-- Integrations & Webhooks Section -->
-    <div id="integrations" class="content">
-      <h1>Integrations & Webhooks</h1>
-      <div class="integrations">
-        <p>Twilio API Key:</p>
-        <input type="text" id="twilioKey" placeholder="Enter Twilio API Key">
-        <p>OpenAI API Key:</p>
-        <input type="text" id="openaiKey" placeholder="Enter OpenAI API Key">
-        <p>Dialogflow API Key:</p>
-        <input type="text" id="dialogflowKey" placeholder="Enter Dialogflow API Key">
-        <p>Webhook URL:</p>
-        <input type="text" id="webhookUrl" placeholder="Enter Webhook URL">
-        <button class="save-btn" onclick="saveIntegrations()">Save Integrations</button>
-      </div>
-    </div>
-
-    <!-- Analytics Section -->
+    <!-- Analytics -->
     <div id="analytics" class="content">
       <h1>Analytics</h1>
       <div class="chart-container">
         <canvas id="analyticsChart"></canvas>
       </div>
     </div>
-
-    <!-- Advanced Settings Section -->
-    <div id="advanced" class="content">
-      <h1>Advanced Settings</h1>
-      <div class="advanced-settings">
-        <label>
-          <input type="checkbox" id="autoLearning"> Enable Auto Learning
-        </label>
-        <label>
-          <input type="checkbox" id="autoAnswer"> Enable Auto Answer
-        </label>
-        <label>Tone of Bot:</label>
-        <select id="botTone">
-          <option>Formal</option>
-          <option>Friendly</option>
-          <option>Humorous</option>
-        </select>
-        <button class="save-btn" onclick="saveAdvancedSettings()">Save Advanced Settings</button>
-      </div>
-    </div>
   </div>
 
   <script>
-    // Функция для переключения вкладок
-    function showTab(tabId) {
-      document.querySelectorAll('.content').forEach(tab => {
-        tab.classList.remove('active');
-      });
+    // Переключение вкладок
+    function switchTab(tabId) {
+      document.querySelectorAll('.content').forEach(tab => tab.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
-      document.querySelectorAll('.nav-item').forEach(item => {
-        item.classList.remove('active');
-      });
+      
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
       event.target.classList.add('active');
     }
 
-    // Сохранение настроек бота (сохраняем в localStorage как демонстрация)
-    function saveBotSettings() {
+    // Пример сохранения глобальных настроек (сохранение в localStorage)
+    function saveGlobalSettings() {
       const settings = {
-        botName: document.getElementById("botName").value,
-        botLanguage: document.getElementById("botLanguage").value,
-        welcomeMsg: document.getElementById("welcomeMsg").value,
-        fallbackMsg: document.getElementById("fallbackMsg").value
-      };
-      localStorage.setItem("botSettings", JSON.stringify(settings));
-      alert("Bot settings saved!");
-    }
-
-    // Сохранение интеграций
-    function saveIntegrations() {
-      const integrations = {
         twilioKey: document.getElementById("twilioKey").value,
         openaiKey: document.getElementById("openaiKey").value,
-        dialogflowKey: document.getElementById("dialogflowKey").value,
-        webhookUrl: document.getElementById("webhookUrl").value
+        dialogflowKey: document.getElementById("dialogflowKey").value
       };
-      localStorage.setItem("integrations", JSON.stringify(integrations));
-      alert("Integrations saved!");
+      localStorage.setItem("globalSettings", JSON.stringify(settings));
+      alert("Global settings saved!");
     }
 
-    // Сохранение дополнительных настроек
-    function saveAdvancedSettings() {
-      const advanced = {
-        autoLearning: document.getElementById("autoLearning").checked,
-        autoAnswer: document.getElementById("autoAnswer").checked,
-        botTone: document.getElementById("botTone").value
-      };
-      localStorage.setItem("advancedSettings", JSON.stringify(advanced));
-      alert("Advanced settings saved!");
+    // Пример сохранения настроек сценария
+    function saveScenario() {
+      const scenarioHtml = document.getElementById("scenarioContainer").innerHTML;
+      localStorage.setItem("scenario", scenarioHtml);
+      alert("Scenario saved!");
     }
 
-    // Drag and Drop для Scenario Builder
-    const scenarioContainer = document.getElementById('scenarioContainer');
-
+    // Функция добавления нового блока в сценарии
     function addResponse() {
-      const newBox = document.createElement('div');
+      let newBox = document.createElement('div');
       newBox.className = 'message-box';
       newBox.setAttribute('draggable', 'true');
       newBox.textContent = 'Bot: "New response..."';
-      scenarioContainer.appendChild(newBox);
+      document.getElementById("scenarioContainer").appendChild(newBox);
       addDragHandlers(newBox);
     }
 
+    // Drag & Drop обработчики
     function addDragHandlers(item) {
       item.addEventListener('dragstart', dragStart);
       item.addEventListener('dragover', dragOver);
@@ -307,23 +287,29 @@
       item.addEventListener('dragend', dragEnd);
     }
 
+    let dragSrcEl = null;
+
     function dragStart(e) {
-      e.dataTransfer.setData("text/plain", null);
-      this.classList.add('dragging');
       dragSrcEl = this;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData("text/html", this.outerHTML);
+      this.classList.add('dragging');
     }
 
     function dragOver(e) {
       e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
       return false;
     }
 
     function drop(e) {
       e.stopPropagation();
       if (dragSrcEl !== this) {
-        let container = scenarioContainer;
-        // Меняем местами элементы
-        container.insertBefore(dragSrcEl, this.nextSibling);
+        this.parentNode.removeChild(dragSrcEl);
+        let dropHTML = e.dataTransfer.getData("text/html");
+        this.insertAdjacentHTML('afterend', dropHTML);
+        let droppedElem = this.nextSibling;
+        addDragHandlers(droppedElem);
       }
       return false;
     }
@@ -332,20 +318,20 @@
       this.classList.remove('dragging');
     }
 
-    // Добавляем обработчики для уже существующих блоков
+    // Добавляем обработчики для уже существующих блоков сценария
     document.querySelectorAll('.message-box').forEach(item => {
       addDragHandlers(item);
     });
 
-    // Analytics: Инициализация Chart.js
+    // Analytics: инициализация графика через Chart.js
     const ctx = document.getElementById('analyticsChart').getContext('2d');
     const analyticsChart = new Chart(ctx, {
       type: 'bar',
       data: {
-        labels: ['Messages', 'Scenarios', 'API Calls'],
+        labels: ['Bots Created', 'Scenarios', 'API Calls'],
         datasets: [{
           label: 'Usage Stats',
-          data: [15, 10, 25],
+          data: [5, 8, 15],
           backgroundColor: ['#4a5d87', '#ffcc00', '#ff5733']
         }]
       },
@@ -354,6 +340,11 @@
         maintainAspectRatio: false
       }
     });
+
+    // Пример функции редактирования бота (демо)
+    function editBot(botName) {
+      alert("Editing bot: " + botName + " (demo)");
+    }
   </script>
 
 </body>
