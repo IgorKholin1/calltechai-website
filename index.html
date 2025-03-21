@@ -1,224 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CallTechAI Customization Panel</title>
-    <script type="module">
-        // Инициализация Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CallTechAI - Bot Customization</title>
+  
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-firestore.js"></script>
 
-        const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_AUTH_DOMAIN",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_STORAGE_BUCKET",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
-        };
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
 
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
+    body {
+      display: flex;
+      height: 100vh;
+      background: #121826;
+      color: white;
+    }
 
-        // Функция сохранения настроек в Firestore
-        window.saveSettings = async function () {
-            const botName = document.getElementById("botName").value;
-            const language = document.getElementById("botLanguage").value;
-            const welcomeMsg = document.getElementById("welcomeMessage").value;
-            const fallbackMsg = document.getElementById("fallbackMessage").value;
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #1c2333;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+    }
 
-            await setDoc(doc(db, "botSettings", "main"), {
-                botName,
-                language,
-                welcomeMsg,
-                fallbackMsg
-            });
+    .sidebar h2 {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
 
-            alert("Settings saved!");
-        };
+    .nav-item {
+      padding: 12px;
+      margin-bottom: 10px;
+      background: #2a3246;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
 
-        // Загрузка настроек при запуске
-        window.loadSettings = async function () {
-            const docSnap = await getDoc(doc(db, "botSettings", "main"));
-            if (docSnap.exists()) {
-                document.getElementById("botName").value = docSnap.data().botName;
-                document.getElementById("botLanguage").value = docSnap.data().language;
-                document.getElementById("welcomeMessage").value = docSnap.data().welcomeMsg;
-                document.getElementById("fallbackMessage").value = docSnap.data().fallbackMsg;
-            }
-        };
+    .nav-item.active {
+      background: #4a5d87;
+    }
 
-        document.addEventListener("DOMContentLoaded", loadSettings);
-    </script>
-    <style>
-        body {
-            display: flex;
-            height: 100vh;
-            background-color: #121826;
-            color: #fff;
-            font-family: Arial, sans-serif;
-        }
-        .sidebar {
-            width: 220px;
-            background: #1c2333;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-        .nav-link {
-            padding: 10px;
-            background: #2a3246;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .nav-link:hover, .nav-link.active {
-            background: #4a5d87;
-        }
-        .main-content {
-            flex: 1;
-            padding: 30px;
-        }
-        .section {
-            display: none;
-        }
-        .section.active {
-            display: block;
-        }
-        .setting-group {
-            margin-bottom: 20px;
-        }
-        .setting-group label {
-            display: block;
-            margin-bottom: 5px;
-        }
-        .setting-group input, .setting-group select {
-            width: 100%;
-            padding: 10px;
-        }
-        .scenario-builder {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            padding: 15px;
-            background: #1c2333;
-            border: 1px solid #4a5d87;
-        }
-        .dialog-block {
-            background: #2a3246;
-            padding: 10px;
-            border-radius: 5px;
-            cursor: grab;
-        }
-        .dialog-block:active {
-            cursor: grabbing;
-        }
-        .add-block {
-            padding: 10px;
-            background: #4a5d87;
-            border-radius: 5px;
-            cursor: pointer;
-            text-align: center;
-        }
-        .save-btn {
-            padding: 10px;
-            background: #4a5d87;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-    </style>
+    .nav-item:hover {
+      background: #3c4863;
+    }
+
+    /* Main Content */
+    .main {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .content {
+      display: none;
+    }
+
+    .content.active {
+      display: block;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    /* Bot Settings */
+    .settings input,
+    .settings select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: none;
+      border-radius: 5px;
+    }
+
+    .save-btn {
+      background: #4a5d87;
+      padding: 10px;
+      border: none;
+      color: white;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* Scenario Builder */
+    .scenario-builder {
+      border: 1px solid #4a5d87;
+      padding: 15px;
+      border-radius: 6px;
+      background: #1c2333;
+    }
+
+    .message-box {
+      background: #2a3246;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 6px;
+      cursor: grab;
+    }
+
+    .add-response {
+      background: #4a5d87;
+      padding: 10px;
+      border: none;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    /* Analytics */
+    .chart-container {
+      width: 100%;
+      max-width: 600px;
+    }
+
+  </style>
 </head>
 <body>
 
-    <div class="sidebar">
-        <h2>CallTechAI</h2>
-        <div class="nav-link active" onclick="switchTab('bot-settings')">Bot Settings</div>
-        <div class="nav-link" onclick="switchTab('scenario-builder')">Scenario Builder</div>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>CallTechAI</h2>
+    <div class="nav-item active" onclick="showTab('settings')">Bot Settings</div>
+    <div class="nav-item" onclick="showTab('scenario')">Scenario Builder</div>
+    <div class="nav-item" onclick="showTab('integrations')">Integrations</div>
+    <div class="nav-item" onclick="showTab('analytics')">Analytics</div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- Bot Settings -->
+    <div id="settings" class="content active">
+      <h1>Bot Settings</h1>
+      <div class="settings">
+        <input type="text" id="botName" placeholder="Bot Name">
+        <select id="botLanguage">
+          <option>English</option>
+          <option>Spanish</option>
+          <option>French</option>
+        </select>
+        <input type="text" id="welcomeMsg" placeholder="Welcome Message">
+        <input type="text" id="fallbackMsg" placeholder="Fallback Message">
+        <button class="save-btn" onclick="saveSettings()">Save Changes</button>
+      </div>
     </div>
 
-    <div class="main-content">
-        <div class="section active" id="bot-settings">
-            <h2>Bot Settings</h2>
-            <div class="setting-group">
-                <label>Bot Name:</label>
-                <input type="text" id="botName">
-            </div>
-            <div class="setting-group">
-                <label>Language:</label>
-                <select id="botLanguage">
-                    <option>English</option>
-                    <option>Spanish</option>
-                    <option>French</option>
-                </select>
-            </div>
-            <div class="setting-group">
-                <label>Welcome Message:</label>
-                <input type="text" id="welcomeMessage">
-            </div>
-            <div class="setting-group">
-                <label>Fallback Message:</label>
-                <input type="text" id="fallbackMessage">
-            </div>
-            <button class="save-btn" onclick="saveSettings()">Save Changes</button>
-        </div>
-
-        <div class="section" id="scenario-builder">
-            <h2>Scenario Builder</h2>
-            <div class="scenario-builder" id="scenarioBuilder">
-                <div class="dialog-block" draggable="true">User: "Hello"</div>
-                <div class="dialog-block" draggable="true">Bot: "Hi! How can I help?"</div>
-            </div>
-            <div class="add-block" onclick="addDialogBlock()">+ Add Response</div>
-            <button class="save-btn">Save Scenario</button>
-        </div>
+    <!-- Scenario Builder -->
+    <div id="scenario" class="content">
+      <h1>Scenario Builder</h1>
+      <div class="scenario-builder" id="scenarioList">
+        <div class="message-box" draggable="true">User: "Hello"</div>
+        <div class="message-box" draggable="true">Bot: "Hi! How can I help?"</div>
+      </div>
+      <button class="add-response" onclick="addResponse()">+ Add Response</button>
     </div>
 
-    <script>
-        function switchTab(tabId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(tabId).classList.add('active');
-            
-            document.querySelectorAll('.nav-link').forEach(link => {
-                link.classList.remove('active');
-            });
-            event.target.classList.add('active');
-        }
+    <!-- Integrations -->
+    <div id="integrations" class="content">
+      <h1>Integrations</h1>
+      <p>Twilio API Key:</p>
+      <input type="text" placeholder="Enter Twilio API Key">
+      <p>Firebase Project ID:</p>
+      <input type="text" placeholder="Enter Firebase Project ID">
+    </div>
 
-        function addDialogBlock() {
-            let block = document.createElement('div');
-            block.className = 'dialog-block';
-            block.draggable = true;
-            block.innerText = 'Bot: "New response..."';
-            document.getElementById("scenarioBuilder").appendChild(block);
-            addDragAndDrop();
-        }
+    <!-- Analytics -->
+    <div id="analytics" class="content">
+      <h1>Analytics</h1>
+      <div class="chart-container">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
 
-        function addDragAndDrop() {
-            document.querySelectorAll('.dialog-block').forEach(item => {
-                item.addEventListener('dragstart', (event) => {
-                    event.dataTransfer.setData("text", event.target.outerHTML);
-                    event.target.classList.add("dragging");
-                });
+  </div>
 
-                item.addEventListener('dragover', (event) => {
-                    event.preventDefault();
-                });
+  <script>
+    function showTab(tabId) {
+      document.querySelectorAll('.content').forEach(tab => tab.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
 
-                item.addEventListener('drop', (event) => {
-                    event.preventDefault();
-                    let data = event.dataTransfer.getData("text");
-                    item.insertAdjacentHTML('beforebegin', data);
-                    item.classList.remove("dragging");
-                });
-            });
-        }
-        addDragAndDrop();
-    </script>
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+
+    function addResponse() {
+      let newMessage = document.createElement('div');
+      newMessage.classList.add('message-box');
+      newMessage.setAttribute('draggable', 'true');
+      newMessage.textContent = "New Response";
+      document.getElementById('scenarioList').appendChild(newMessage);
+    }
+
+    document.getElementById('scenarioList').addEventListener('dragstart', (e) => {
+      e.dataTransfer.setData("text/plain", e.target.outerHTML);
+      e.target.remove();
+    });
+
+    document.getElementById('scenarioList').addEventListener('dragover', (e) => {
+      e.preventDefault();
+    });
+
+    document.getElementById('scenarioList').addEventListener('drop', (e) => {
+      e.preventDefault();
+      let data = e.dataTransfer.getData("text/plain");
+      document.getElementById('scenarioList').insertAdjacentHTML('beforeend', data);
+    });
+
+    // Chart.js Example
+    const ctx = document.getElementById('myChart').getContext('2d');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Messages', 'Scenarios', 'API Calls'],
+        datasets: [{
+          label: 'Usage Stats',
+          data: [15, 10, 25],
+          backgroundColor: ['#4a5d87', '#ffcc00', '#ff5733']
+        }]
+      }
+    });
+
+  </script>
 
 </body>
 </html>
