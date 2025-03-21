@@ -1,24 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
+  <title>CallTechAI – Control Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>CallTechAI – Intelligent Voice Auto-Attendants for Business</title>
-
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
-
   <style>
-    /*****************************************
-     * RESET
-     *****************************************/
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    /* RESET */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       font-family: "Poppins", sans-serif;
       color: #fff;
@@ -26,1170 +18,407 @@
       overflow-x: hidden;
       scroll-behavior: smooth;
     }
-
-    /*****************************************
-     * ANIMATION: fadeInUp
-     *****************************************/
-    @keyframes fadeInUp {
-      0% {
-        opacity: 0;
-        transform: translateY(30px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    .fade-in-up {
-      opacity: 0;
-      animation: fadeInUp 0.8s ease forwards;
-    }
-
-    /*****************************************
-     * HEADER
-     *****************************************/
-    header {
+    body {
+      min-height: 100vh;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1rem 2rem;
+      flex-direction: column;
+    }
+    header {
       background: rgba(10,15,31,0.8);
-      position: sticky;
-      top: 0;
-      z-index: 1000;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0; z-index: 1000;
     }
     .logo {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      position: relative;
+      font-size: 1.4rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
     }
     nav a {
-      margin-left: 1.5rem;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 500;
+      margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 500;
       transition: color 0.3s;
     }
-    nav a:hover {
-      color: #a8dadc;
-    }
-
-    /* Customization Center Link (показывается для залогиненных) */
-    #customLink {
-      margin-left: 1.5rem;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      background-color: #778da9;
-      padding: 0.5rem 1rem;
-      border-radius: 5px;
-      display: none;
-    }
-    #customLink:hover {
-      background-color: #a8dadc;
-      color: #0a0f1f;
-    }
-
-    /* Auth Buttons (Log In / Sign Up) */
-    .auth-buttons button {
-      background-color: #415a77;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      margin-left: 1.2rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      font-weight: 600;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-    }
-    .auth-buttons button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
-    }
-
-    /*****************************************
-     * USER ICON / ACCOUNT DROPDOWN
-     *****************************************/
-    #userIcon {
-      display: none;
-      position: relative;
-      margin-left: 1.5rem;
-      cursor: pointer;
-      font-weight: 600;
-      background-color: #415a77;
-      padding: 0.6rem 1.2rem;
-      border-radius: 5px;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-    }
-    #userIcon:hover {
-      background-color: #778da9;
-    }
-    /* Dropdown меню (по умолчанию скрыто, покажется с анимацией) */
-    #userDropdown {
-      position: absolute;
-      top: 45px;
-      right: 0;
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 5px;
-      padding: 1rem;
-      width: 200px;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.3);
-      z-index: 999;
-      max-height: 0;
-      opacity: 0;
-      overflow: hidden;
-      transition: max-height 0.3s ease, opacity 0.3s ease;
-    }
-    #userDropdown.show {
-      max-height: 300px;
-      opacity: 1;
-    }
-    #userDropdown a, #userDropdown button {
-      display: block;
-      color: #fff;
-      text-decoration: none;
-      margin-bottom: 0.5rem;
-      background: none;
-      border: none;
-      text-align: left;
-      width: 100%;
-      cursor: pointer;
-      font-size: 0.95rem;
-      font-weight: 500;
-      padding: 0.3rem 0;
-    }
-    #userDropdown a:hover, #userDropdown button:hover {
-      color: #a8dadc;
-    }
-
-    /*****************************************
-     * HERO SECTION
-     *****************************************/
-    .hero {
-      position: relative;
-      height: 70vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
+    nav a:hover { color: #a8dadc; }
+    .container {
+      width: 90%; max-width: 1000px;
       margin: 2rem auto;
-      width: 90%;
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(8px);
       border-radius: 15px;
       padding: 2rem;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
     }
-    .hero-content {
-      max-width: 800px;
-      margin: 0 auto;
+    h2 { font-size: 1.6rem; margin-bottom: 1rem; font-weight: 700; text-align: center; }
+    label { display: block; margin: 0.8rem 0 0.3rem; font-weight: 600; }
+    input, select, textarea {
+      width: 100%; padding: 0.6rem; border-radius: 5px; border: none;
+      margin-bottom: 0.5rem; font-size: 1rem;
     }
-    .hero h1 {
-      font-size: 2.4rem;
-      margin-bottom: 1rem;
-      font-weight: 700;
+    button {
+      background-color: #415a77; color: #fff; border: none;
+      padding: 0.8rem 1.5rem; border-radius: 50px; cursor: pointer;
+      font-weight: 600; box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      margin-top: 1rem; transition: background-color 0.3s;
     }
-    .hero p {
-      font-size: 1.1rem;
+    button:hover { background-color: #778da9; }
+    .auth-section, .dashboard-section, .scenario-section, .payment-section {
       margin-bottom: 2rem;
-      font-weight: 400;
+      display: none;
     }
-
-    /* HERO BUTTONS */
-    .hero-buttons {
-      display: flex;
-      gap: 1rem;
-      justify-content: center;
-      flex-wrap: wrap;
+    .show { display: block !important; }
+    .scenario-steps {
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 1rem;
       margin-top: 1rem;
     }
-    .cta-button, .trial-button {
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      text-transform: uppercase;
-      font-weight: 700;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+    .step {
+      display: flex; gap: 1rem; margin-bottom: 0.5rem;
     }
-    .cta-button {
-      background-color: #415a77;
-      color: #fff;
+    .step input {
+      width: 45%;
     }
-    .cta-button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
-    }
-    .trial-button {
-      background-color: transparent;
-      border: 2px solid #fff;
-      color: #fff;
-    }
-    .trial-button:hover {
-      background-color: #fff;
-      color: #0a0f1f;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
-    }
-
-    /*****************************************
-     * WAVES
-     *****************************************/
-    .wave {
-      margin-top: -1px;
-    }
-    .wave svg {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
-
-    /*****************************************
-     * SECTION CARD
-     *****************************************/
-    .section-card {
-      width: 90%;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-    }
-    .section-title {
-      font-size: 1.6rem;
-      margin-bottom: 2rem;
-      font-weight: 700;
-    }
-
-    /*****************************************
-     * INFO-SECTIONS, FAQ, CONTACT FORM
-     *****************************************/
-    .info-section {
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: left;
-    }
-    .info-section p {
-      margin-bottom: 1rem;
-      font-size: 1rem;
-      line-height: 1.6;
-    }
-
-    .faq-item {
-      margin-bottom: 1rem;
-      padding: 1rem;
-      background-color: rgba(255,255,255,0.2);
-      border-radius: 10px;
-      cursor: pointer;
-    }
-    .faq-item h3 {
-      font-size: 1.1rem;
-      margin-bottom: 0.5rem;
-    }
-    .faq-item p {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      display: none;
-      margin-top: 0.5rem;
-    }
-    .faq-item.active p {
-      display: block;
-    }
-
-    .contact-form {
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: left;
-      margin-top: 2rem;
-    }
-    .contact-form input,
-    .contact-form textarea {
-      width: 100%;
-      padding: 0.8rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
-      font-size: 1rem;
-    }
-    .contact-form button {
-      background-color: #415a77;
-      border: none;
-      padding: 1rem 2rem;
-      font-size: 1rem;
-      color: #fff;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: background-color 0.3s ease, box-shadow 0.3s;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-    }
-    .contact-form button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
-    }
-
-    /*****************************************
-     * FOOTER
-     *****************************************/
     footer {
       text-align: center;
-      padding: 1rem;
+      padding: 1rem; margin-top: auto;
       background-color: rgba(0,0,0,0.2);
-      margin-top: 2rem;
       font-size: 0.9rem;
     }
-    footer a {
-      color: #a8dadc;
-      text-decoration: none;
-    }
-
-    /*****************************************
-     * MODALS
-     *****************************************/
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(0,0,0,0.5);
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      overscroll-behavior: contain;
-      touch-action: none;
-    }
-    .modal-content {
-      background-color: rgba(255,255,255,0.1);
-      backdrop-filter: blur(10px);
-      border-radius: 15px;
-      padding: 2rem;
-      width: 90%;
-      max-width: 800px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .modal-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: #fff;
-    }
-    .modal h2 {
-      margin-bottom: 1rem;
-      font-size: 1.8rem;
-      font-weight: 700;
-    }
-    .modal-plans {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 2rem;
-    }
-    .modal-plan-card {
-      background-color: rgba(255,255,255,0.2);
-      border-radius: 10px;
-      padding: 1rem;
-      width: 220px;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .modal-plan-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 6px 12px rgba(0,0,0,0.2);
-    }
-    .modal-plan-card h3 {
-      font-size: 1.4rem;
-      margin-bottom: 0.5rem;
-      font-weight: 700;
-    }
-    .modal-plan-card p {
-      font-size: 0.95rem;
-      line-height: 1.4;
-      margin-bottom: 0.8rem;
-    }
-    .modal-plan-price {
-      font-size: 1.4rem;
-      margin-bottom: 0.8rem;
-      color: #a8dadc;
-      font-weight: 700;
-    }
-    .modal-plan-button {
-      background-color: #415a77;
-      color: #fff;
-      border: none;
-      padding: 0.5rem 1rem;
-      border-radius: 20px;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-      margin-top: 0.5rem;
-    }
-    .modal-plan-button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
-    }
-    .extra-features {
-      display: none;
-      text-align: left;
-      margin-top: 0.5rem;
-      font-size: 0.9rem;
-      line-height: 1.4;
-    }
-    .extra-features ul {
-      list-style-type: disc;
-      margin-left: 1.2rem;
-      margin-top: 0.5rem;
-    }
-    .show-more-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      text-decoration: underline;
-      cursor: pointer;
-      font-size: 0.9rem;
-      margin-bottom: 0.5rem;
-    }
-    .show-more-btn:hover {
-      color: #a8dadc;
-    }
-
-    /*****************************************
-     * CUSTOMIZATION CENTER
-     *****************************************/
-    #customizationCenter {
-      display: none;
-      width: 90%;
-      margin: 2rem auto;
-      padding: 2rem;
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      text-align: center;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-    }
-    #customizationCenter h2 { font-size: 2rem; margin-bottom: 1rem; }
-    #customizationCenter p { margin-bottom: 1rem; }
-    .bot-settings {
-      background-color: rgba(255,255,255,0.2);
-      padding: 1rem;
-      border-radius: 10px;
-      margin: 1rem auto;
-      text-align: left;
-      max-width: 600px;
-    }
-    .bot-settings h3 {
-      margin-bottom: 0.5rem;
-      font-size: 1.2rem;
-      font-weight: 600;
-    }
-    .bot-settings label {
-      display: block;
-      margin: 0.5rem 0 0.2rem 0;
-    }
-    .bot-settings input, .bot-settings select {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 0.5rem;
-      border: none;
-      border-radius: 5px;
-    }
-
-    /*****************************************
-     * LOGIN & SIGNUP MODALS
-     *****************************************/
-    .login-modal, .signup-modal {
-      display: none;
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: rgba(0,0,0,0.5);
-      align-items: center;
-      justify-content: center;
-      z-index: 9999;
-      overscroll-behavior: contain;
-      touch-action: none;
-    }
-    .login-content, .signup-content {
-      background: rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 15px;
-      padding: 2rem;
-      width: 300px;
-      text-align: center;
-      position: relative;
-      box-shadow: 0 5px 10px rgba(0,0,0,0.3);
-    }
-    .login-content h2, .signup-content h2 {
-      margin-bottom: 1rem;
-    }
-    .login-content input, .signup-content input {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: none;
-      border-radius: 5px;
-    }
-    .login-content button, .signup-content button {
-      background-color: #415a77;
-      color: #fff;
-      border: none;
-      padding: 0.6rem 1.2rem;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s, box-shadow 0.3s;
-    }
-    .login-content button:hover, .signup-content button:hover {
-      background-color: #778da9;
-      box-shadow: 0 4px 7px rgba(0,0,0,0.3);
-    }
-    .login-close, .signup-close {
-      position: absolute;
-      top: 1rem;
-      right: 1rem;
-      font-size: 1.2rem;
-      cursor: pointer;
-      color: #fff;
-    }
-    /* Show/Hide password link */
-    .toggle-pw {
-      font-size: 0.8rem;
-      color: #a8dadc;
-      cursor: pointer;
-      margin-left: 5px;
-      text-decoration: underline;
-    }
-    .toggle-pw:hover {
-      color: #fff;
-    }
-
-    /*****************************************
-     * MEDIA QUERY
-     *****************************************/
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: center;
-      }
-      nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 0.5rem;
-        position: static;
-      }
-      nav a {
-        margin: 0.5rem;
-      }
-      .auth-buttons {
-        margin-left: 0;
-        margin-top: 0.5rem;
-        display: flex;
-        gap: 0.5rem;
-        justify-content: center;
-      }
-    }
+    footer a { color: #a8dadc; text-decoration: none; }
   </style>
 </head>
-<body onload="checkLoginState()">
+<body>
 
-  <!-- HEADER -->
-  <header class="fade-in-up">
-    <div class="logo">CallTechAI</div>
-    <nav>
-      <a href="#how-it-works">How It Works</a>
-      <a href="#faq">FAQ</a>
-      <a href="#contacts">Contacts</a>
-      <a href="#customizationCenter" id="customLink">Customization Center</a>
+<header>
+  <div class="logo">CallTechAI</div>
+  <nav>
+    <a href="#" onclick="showSection('auth-section')">Auth</a>
+    <a href="#" onclick="showSection('payment-section')">Payment</a>
+    <a href="#" onclick="showSection('dashboard-section')">Dashboard</a>
+  </nav>
+</header>
 
-      <div class="auth-buttons" id="authButtons">
-        <button onclick="openLogin()">Log In</button>
-        <button onclick="openSignUp()">Sign Up</button>
-      </div>
-
-      <div id="userIcon" onclick="toggleUserDropdown()">Account</div>
-      <div id="userDropdown">
-        <button onclick="goToAccountSettings()">Account Settings</button>
-        <button onclick="goToBilling()">Billing</button>
-        <button onclick="doLogout()">Log Out</button>
-      </div>
-    </nav>
-  </header>
-
-  <!-- HERO SECTION -->
-  <section class="hero fade-in-up">
-    <div class="hero-content">
-      <h1>Intelligent Voice Auto-Attendants for Business</h1>
-      <p>Automate customer support and call handling with AI technology</p>
-      <div class="hero-buttons">
-        <button class="cta-button" onclick="openPlansModal()">Choose Plan</button>
-        <button class="trial-button" onclick="activateTrial()">7-Day Trial</button>
-      </div>
-      <p id="trialInfo" style="margin-top:1rem; color:#a8dadc;"></p>
+<!-- AUTH SECTION -->
+<div class="container auth-section" id="auth-section">
+  <h2>User Authentication</h2>
+  <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+    <!-- Login -->
+    <div style="flex:1; min-width:300px;">
+      <h3>Log In</h3>
+      <label for="loginEmail">Email</label>
+      <input type="email" id="loginEmail" placeholder="you@example.com"/>
+      <label for="loginPassword">Password</label>
+      <input type="password" id="loginPassword" placeholder="******"/>
+      <button onclick="doLogin()">Log In</button>
+      <p id="loginStatus" style="margin-top:0.5rem;"></p>
     </div>
-  </section>
-
-  <!-- WAVES -->
-  <div class="wave">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <path fill="#0a0f1f" d="M0,0L80,10C160,20,320,40,480,53.3C640,67,800,73,960,74.7C1120,77,1280,75,1360,74.7L1440,74.7L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
-    </svg>
-  </div>
-
-  <!-- HOW IT WORKS -->
-  <div class="section-card fade-in-up" id="how-it-works">
-    <h2 class="section-title">How It Works</h2>
-    <div class="info-section">
-      <p>CallTechAI integrates with your phone system through the Twilio Cloud Service. Our AI analyzes incoming calls, answers customer questions, and redirects to a live operator if needed.</p>
-      <p>Support for multiple languages, custom scenarios, and easy integration make our service an indispensable tool for modern businesses.</p>
-      <p id="currentPlan" style="color:#a8dadc; margin-top:1rem;"></p>
-    </div>
-  </div>
-
-  <!-- WAVES -->
-  <div class="wave">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <path fill="#0a0f1f" d="M0,0L80,10C160,20,320,40,480,53.3C640,67,800,73,960,74.7C1120,77,1280,75,1360,74.7L1440,74.7L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
-    </svg>
-  </div>
-
-  <!-- USE CASES -->
-  <div class="section-card fade-in-up">
-    <h2 class="section-title">Use Cases</h2>
-    <div class="info-section">
-      <p><strong>Dental Clinics:</strong> Automate appointment scheduling and reduce receptionist workload.</p>
-      <p><strong>Food Delivery:</strong> Handle high-volume calls for order tracking and updates.</p>
-      <p><strong>E-commerce:</strong> Provide 24/7 customer support without hiring additional agents.</p>
-    </div>
-  </div>
-
-  <!-- TESTIMONIALS -->
-  <div class="section-card fade-in-up">
-    <h2 class="section-title">What Our Clients Say</h2>
-    <div class="info-section">
-      <p><em>"CallTechAI saved us from hiring 3 more operators!"</em> – Sarah, Dental Clinic Manager</p>
-      <p><em>"Our customers love the instant answers and order updates."</em> – Tom, Food Delivery Startup</p>
-      <p><em>"We've integrated with our CRM in no time, boosting sales efficiency."</em> – Linda, E-commerce Owner</p>
-    </div>
-  </div>
-
-  <!-- FAQ -->
-  <div class="section-card fade-in-up" id="faq">
-    <h2 class="section-title">FAQ</h2>
-    <div class="info-section">
-      <div class="faq-item" onclick="this.classList.toggle('active')">
-        <h3>How does the auto-attendant work?</h3>
-        <p>Our service uses AI to analyze incoming calls and automatically respond based on configured scenarios.</p>
-      </div>
-      <div class="faq-item" onclick="this.classList.toggle('active')">
-        <h3>Can I integrate with my CRM?</h3>
-        <p>Yes, we support integration with most CRMs, allowing easy synchronization of customer data and orders.</p>
-      </div>
-      <div class="faq-item" onclick="this.classList.toggle('active')">
-        <h3>What is the trial period?</h3>
-        <p>We offer a 7-day trial so you can test all features without any commitment.</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- WAVES -->
-  <div class="wave">
-    <svg viewBox="0 0 1440 80" preserveAspectRatio="none">
-      <path fill="#0a0f1f" d="M0,0L80,10C160,20,320,40,480,53.3C640,67,800,73,960,74.7C1120,77,1280,75,1360,74.7L1440,74.7L1440,0L1360,0C1280,0,1120,0,960,0C800,0,640,0,480,0C320,0,160,0,80,0L0,0Z"></path>
-    </svg>
-  </div>
-
-  <!-- CONTACTS -->
-  <div class="section-card fade-in-up" id="contacts">
-    <h2 class="section-title">Contact Us</h2>
-    <div class="info-section">
-      <p>Leave a request, and we'll reach out to connect CallTechAI to your business.</p>
-      <form class="contact-form" action="https://formspree.io/f/xkgjgdel" method="POST">
-        <input type="text" name="name" placeholder="Your Name" required/>
-        <input type="email" name="email" placeholder="Your Email" required/>
-        <textarea rows="4" name="message" placeholder="Your Message"></textarea>
-        <button type="submit">Send</button>
-      </form>
-    </div>
-  </div>
-
-  <!-- FOOTER -->
-  <footer class="fade-in-up">
-    <p>&copy; 2025 CallTechAI. All rights reserved. | <a href="#">Privacy Policy</a></p>
-  </footer>
-
-  <!-- PLANS MODAL -->
-  <div id="plansModal" class="modal">
-    <div class="modal-content fade-in-up">
-      <span class="modal-close" onclick="closePlansModal()">&times;</span>
-      <h2>Choose a Plan</h2>
-      <div class="modal-plans">
-        <!-- Plan 1: Basic -->
-        <div class="modal-plan-card">
-          <h3>Basic</h3>
-          <p>Essential features for small businesses.</p>
-          <div class="modal-plan-price">$99/mo</div>
-          <button class="show-more-btn" onclick="toggleFeatures('basicFeatures')">Details</button>
-          <div id="basicFeatures" class="extra-features">
-            <ul>
-              <li>1 language supported</li>
-              <li>Basic call scenarios</li>
-              <li>Limited call analytics</li>
-            </ul>
-          </div>
-          <button class="modal-plan-button" onclick="choosePlan('Basic')">Select</button>
-          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Basic')">Subscribe</button>
-        </div>
-        <!-- Plan 2: Advanced -->
-        <div class="modal-plan-card">
-          <h3>Advanced</h3>
-          <p>Expanded features and CRM integration.</p>
-          <div class="modal-plan-price">$199/mo</div>
-          <button class="show-more-btn" onclick="toggleFeatures('advancedFeatures')">Details</button>
-          <div id="advancedFeatures" class="extra-features">
-            <ul>
-              <li>Up to 3 languages</li>
-              <li>Customizable scenarios</li>
-              <li>Integration with popular CRMs</li>
-              <li>Extended analytics</li>
-            </ul>
-          </div>
-          <button class="modal-plan-button" onclick="choosePlan('Advanced')">Select</button>
-          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Advanced')">Subscribe</button>
-        </div>
-        <!-- Plan 3: Premium -->
-        <div class="modal-plan-card">
-          <h3>Premium</h3>
-          <p>Full automation, analytics, and customization.</p>
-          <div class="modal-plan-price">$399/mo</div>
-          <button class="show-more-btn" onclick="toggleFeatures('premiumFeatures')">Details</button>
-          <div id="premiumFeatures" class="extra-features">
-            <ul>
-              <li>Unlimited languages</li>
-              <li>Deep scenario customization</li>
-              <li>Complete analytics & reports</li>
-              <li>Priority 24/7 support</li>
-            </ul>
-          </div>
-          <button class="modal-plan-button" onclick="choosePlan('Premium')">Select</button>
-          <button class="modal-plan-button" style="background-color:#222; margin-top:0.5rem;" onclick="subscribePlan('Premium')">Subscribe</button>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- CUSTOMIZATION CENTER -->
-  <div id="customizationCenter" class="section-card fade-in-up">
-    <h2>Customization Center</h2>
-    <p>Configure your AI call scenarios, add languages, and view analytics here.</p>
-    <div class="bot-settings">
-      <h3>Bot Scenarios</h3>
-      <label for="scenarioName">Scenario Name</label>
-      <input type="text" id="scenarioName" placeholder="e.g. Appointment Booking"/>
-      <label for="languageSelect">Language</label>
-      <select id="languageSelect">
-        <option>English</option>
-        <option>Spanish</option>
-        <option>French</option>
-      </select>
-      <label for="scenarioDesc">Scenario Description</label>
-      <input type="text" id="scenarioDesc" placeholder="Describe the scenario..."/>
-      <button onclick="alert('Scenario saved (demo)')">Save Scenario</button>
-    </div>
-  </div>
-
-  <!-- LOGIN MODAL -->
-  <div class="login-modal" id="loginModal">
-    <div class="login-content fade-in-up">
-      <span class="login-close" onclick="closeLogin()">&times;</span>
-      <h2>Log In</h2>
-      <input type="email" id="loginEmail" placeholder="Email"/>
-      <div style="position:relative;">
-        <input type="password" id="loginPassword" placeholder="Password" style="width:calc(100% - 50px);"/>
-        <span class="toggle-pw" id="toggleLoginPw" style="position:absolute; right:0; top:0.7rem; margin-right:10px;"
-          onclick="togglePassword('loginPassword','toggleLoginPw')">Show</span>
-      </div>
-      <button id="loginBtn" onclick="doLogin()">Log In</button>
-      <div id="loginStatus" style="margin-top:0.5rem;"></div>
-    </div>
-  </div>
-
-  <!-- SIGN UP MODAL -->
-  <div class="signup-modal" id="signupModal">
-    <div class="signup-content fade-in-up">
-      <span class="signup-close" onclick="closeSignUp()">&times;</span>
-      <h2>Sign Up</h2>
-      <input type="email" id="signupEmail" placeholder="Email"/>
-      <div style="position:relative;">
-        <input type="password" id="signupPassword" placeholder="Password" style="width:calc(100% - 50px);"/>
-        <span class="toggle-pw" id="toggleSignUpPw" style="position:absolute; right:0; top:0.7rem; margin-right:10px;"
-          onclick="togglePassword('signupPassword','toggleSignUpPw')">Show</span>
-      </div>
-      <input type="password" id="signupPasswordConfirm" placeholder="Confirm Password"/>
+    <!-- Sign Up -->
+    <div style="flex:1; min-width:300px;">
+      <h3>Sign Up</h3>
+      <label for="signupEmail">Email</label>
+      <input type="email" id="signupEmail" placeholder="you@example.com"/>
+      <label for="signupPassword">Password</label>
+      <input type="password" id="signupPassword" placeholder="******"/>
+      <label for="signupPassword2">Confirm Password</label>
+      <input type="password" id="signupPassword2" placeholder="******"/>
       <button onclick="doSignUp()">Sign Up</button>
-      <div id="signupStatus" style="margin-top:0.5rem;"></div>
+      <p id="signupStatus" style="margin-top:0.5rem;"></p>
     </div>
   </div>
+  <button style="background:#dc3545;" onclick="doLogout()">Log Out</button>
+  <p id="logoutStatus" style="margin-top:0.5rem;"></p>
+</div>
 
-  <!-- ACCOUNT SETTINGS MODAL -->
-  <div class="modal" id="accountSettingsModal">
-    <div class="modal-content fade-in-up">
-      <span class="modal-close" onclick="closeAccountSettings()">&times;</span>
-      <h2>Account Settings</h2>
-      <div style="text-align:left; max-width:400px; margin:1rem auto;">
-        <label for="accName">Name</label>
-        <input type="text" id="accName" placeholder="Your Name"/>
-        <label for="accPhone">Phone</label>
-        <input type="text" id="accPhone" placeholder="Your Phone"/>
-        <label for="accAddress">Address</label>
-        <input type="text" id="accAddress" placeholder="Your Address"/>
-        <button onclick="saveAccountSettings()">Save Changes</button>
-      </div>
-      <div id="accSettingsStatus" style="margin-top:0.5rem;"></div>
-    </div>
+<!-- PAYMENT SECTION -->
+<div class="container payment-section" id="payment-section">
+  <h2>Choose Plan & Payment</h2>
+  <div>
+    <label>Select a Plan:</label>
+    <select id="planSelect">
+      <option value="basic">$99/mo – Basic</option>
+      <option value="advanced">$199/mo – Advanced</option>
+      <option value="premium">$399/mo – Premium</option>
+    </select>
+    <button onclick="checkoutPlan()">Proceed to Payment</button>
+    <p id="paymentStatus" style="margin-top:1rem;"></p>
   </div>
+</div>
 
-  <!-- BILLING MODAL -->
-  <div class="modal" id="billingModal">
-    <div class="modal-content fade-in-up">
-      <span class="modal-close" onclick="closeBilling()">&times;</span>
-      <h2>Billing &amp; Subscriptions</h2>
-      <p>Current Plan: <span id="billingPlan">None</span></p>
-      <p>Next Billing Date: <span id="billingDate">N/A</span></p>
-      <button onclick="alert('Upgrade (demo)')">Upgrade</button>
-      <button onclick="alert('Downgrade (demo)')">Downgrade</button>
-      <div id="billingStatus" style="margin-top:0.5rem;"></div>
-    </div>
+<!-- DASHBOARD SECTION -->
+<div class="container dashboard-section" id="dashboard-section">
+  <h2>Dashboard</h2>
+  <p>Welcome, <span id="userEmail"></span>!</p>
+  <p>Your selected plan: <span id="userPlan"></span></p>
+
+  <!-- Twilio Number Setup -->
+  <h3>Phone Number Setup</h3>
+  <p>Select or buy a Twilio number (demo):</p>
+  <select id="twilioNumberSelect">
+    <option value="">Choose number...</option>
+    <option value="+14120001111">+1 (412) 000-1111</option>
+    <option value="+14120002222">+1 (412) 000-2222</option>
+  </select>
+  <button onclick="assignNumber()">Assign Number</button>
+  <p id="twilioStatus"></p>
+
+  <!-- Scenario Setup -->
+  <div class="scenario-section" id="scenarioSection" style="margin-top:2rem;">
+    <h3>Scenario Setup</h3>
+    <label>Bot Name</label>
+    <input type="text" id="botName" placeholder="MyBot"/>
+
+    <label>Greeting</label>
+    <input type="text" id="botGreeting" placeholder="Hello! How can I help you?"/>
+
+    <label>Fallback</label>
+    <input type="text" id="botFallback" placeholder="Sorry, I didn't catch that." />
+
+    <h4>Steps (User says → Bot replies)</h4>
+    <div id="stepsContainer"></div>
+    <button onclick="addStep()">+ Add Step</button>
+
+    <button onclick="saveScenario()" style="margin-top:1rem;">Save Scenario</button>
+    <p id="scenarioStatus" style="margin-top:0.5rem;"></p>
   </div>
+</div>
 
-  <footer class="fade-in-up">
-    <p>&copy; 2025 CallTechAI. All rights reserved. | <a href="#">Privacy Policy</a></p>
-  </footer>
+<footer>
+  <p>&copy; 2025 CallTechAI. All rights reserved. | <a href="#">Privacy Policy</a></p>
+</footer>
 
-  <script>
-    /*****************************************
-     * State Checking & Panels
-     *****************************************/
-    function checkLoginState() {
-      const customLink = document.getElementById("customLink");
-      const authButtons = document.getElementById("authButtons");
-      const userIcon = document.getElementById("userIcon");
-      const userJson = localStorage.getItem("firebaseUser");
+<!-- Firebase & Panel Script -->
+<script type="module">
+  /***********************************************
+   * 1) Firebase Imports & Init
+   ***********************************************/
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
+  import {
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut,
+    sendEmailVerification
+  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
+  import {
+    getFirestore, doc, setDoc, getDoc, updateDoc
+  } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-      if (userJson) {
-        customLink.style.display = "inline-block";
-        authButtons.style.display = "none";
-        userIcon.style.display = "inline-block";
-      } else {
-        customLink.style.display = "none";
-        authButtons.style.display = "flex";
-        userIcon.style.display = "none";
-      }
+  // Replace with your real config
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    storageBucket: "YOUR_PROJECT_ID.appspot.com",
+    messagingSenderId: "YOUR_SENDER_ID",
+    appId: "YOUR_APP_ID",
+    measurementId: "YOUR_MEASUREMENT_ID"
+  };
 
-      // Проверяем текущий план
-      let plan = localStorage.getItem("currentPlan");
-      if (plan) {
-        if (plan === "Базовый") plan = "Basic";
-        if (plan === "Продвинутый") plan = "Advanced";
-        if (plan === "Премиум") plan = "Premium";
-        localStorage.setItem("currentPlan", plan);
-        const currentPlanEl = document.getElementById("currentPlan");
-        if (currentPlanEl) {
-          currentPlanEl.textContent = "You selected plan: " + plan;
-        }
-      }
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
 
-      // Проверка триала
-      const hasTrial = localStorage.getItem("hasTrial");
-      const trialInfo = document.getElementById("trialInfo");
-      if (hasTrial === "true" && trialInfo) {
-        trialInfo.textContent = "Trial is active!";
-      }
-    }
+  // Global state
+  let currentUser = null;
+  let steps = []; // array of { userSay, botReply }
 
-    /*****************************************
-     * Plans Modal Functions
-     *****************************************/
-    const plansModal = document.getElementById("plansModal");
-    function openPlansModal() {
-      plansModal.style.display = "flex";
-      plansModal.style.alignItems = "center";
-      plansModal.style.justifyContent = "center";
-      document.body.style.overflow = "hidden";
+  /***********************************************
+   * 2) onAuthStateChanged
+   ***********************************************/
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      currentUser = user;
+      console.log("Logged in as:", user.email);
+      document.getElementById("userEmail").textContent = user.email;
+      showSection("dashboard-section");
+      loadUserPlan(); // load plan from Firestore
+      loadScenario(); // load scenario from Firestore
+    } else {
+      currentUser = null;
+      console.log("Not logged in");
+      showSection("auth-section");
     }
-    function closePlansModal() {
-      plansModal.style.display = "none";
-      document.body.style.overflow = "";
+  });
+
+  /***********************************************
+   * 3) Auth Functions
+   ***********************************************/
+  window.doSignUp = async function() {
+    const email = document.getElementById("signupEmail").value;
+    const pass = document.getElementById("signupPassword").value;
+    const pass2 = document.getElementById("signupPassword2").value;
+    const status = document.getElementById("signupStatus");
+    status.textContent = "";
+
+    if (!email || !pass || !pass2) {
+      status.textContent = "Please fill all fields!";
+      return;
     }
-    function choosePlan(planName) {
-      localStorage.setItem("currentPlan", planName);
-      alert("Plan “" + planName + "” selected!");
-      closePlansModal();
-      const currentPlanEl = document.getElementById("currentPlan");
-      if (currentPlanEl) {
-        currentPlanEl.textContent = "You selected plan: " + planName;
-      }
-    }
-    function subscribePlan(planName) {
-      alert("Proceed to checkout for plan: " + planName + " (demo)...");
-      closePlansModal();
-    }
-    function toggleFeatures(id) {
-      const block = document.getElementById(id);
-      block.style.display = (block.style.display === "block") ? "none" : "block";
-    }
-    function activateTrial() {
-      localStorage.setItem("hasTrial", "true");
-      alert("7-Day Trial Activated!");
-      const trialInfo = document.getElementById("trialInfo");
-      if (trialInfo) {
-        trialInfo.textContent = "Trial is active!";
-      }
+    if (pass !== pass2) {
+      status.textContent = "Passwords do not match!";
+      return;
     }
 
-    /*****************************************
-     * Login & Sign Up Modal Functions
-     *****************************************/
-    const loginModal = document.getElementById("loginModal");
-    function openLogin() {
-      loginModal.style.display = "flex";
-      loginModal.style.alignItems = "center";
-      loginModal.style.justifyContent = "center";
-      document.body.style.overflow = "hidden";
+    try {
+      const userCred = await createUserWithEmailAndPassword(auth, email, pass);
+      await sendEmailVerification(userCred.user);
+      status.textContent = "Registration successful! Check your email for verification.";
+    } catch (err) {
+      status.textContent = "Sign Up error: " + err.message;
     }
-    function closeLogin() {
-      loginModal.style.display = "none";
-      document.body.style.overflow = "";
-    }
-    const signupModal = document.getElementById("signupModal");
-    function openSignUp() {
-      signupModal.style.display = "flex";
-      signupModal.style.alignItems = "center";
-      signupModal.style.justifyContent = "center";
-      document.body.style.overflow = "hidden";
-    }
-    function closeSignUp() {
-      signupModal.style.display = "none";
-      document.body.style.overflow = "";
+  };
+
+  window.doLogin = async function() {
+    const email = document.getElementById("loginEmail").value;
+    const pass = document.getElementById("loginPassword").value;
+    const status = document.getElementById("loginStatus");
+    status.textContent = "";
+
+    if (!email || !pass) {
+      status.textContent = "Please fill all fields!";
+      return;
     }
 
-    /*****************************************
-     * User Dropdown Functions
-     *****************************************/
-    function toggleUserDropdown() {
-      const dropdown = document.getElementById("userDropdown");
-      dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+    try {
+      await signInWithEmailAndPassword(auth, email, pass);
+      status.textContent = "Login successful!";
+    } catch (err) {
+      status.textContent = "Login error: " + err.message;
     }
-    function goToAccountSettings() {
-      openAccountSettings();
+  };
+
+  window.doLogout = async function() {
+    await signOut(auth);
+    document.getElementById("logoutStatus").textContent = "Logged out!";
+  };
+
+  /***********************************************
+   * 4) Show/Hide sections
+   ***********************************************/
+  function showSection(sectionId) {
+    // Hide all
+    document.querySelectorAll(".auth-section, .dashboard-section, .payment-section")
+      .forEach(el => el.style.display = "none");
+    // Show needed
+    document.getElementById(sectionId).style.display = "block";
+  }
+
+  /***********************************************
+   * 5) Payment (Stripe Demo)
+   ***********************************************/
+  window.checkoutPlan = async function() {
+    if (!currentUser) {
+      alert("Please log in first!");
+      return;
     }
-    function goToBilling() {
-      openBilling();
-    }
-    document.addEventListener("click", function(e) {
-      const userIcon = document.getElementById("userIcon");
-      const dropdown = document.getElementById("userDropdown");
-      if (!userIcon.contains(e.target) && !dropdown.contains(e.target)) {
-        dropdown.style.display = "none";
-      }
+    const plan = document.getElementById("planSelect").value;
+    // Here you'd redirect to Stripe Checkout or Payment Link
+    // We'll just emulate success
+    document.getElementById("paymentStatus").textContent = "Payment successful! Plan: " + plan;
+    // Save plan in Firestore
+    await setDoc(doc(db, "users", currentUser.uid), { plan }, { merge: true });
+    // Then go to dashboard
+    showSection("dashboard-section");
+    loadUserPlan();
+  };
+
+  async function loadUserPlan() {
+    if (!currentUser) return;
+    const docRef = doc(db, "users", currentUser.uid);
+    const docSnap = await getDoc(docRef);
+    let userPlan = docSnap.exists() && docSnap.data().plan ? docSnap.data().plan : "None";
+    document.getElementById("userPlan").textContent = userPlan;
+  }
+
+  /***********************************************
+   * 6) Twilio Number (Demo)
+   ***********************************************/
+  window.assignNumber = async function() {
+    if (!currentUser) return alert("Not logged in!");
+    const sel = document.getElementById("twilioNumberSelect");
+    const number = sel.value;
+    if (!number) return alert("Please select a number!");
+    // Save number to Firestore
+    await setDoc(doc(db, "users", currentUser.uid), { phoneNumber: number }, { merge: true });
+    document.getElementById("twilioStatus").textContent = "Number assigned: " + number;
+  };
+
+  /***********************************************
+   * 7) Scenario (Steps) logic
+   ***********************************************/
+  function updateStepsUI() {
+    const stepsContainer = document.getElementById("stepsContainer");
+    stepsContainer.innerHTML = "";
+    steps.forEach((step, index) => {
+      const div = document.createElement("div");
+      div.className = "step";
+      div.innerHTML = `
+        <input type="text" placeholder="User says..." value="${step.userSay.replace(/"/g, '&quot;')}" oninput="steps[${index}].userSay=this.value"/>
+        <input type="text" placeholder="Bot replies..." value="${step.botReply.replace(/"/g, '&quot;')}" oninput="steps[${index}].botReply=this.value"/>
+        <button style="background:#dc3545;" onclick="removeStep(${index})">X</button>
+      `;
+      stepsContainer.appendChild(div);
     });
+  }
 
-    /*****************************************
-     * Account Settings Modal Functions
-     *****************************************/
-    const accountSettingsModal = document.getElementById("accountSettingsModal");
-    function openAccountSettings() {
-      accountSettingsModal.style.display = "flex";
-      accountSettingsModal.style.alignItems = "center";
-      accountSettingsModal.style.justifyContent = "center";
-      document.body.style.overflow = "hidden";
-      document.getElementById("userDropdown").style.display = "none";
-    }
-    function closeAccountSettings() {
-      accountSettingsModal.style.display = "none";
-      document.body.style.overflow = "";
-    }
-    function saveAccountSettings() {
-      document.getElementById("accSettingsStatus").innerHTML = `<span style="color: #4CAF50;">Account settings saved (demo)</span>`;
-    }
+  window.addStep = function() {
+    steps.push({ userSay: "", botReply: "" });
+    updateStepsUI();
+  };
+  window.removeStep = function(index) {
+    steps.splice(index, 1);
+    updateStepsUI();
+  };
 
-    /*****************************************
-     * Billing Modal Functions
-     *****************************************/
-    const billingModal = document.getElementById("billingModal");
-    function openBilling() {
-      billingModal.style.display = "flex";
-      billingModal.style.alignItems = "center";
-      billingModal.style.justifyContent = "center";
-      document.body.style.overflow = "hidden";
-      document.getElementById("userDropdown").style.display = "none";
-      const plan = localStorage.getItem("currentPlan") || "No plan";
-      document.getElementById("billingPlan").textContent = plan;
-      document.getElementById("billingDate").textContent = "2025-12-31";
+  /***********************************************
+   * 8) Save/Load scenario from Firestore
+   ***********************************************/
+  async function loadScenario() {
+    if (!currentUser) return;
+    const docRef = doc(db, "users", currentUser.uid, "botData", "scenario");
+    const snap = await getDoc(docRef);
+    if (snap.exists()) {
+      const data = snap.data();
+      document.getElementById("botName").value = data.botName || "";
+      document.getElementById("botGreeting").value = data.greeting || "";
+      document.getElementById("botFallback").value = data.fallback || "";
+      steps = data.steps || [];
+      updateStepsUI();
+    } else {
+      steps = [];
+      updateStepsUI();
     }
-    function closeBilling() {
-      billingModal.style.display = "none";
-      document.body.style.overflow = "";
+  }
+
+  window.saveScenario = async function() {
+    if (!currentUser) {
+      alert("Not logged in!");
+      return;
     }
-
-    /*****************************************
-     * Animate on DOMContentLoaded
-     *****************************************/
-    document.addEventListener("DOMContentLoaded", function() {
-      const fadeEls = document.querySelectorAll(".fade-in-up");
-      fadeEls.forEach((el, idx) => {
-        el.style.animationDelay = (idx * 0.2) + "s";
-      });
-    });
-  </script>
-
-  <!-- *****************************************
-       * Firebase Initialization and Auth Functions
-       ***************************************** -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
-    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, sendEmailVerification } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
-
-    // Firebase configuration – замените данные на ваши (из Firebase Console)
-    const firebaseConfig = {
-      apiKey: "AIzaSyBVYpupWLu8KtaOvC5jnXJE2_bzimIzTyQ",
-      authDomain: "calltechai.firebaseapp.com",
-      projectId: "calltechai",
-      storageBucket: "calltechai.firebasestorage.app",
-      messagingSenderId: "835676076075",
-      appId: "1:835676076075:web:63f155b187cd1646b9926e",
-      measurementId: "G-EGWWQ9H9EK"
+    const scenarioData = {
+      botName: document.getElementById("botName").value,
+      greeting: document.getElementById("botGreeting").value,
+      fallback: document.getElementById("botFallback").value,
+      steps: steps,
+      updatedAt: new Date().toISOString()
     };
+    try {
+      await setDoc(doc(db, "users", currentUser.uid, "botData", "scenario"), scenarioData);
+      document.getElementById("scenarioStatus").textContent = "Scenario saved!";
+    } catch (err) {
+      document.getElementById("scenarioStatus").textContent = "Error saving scenario: " + err.message;
+    }
+  };
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    const auth = getAuth(app);
+  /***********************************************
+   * 9) Utility to show the correct section on load
+   ***********************************************/
+  document.addEventListener("DOMContentLoaded", () => {
+    // By default, show auth if not logged in
+    showSection("auth-section");
+  });
+</script>
 
-    console.log("Firebase initialized with real email verification!");
-
-    // ======================
-    // doSignUp: Реальная логика регистрации с отправкой email верификации
-    // ======================
-    window.doSignUp = async function() {
-      const email = document.getElementById("signupEmail").value;
-      const pass = document.getElementById("signupPassword").value;
-      const passConfirm = document.getElementById("signupPasswordConfirm").value;
-      const signupStatus = document.getElementById("signupStatus");
-
-      signupStatus.innerHTML = "";
-
-      if (!email || !pass) {
-        signupStatus.innerHTML = `<span style="color: red;">Please fill all fields!</span>`;
-        return;
-      }
-      if (pass !== passConfirm) {
-        signupStatus.innerHTML = `<span style="color: red;">Passwords do not match!</span>`;
-        return;
-      }
-
-      try {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
-        const user = userCredential.user;
-
-        // Отправляем письмо для верификации
-        await sendEmailVerification(user);
-
-        signupStatus.innerHTML = `<span style="color: #4CAF50; font-weight:600;">Registration successful! Check your email for verification.</span>`;
-
-        localStorage.setItem("firebaseUser", JSON.stringify({
-          uid: user.uid,
-          email: user.email,
-          verified: user.emailVerified
-        }));
-
-        setTimeout(() => { closeSignUp(); checkLoginState(); }, 3000);
-      } catch (err) {
-        signupStatus.innerHTML = `<span style="color: red;">Sign Up error: ${err.message}</span>`;
-      }
-    };
-
-    // ======================
-    // doLogin: Реальная логика входа с показом уведомления об успехе
-    // ======================
-    window.doLogin = async function() {
-      const email = document.getElementById("loginEmail").value;
-      const pass = document.getElementById("loginPassword").value;
-      const loginStatus = document.getElementById("loginStatus");
-      const loginBtn = document.getElementById("loginBtn");
-
-      loginStatus.innerHTML = "";
-      loginBtn.textContent = "Log In";
-      loginBtn.style.backgroundColor = "#415a77";
-
-      if (!email || !pass) {
-        loginStatus.innerHTML = `<span style="color: red;">Please enter email and password!</span>`;
-        return;
-      }
-
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, pass);
-        const user = userCredential.user;
-
-        if (!user.emailVerified) {
-          loginStatus.innerHTML = `<span style="color: orange; font-size:0.85rem; font-weight:600;">Email not verified!</span>`;
-        } else {
-          loginStatus.innerHTML = `<span style="color: #4CAF50; font-weight:600;">Success &#10004;</span>`;
-          loginBtn.textContent = "Success ✅";
-          loginBtn.style.backgroundColor = "#4CAF50";
-        }
-
-        localStorage.setItem("firebaseUser", JSON.stringify({
-          uid: user.uid,
-          email: user.email,
-          verified: user.emailVerified
-        }));
-      } catch (err) {
-        loginStatus.innerHTML = `<span style="color: red;">Login error: ${err.message}</span>`;
-      }
-    };
-
-    // ======================
-    // onAuthStateChanged: Отслеживание состояния входа
-    // ======================
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        const userData = {
-          uid: user.uid,
-          email: user.email,
-          verified: user.emailVerified
-        };
-        localStorage.setItem("firebaseUser", JSON.stringify(userData));
-      } else {
-        localStorage.removeItem("firebaseUser");
-      }
-      checkLoginState();
-    });
-
-    // ======================
-    // doLogout: Выход
-    // ======================
-    window.doLogout = async function() {
-      await signOut(auth);
-      localStorage.removeItem("firebaseUser");
-      alert("You have logged out!");
-      checkLoginState();
-    };
-  </script>
 </body>
 </html>
