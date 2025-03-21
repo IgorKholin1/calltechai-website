@@ -93,6 +93,10 @@
     #customLink:hover { background-color: #a8dadc; color: #0a0f1f; }
 
     /* Auth Buttons */
+    .auth-buttons {
+      display: flex;
+      align-items: center;
+    }
     .auth-buttons button {
       background-color: #415a77;
       border: none;
@@ -180,7 +184,7 @@
      *****************************************/
     .hero {
       position: relative;
-      height: 70vh;
+      min-height: 70vh; /* вместо фиксированного height:70vh */
       display: flex;
       align-items: center;
       justify-content: center;
@@ -450,10 +454,10 @@
     .checkbox-row {
       display: flex;
       align-items: center;
+      width: 100%;
+      max-width: 300px;
       justify-content: flex-start;
       gap: 0.5rem;
-      max-width: 300px;
-      width: 100%;
       margin-bottom: 1rem;
       font-size: 0.9rem;
     }
@@ -506,9 +510,43 @@
       border: none;
       border-radius: 5px;
     }
+
+    /*****************************************
+     * MEDIA QUERY (Mobile)
+     *****************************************/
+    @media (max-width: 768px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      nav a {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+      .auth-buttons {
+        margin-left: 0;
+        margin-top: 0.5rem;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+      .profile-icon {
+        margin-left: 0;
+        margin-top: 0.5rem;
+      }
+      .hero {
+        min-height: 60vh; /* Чуть уменьшим на мобильных */
+      }
+    }
   </style>
 </head>
-<body onload="checkLoginState()">
+
+<!-- Прокрутка к верху при загрузке (если нет #hash) -->
+<body onload="if(!location.hash){window.scrollTo(0,0);} checkLoginState();">
 
   <!-- HEADER -->
   <header class="fade-in-up">
@@ -778,7 +816,6 @@
       // Проверяем текущий план
       let plan = localStorage.getItem("currentPlan");
       if (plan) {
-        // если раньше были русские названия
         if (plan === "Базовый") plan = "Basic";
         if (plan === "Продвинутый") plan = "Advanced";
         if (plan === "Премиум") plan = "Premium";
@@ -941,16 +978,6 @@
     }
 
     /*****************************************
-     * Animate on DOMContentLoaded
-     *****************************************/
-    document.addEventListener("DOMContentLoaded", function() {
-      const fadeEls = document.querySelectorAll(".fade-in-up");
-      fadeEls.forEach((el, idx) => {
-        el.style.animationDelay = (idx * 0.2) + "s";
-      });
-    });
-
-    /*****************************************
      * doLogin & doSignUp Functions (Firebase)
      *****************************************/
     window.doLogin = async function() {
@@ -1046,6 +1073,7 @@
       }
     };
 
+    // Следим за изменением статуса Firebase (логин/логаут, верифицирован ли email)
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const userData = {
@@ -1053,7 +1081,7 @@
           email: user.email,
           verified: user.emailVerified
         };
-        // Если уже в localStorage есть policyAccepted, перенесём его в userData
+        // Если уже в localStorage есть policyAccepted, перенесём его
         const storedUser = localStorage.getItem("firebaseUser");
         if (storedUser) {
           const storedObj = JSON.parse(storedUser);
