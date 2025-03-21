@@ -1,16 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>CallTechAI – Control Panel</title>
+  <meta charset="UTF-8"/>
+  <title>CallTechAI – Unified Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
+
   <style>
     /* RESET */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+    }
     html, body {
       font-family: "Poppins", sans-serif;
       color: #fff;
@@ -23,70 +28,189 @@
       display: flex;
       flex-direction: column;
     }
+
+    /* HEADER */
     header {
-      background: rgba(10,15,31,0.8);
-      padding: 1rem 2rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding: 1rem 2rem;
+      background: rgba(10,15,31,0.8);
       box-shadow: 0 2px 6px rgba(0,0,0,0.3);
       position: sticky;
-      top: 0; z-index: 1000;
+      top: 0; 
+      z-index: 1000;
     }
     .logo {
-      font-size: 1.4rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
+      font-size: 1.4rem; 
+      font-weight: 700; 
+      letter-spacing: 1px; 
+      text-transform: uppercase;
     }
     nav a {
-      margin-left: 1.5rem; color: #fff; text-decoration: none; font-weight: 500;
+      margin-left: 1.5rem; 
+      color: #fff; 
+      text-decoration: none; 
+      font-weight: 500; 
       transition: color 0.3s;
     }
     nav a:hover { color: #a8dadc; }
-    .container {
-      width: 90%; max-width: 1000px;
-      margin: 2rem auto;
+
+    /* LANDING */
+    .landing {
+      flex: 1; 
+      display: none; 
+      justify-content: center; 
+      align-items: center; 
+      flex-direction: column;
+      text-align: center; 
+      padding: 2rem;
+    }
+    .landing h1 {
+      font-size: 2.4rem; 
+      margin-bottom: 1rem; 
+      font-weight: 700;
+    }
+    .landing-buttons {
+      display: flex; 
+      gap: 1rem; 
+      margin-top: 2rem;
+    }
+
+    /* BUTTONS */
+    button {
+      background-color: #415a77; 
+      color: #fff; 
+      border: none;
+      padding: 0.8rem 1.5rem; 
+      border-radius: 50px; 
+      cursor: pointer;
+      font-weight: 600; 
+      box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+      transition: background-color 0.3s;
+    }
+    button:hover {
+      background-color: #778da9;
+    }
+
+    /* MODALS */
+    .modal {
+      display: none; 
+      position: fixed; 
+      top: 0; 
+      left: 0;
+      width: 100%; 
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      align-items: center; 
+      justify-content: center;
+      z-index: 9999;
+    }
+    .modal-content {
       background: rgba(255,255,255,0.1);
       backdrop-filter: blur(8px);
       border-radius: 15px;
       padding: 2rem;
+      width: 90%; 
+      max-width: 400px;
+      position: relative;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+      text-align: center;
     }
-    h2 { font-size: 1.6rem; margin-bottom: 1rem; font-weight: 700; text-align: center; }
-    label { display: block; margin: 0.8rem 0 0.3rem; font-weight: 600; }
-    input, select, textarea {
-      width: 100%; padding: 0.6rem; border-radius: 5px; border: none;
-      margin-bottom: 0.5rem; font-size: 1rem;
+    .modal-close {
+      position: absolute; 
+      top: 1rem; 
+      right: 1rem; 
+      font-size: 1.5rem; 
+      cursor: pointer; 
+      color: #fff;
     }
-    button {
-      background-color: #415a77; color: #fff; border: none;
-      padding: 0.8rem 1.5rem; border-radius: 50px; cursor: pointer;
-      font-weight: 600; box-shadow: 0 3px 5px rgba(0,0,0,0.2);
-      margin-top: 1rem; transition: background-color 0.3s;
+    .modal-content input {
+      width: 100%; 
+      padding: 0.6rem; 
+      border: none; 
+      border-radius: 5px; 
+      margin-bottom: 1rem;
     }
-    button:hover { background-color: #778da9; }
-    .auth-section, .dashboard-section, .scenario-section, .payment-section {
-      margin-bottom: 2rem;
-      display: none;
+
+    /* DASHBOARD */
+    .dashboard {
+      flex: 1; 
+      display: none; 
+      padding: 2rem;
     }
-    .show { display: block !important; }
+    .dashboard h2 {
+      font-size: 1.8rem; 
+      margin-bottom: 1rem; 
+      text-align: center;
+    }
+    .plan-box {
+      background: rgba(255,255,255,0.1);
+      padding: 1rem; 
+      border-radius: 10px; 
+      margin-bottom: 1rem;
+    }
+
+    /* PLANS MODAL */
+    .plans-modal .modal-content {
+      max-width: 500px;
+    }
+    .plans-list {
+      display: flex; 
+      gap: 1rem; 
+      flex-wrap: wrap; 
+      justify-content: center; 
+      margin-top: 1rem;
+    }
+    .plan-card {
+      background: rgba(255,255,255,0.2); 
+      border-radius: 10px; 
+      padding: 1rem; 
+      width: 140px; 
+      text-align: center;
+    }
+    .plan-card h3 { 
+      font-size: 1.2rem; 
+      margin-bottom: 0.5rem; 
+    }
+    .plan-card .price { 
+      font-size: 1.4rem; 
+      color: #a8dadc; 
+      margin-bottom: 0.5rem; 
+    }
+    .plan-card button {
+      margin-top: 0.5rem; 
+      border-radius: 20px; 
+      width: 100%;
+    }
+
+    /* SCENARIO STEPS */
     .scenario-steps {
-      background: rgba(255,255,255,0.2);
-      border-radius: 10px;
-      padding: 1rem;
+      background: rgba(255,255,255,0.1);
+      padding: 1rem; 
+      border-radius: 10px; 
       margin-top: 1rem;
     }
     .step {
-      display: flex; gap: 1rem; margin-bottom: 0.5rem;
+      display: flex; 
+      gap: 1rem; 
+      margin-bottom: 0.5rem;
     }
     .step input {
       width: 45%;
     }
+
     footer {
-      text-align: center;
-      padding: 1rem; margin-top: auto;
-      background-color: rgba(0,0,0,0.2);
+      text-align: center; 
+      padding: 1rem; 
+      background: rgba(0,0,0,0.2); 
+      margin-top: auto; 
       font-size: 0.9rem;
     }
-    footer a { color: #a8dadc; text-decoration: none; }
+    footer a { 
+      color: #a8dadc; 
+      text-decoration: none; 
+    }
   </style>
 </head>
 <body>
@@ -94,89 +218,101 @@
 <header>
   <div class="logo">CallTechAI</div>
   <nav>
-    <a href="#" onclick="showSection('auth-section')">Auth</a>
-    <a href="#" onclick="showSection('payment-section')">Payment</a>
-    <a href="#" onclick="showSection('dashboard-section')">Dashboard</a>
+    <a href="#" onclick="showLanding()">Home</a>
+    <a href="#" onclick="openLoginModal()">Log In</a>
+    <a href="#" onclick="openSignUpModal()">Sign Up</a>
   </nav>
 </header>
 
-<!-- AUTH SECTION -->
-<div class="container auth-section" id="auth-section">
-  <h2>User Authentication</h2>
-  <div style="display:flex; gap:1rem; flex-wrap:wrap;">
-    <!-- Login -->
-    <div style="flex:1; min-width:300px;">
-      <h3>Log In</h3>
-      <label for="loginEmail">Email</label>
-      <input type="email" id="loginEmail" placeholder="you@example.com"/>
-      <label for="loginPassword">Password</label>
-      <input type="password" id="loginPassword" placeholder="******"/>
-      <button onclick="doLogin()">Log In</button>
-      <p id="loginStatus" style="margin-top:0.5rem;"></p>
-    </div>
-    <!-- Sign Up -->
-    <div style="flex:1; min-width:300px;">
-      <h3>Sign Up</h3>
-      <label for="signupEmail">Email</label>
-      <input type="email" id="signupEmail" placeholder="you@example.com"/>
-      <label for="signupPassword">Password</label>
-      <input type="password" id="signupPassword" placeholder="******"/>
-      <label for="signupPassword2">Confirm Password</label>
-      <input type="password" id="signupPassword2" placeholder="******"/>
-      <button onclick="doSignUp()">Sign Up</button>
-      <p id="signupStatus" style="margin-top:0.5rem;"></p>
-    </div>
-  </div>
-  <button style="background:#dc3545;" onclick="doLogout()">Log Out</button>
-  <p id="logoutStatus" style="margin-top:0.5rem;"></p>
-</div>
-
-<!-- PAYMENT SECTION -->
-<div class="container payment-section" id="payment-section">
-  <h2>Choose Plan & Payment</h2>
-  <div>
-    <label>Select a Plan:</label>
-    <select id="planSelect">
-      <option value="basic">$99/mo – Basic</option>
-      <option value="advanced">$199/mo – Advanced</option>
-      <option value="premium">$399/mo – Premium</option>
-    </select>
-    <button onclick="checkoutPlan()">Proceed to Payment</button>
-    <p id="paymentStatus" style="margin-top:1rem;"></p>
+<!-- LANDING PAGE -->
+<div class="landing" id="landingPage">
+  <h1>CallTechAI</h1>
+  <p style="max-width:500px; margin-top:1rem;">
+    Intelligent Voice Auto-Attendants for Business. Automate customer support and call handling with AI technology.
+  </p>
+  <div class="landing-buttons">
+    <button onclick="openLoginModal()">Log In</button>
+    <button onclick="openSignUpModal()">Sign Up</button>
   </div>
 </div>
 
-<!-- DASHBOARD SECTION -->
-<div class="container dashboard-section" id="dashboard-section">
+<!-- LOGIN MODAL -->
+<div class="modal" id="loginModal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeLoginModal()">&times;</span>
+    <h2>Log In</h2>
+    <input type="email" id="loginEmail" placeholder="Email"/>
+    <input type="password" id="loginPassword" placeholder="Password"/>
+    <button onclick="doLogin()">Log In</button>
+    <p id="loginStatus" style="margin-top:0.5rem;"></p>
+  </div>
+</div>
+
+<!-- SIGNUP MODAL -->
+<div class="modal" id="signUpModal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeSignUpModal()">&times;</span>
+    <h2>Sign Up</h2>
+    <input type="email" id="signupEmail" placeholder="Email"/>
+    <input type="password" id="signupPassword" placeholder="Password"/>
+    <input type="password" id="signupPassword2" placeholder="Confirm Password"/>
+    <button onclick="doSignUp()">Sign Up</button>
+    <p id="signupStatus" style="margin-top:0.5rem;"></p>
+  </div>
+</div>
+
+<!-- PLANS MODAL -->
+<div class="modal plans-modal" id="plansModal">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closePlansModal()">&times;</span>
+    <h2>Choose a Plan</h2>
+    <div class="plans-list">
+      <div class="plan-card">
+        <h3>Basic</h3>
+        <div class="price">$99/mo</div>
+        <p style="font-size:0.8rem;">1 language, Basic call scenarios</p>
+        <button onclick="selectPlan('basic')">Select</button>
+      </div>
+      <div class="plan-card">
+        <h3>Advanced</h3>
+        <div class="price">$199/mo</div>
+        <p style="font-size:0.8rem;">3 languages, Extended scenarios</p>
+        <button onclick="selectPlan('advanced')">Select</button>
+      </div>
+      <div class="plan-card">
+        <h3>Premium</h3>
+        <div class="price">$399/mo</div>
+        <p style="font-size:0.8rem;">Unlimited languages, Full customization</p>
+        <button onclick="selectPlan('premium')">Select</button>
+      </div>
+    </div>
+    <p id="plansStatus" style="margin-top:1rem;"></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dashboard" id="dashboard">
   <h2>Dashboard</h2>
-  <p>Welcome, <span id="userEmail"></span>!</p>
-  <p>Your selected plan: <span id="userPlan"></span></p>
+  <p>Welcome, <span id="userEmail"></span></p>
+  <p>Your Plan: <span id="userPlan"></span> 
+    <button style="float:right;" onclick="openPlansModal()">Change Plan</button>
+  </p>
+  <button style="background:#dc3545;" onclick="doLogout()">Log Out</button>
 
-  <!-- Twilio Number Setup -->
-  <h3>Phone Number Setup</h3>
-  <p>Select or buy a Twilio number (demo):</p>
-  <select id="twilioNumberSelect">
-    <option value="">Choose number...</option>
-    <option value="+14120001111">+1 (412) 000-1111</option>
-    <option value="+14120002222">+1 (412) 000-2222</option>
-  </select>
-  <button onclick="assignNumber()">Assign Number</button>
-  <p id="twilioStatus"></p>
-
-  <!-- Scenario Setup -->
-  <div class="scenario-section" id="scenarioSection" style="margin-top:2rem;">
-    <h3>Scenario Setup</h3>
+  <div class="scenario-section" style="margin-top:2rem;">
+    <h3>Bot Settings</h3>
+    <p id="planWarning" style="color:yellow;"></p>
     <label>Bot Name</label>
-    <input type="text" id="botName" placeholder="MyBot"/>
+    <input type="text" id="botName"/>
 
     <label>Greeting</label>
-    <input type="text" id="botGreeting" placeholder="Hello! How can I help you?"/>
+    <input type="text" id="botGreeting"/>
 
     <label>Fallback</label>
-    <input type="text" id="botFallback" placeholder="Sorry, I didn't catch that." />
+    <input type="text" id="botFallback"/>
 
     <h4>Steps (User says → Bot replies)</h4>
-    <div id="stepsContainer"></div>
+    <div class="scenario-steps" id="stepsContainer"></div>
     <button onclick="addStep()">+ Add Step</button>
 
     <button onclick="saveScenario()" style="margin-top:1rem;">Save Scenario</button>
@@ -188,30 +324,29 @@
   <p>&copy; 2025 CallTechAI. All rights reserved. | <a href="#">Privacy Policy</a></p>
 </footer>
 
-<!-- Firebase & Panel Script -->
 <script type="module">
-  /***********************************************
+  /**********************************************
    * 1) Firebase Imports & Init
-   ***********************************************/
+   **********************************************/
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
   import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-analytics.js";
   import {
-    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut,
-    sendEmailVerification
+    getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword,
+    onAuthStateChanged, signOut, sendEmailVerification
   } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-auth.js";
   import {
-    getFirestore, doc, setDoc, getDoc, updateDoc
+    getFirestore, doc, setDoc, getDoc
   } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-  // Replace with your real config
+  // Your actual Firebase config:
   const firebaseConfig = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT_ID.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID",
-    measurementId: "YOUR_MEASUREMENT_ID"
+    apiKey: "AIzaSyBVYpupWLu8KtaOvC5jnXJE2_bzimIzTyQ",
+    authDomain: "calltechai.firebaseapp.com",
+    projectId: "calltechai",
+    storageBucket: "calltechai.firebasestorage.app",
+    messagingSenderId: "835676076075",
+    appId: "1:835676076075:web:63f155b187cd1646b9926e",
+    measurementId: "G-EGWWQ9H9EK"
   };
 
   const app = initializeApp(firebaseConfig);
@@ -219,161 +354,166 @@
   const auth = getAuth(app);
   const db = getFirestore(app);
 
-  // Global state
   let currentUser = null;
-  let steps = []; // array of { userSay, botReply }
+  let steps = [];
 
-  /***********************************************
-   * 2) onAuthStateChanged
-   ***********************************************/
-  onAuthStateChanged(auth, (user) => {
+  /**********************************************
+   * 2) On Auth State Changed
+   **********************************************/
+  onAuthStateChanged(auth, async (user) => {
     if (user) {
       currentUser = user;
       console.log("Logged in as:", user.email);
       document.getElementById("userEmail").textContent = user.email;
-      showSection("dashboard-section");
-      loadUserPlan(); // load plan from Firestore
-      loadScenario(); // load scenario from Firestore
+      showDashboard();
+      await loadPlan();
+      await loadScenario();
     } else {
       currentUser = null;
       console.log("Not logged in");
-      showSection("auth-section");
+      showLanding();
     }
   });
 
-  /***********************************************
-   * 3) Auth Functions
-   ***********************************************/
+  /**********************************************
+   * 3) Show/Hide sections
+   **********************************************/
+  function showLanding() {
+    document.getElementById("landingPage").style.display = "flex";
+    document.getElementById("dashboard").style.display = "none";
+  }
+  function showDashboard() {
+    document.getElementById("landingPage").style.display = "none";
+    document.getElementById("dashboard").style.display = "block";
+  }
+
+  /**********************************************
+   * 4) Login / Signup Modals
+   **********************************************/
+  function openLoginModal() {
+    document.getElementById("loginModal").style.display = "flex";
+  }
+  function closeLoginModal() {
+    document.getElementById("loginModal").style.display = "none";
+  }
+  function openSignUpModal() {
+    document.getElementById("signUpModal").style.display = "flex";
+  }
+  function closeSignUpModal() {
+    document.getElementById("signUpModal").style.display = "none";
+  }
+
+  /**********************************************
+   * 5) doSignUp, doLogin, doLogout
+   **********************************************/
   window.doSignUp = async function() {
     const email = document.getElementById("signupEmail").value;
     const pass = document.getElementById("signupPassword").value;
     const pass2 = document.getElementById("signupPassword2").value;
-    const status = document.getElementById("signupStatus");
-    status.textContent = "";
+    const st = document.getElementById("signupStatus");
+    st.textContent = "";
 
     if (!email || !pass || !pass2) {
-      status.textContent = "Please fill all fields!";
+      st.textContent = "Please fill all fields!";
       return;
     }
     if (pass !== pass2) {
-      status.textContent = "Passwords do not match!";
+      st.textContent = "Passwords do not match!";
       return;
     }
-
     try {
       const userCred = await createUserWithEmailAndPassword(auth, email, pass);
       await sendEmailVerification(userCred.user);
-      status.textContent = "Registration successful! Check your email for verification.";
+      st.textContent = "Registration successful! Check email for verification.";
+      setTimeout(() => { closeSignUpModal(); }, 1500);
     } catch (err) {
-      status.textContent = "Sign Up error: " + err.message;
+      st.textContent = "Sign Up error: " + err.message;
     }
   };
 
   window.doLogin = async function() {
     const email = document.getElementById("loginEmail").value;
     const pass = document.getElementById("loginPassword").value;
-    const status = document.getElementById("loginStatus");
-    status.textContent = "";
-
+    const st = document.getElementById("loginStatus");
+    st.textContent = "";
     if (!email || !pass) {
-      status.textContent = "Please fill all fields!";
+      st.textContent = "Please fill all fields!";
       return;
     }
-
     try {
       await signInWithEmailAndPassword(auth, email, pass);
-      status.textContent = "Login successful!";
+      st.textContent = "Login successful!";
+      setTimeout(() => { closeLoginModal(); }, 1500);
     } catch (err) {
-      status.textContent = "Login error: " + err.message;
+      st.textContent = "Login error: " + err.message;
     }
   };
 
   window.doLogout = async function() {
     await signOut(auth);
-    document.getElementById("logoutStatus").textContent = "Logged out!";
+    showLanding();
   };
 
-  /***********************************************
-   * 4) Show/Hide sections
-   ***********************************************/
-  function showSection(sectionId) {
-    // Hide all
-    document.querySelectorAll(".auth-section, .dashboard-section, .payment-section")
-      .forEach(el => el.style.display = "none");
-    // Show needed
-    document.getElementById(sectionId).style.display = "block";
+  /**********************************************
+   * 6) Plans Modal
+   **********************************************/
+  function openPlansModal() {
+    document.getElementById("plansModal").style.display = "flex";
+  }
+  function closePlansModal() {
+    document.getElementById("plansModal").style.display = "none";
   }
 
-  /***********************************************
-   * 5) Payment (Stripe Demo)
-   ***********************************************/
-  window.checkoutPlan = async function() {
-    if (!currentUser) {
-      alert("Please log in first!");
-      return;
-    }
-    const plan = document.getElementById("planSelect").value;
-    // Here you'd redirect to Stripe Checkout or Payment Link
-    // We'll just emulate success
-    document.getElementById("paymentStatus").textContent = "Payment successful! Plan: " + plan;
+  async function selectPlan(planName) {
+    if (!currentUser) return alert("Not logged in!");
+    document.getElementById("plansStatus").textContent = "Payment successful for plan: " + planName;
     // Save plan in Firestore
-    await setDoc(doc(db, "users", currentUser.uid), { plan }, { merge: true });
-    // Then go to dashboard
-    showSection("dashboard-section");
-    loadUserPlan();
-  };
+    await setDoc(doc(db, "users", currentUser.uid), { plan: planName }, { merge: true });
+    setTimeout(() => {
+      closePlansModal();
+      loadPlan();
+    }, 1000);
+  }
 
-  async function loadUserPlan() {
+  async function loadPlan() {
     if (!currentUser) return;
     const docRef = doc(db, "users", currentUser.uid);
-    const docSnap = await getDoc(docRef);
-    let userPlan = docSnap.exists() && docSnap.data().plan ? docSnap.data().plan : "None";
-    document.getElementById("userPlan").textContent = userPlan;
+    const snap = await getDoc(docRef);
+    let plan = snap.exists() && snap.data().plan ? snap.data().plan : "none";
+    document.getElementById("userPlan").textContent = plan;
+    if (plan === "none") {
+      document.getElementById("planWarning").textContent = "Please purchase a plan to unlock full scenario features.";
+    } else {
+      document.getElementById("planWarning").textContent = "";
+    }
   }
 
-  /***********************************************
-   * 6) Twilio Number (Demo)
-   ***********************************************/
-  window.assignNumber = async function() {
-    if (!currentUser) return alert("Not logged in!");
-    const sel = document.getElementById("twilioNumberSelect");
-    const number = sel.value;
-    if (!number) return alert("Please select a number!");
-    // Save number to Firestore
-    await setDoc(doc(db, "users", currentUser.uid), { phoneNumber: number }, { merge: true });
-    document.getElementById("twilioStatus").textContent = "Number assigned: " + number;
-  };
-
-  /***********************************************
-   * 7) Scenario (Steps) logic
-   ***********************************************/
+  /**********************************************
+   * 7) Scenario Setup
+   **********************************************/
+  function addStep() {
+    steps.push({ userSay: "", botReply: "" });
+    updateStepsUI();
+  }
+  function removeStep(index) {
+    steps.splice(index, 1);
+    updateStepsUI();
+  }
   function updateStepsUI() {
-    const stepsContainer = document.getElementById("stepsContainer");
-    stepsContainer.innerHTML = "";
-    steps.forEach((step, index) => {
+    const cont = document.getElementById("stepsContainer");
+    cont.innerHTML = "";
+    steps.forEach((s, i) => {
       const div = document.createElement("div");
       div.className = "step";
       div.innerHTML = `
-        <input type="text" placeholder="User says..." value="${step.userSay.replace(/"/g, '&quot;')}" oninput="steps[${index}].userSay=this.value"/>
-        <input type="text" placeholder="Bot replies..." value="${step.botReply.replace(/"/g, '&quot;')}" oninput="steps[${index}].botReply=this.value"/>
-        <button style="background:#dc3545;" onclick="removeStep(${index})">X</button>
+        <input type="text" placeholder="User says..." value="${s.userSay.replace(/"/g,'&quot;')}" oninput="steps[${i}].userSay=this.value"/>
+        <input type="text" placeholder="Bot replies..." value="${s.botReply.replace(/"/g,'&quot;')}" oninput="steps[${i}].botReply=this.value"/>
+        <button style="background:#dc3545;" onclick="removeStep(${i})">X</button>
       `;
-      stepsContainer.appendChild(div);
+      cont.appendChild(div);
     });
   }
 
-  window.addStep = function() {
-    steps.push({ userSay: "", botReply: "" });
-    updateStepsUI();
-  };
-  window.removeStep = function(index) {
-    steps.splice(index, 1);
-    updateStepsUI();
-  };
-
-  /***********************************************
-   * 8) Save/Load scenario from Firestore
-   ***********************************************/
   async function loadScenario() {
     if (!currentUser) return;
     const docRef = doc(db, "users", currentUser.uid, "botData", "scenario");
@@ -392,31 +532,27 @@
   }
 
   window.saveScenario = async function() {
-    if (!currentUser) {
-      alert("Not logged in!");
-      return;
-    }
+    if (!currentUser) return alert("Not logged in!");
     const scenarioData = {
       botName: document.getElementById("botName").value,
       greeting: document.getElementById("botGreeting").value,
       fallback: document.getElementById("botFallback").value,
-      steps: steps,
+      steps,
       updatedAt: new Date().toISOString()
     };
     try {
       await setDoc(doc(db, "users", currentUser.uid, "botData", "scenario"), scenarioData);
       document.getElementById("scenarioStatus").textContent = "Scenario saved!";
     } catch (err) {
-      document.getElementById("scenarioStatus").textContent = "Error saving scenario: " + err.message;
+      document.getElementById("scenarioStatus").textContent = "Error: " + err.message;
     }
   };
 
-  /***********************************************
-   * 9) Utility to show the correct section on load
-   ***********************************************/
+  /**********************************************
+   * 8) On Load
+   **********************************************/
   document.addEventListener("DOMContentLoaded", () => {
-    // By default, show auth if not logged in
-    showSection("auth-section");
+    showLanding();
   });
 </script>
 
