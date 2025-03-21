@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>CallTechAI – Unified Panel</title>
+  <title>CallTechAI – Unified Panel with Trial</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -32,7 +32,6 @@
     /* HEADER */
     header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       padding: 1rem 2rem;
       background: rgba(10,15,31,0.8);
@@ -47,16 +46,8 @@
       letter-spacing: 1px; 
       text-transform: uppercase;
     }
-    nav a {
-      margin-left: 1.5rem; 
-      color: #fff; 
-      text-decoration: none; 
-      font-weight: 500; 
-      transition: color 0.3s;
-    }
-    nav a:hover { color: #a8dadc; }
 
-    /* LANDING */
+    /* LANDING PAGE */
     .landing {
       flex: 1; 
       display: none; 
@@ -70,6 +61,12 @@
       font-size: 2.4rem; 
       margin-bottom: 1rem; 
       font-weight: 700;
+    }
+    .landing p {
+      max-width:500px; 
+      margin-top:1rem; 
+      font-size:1rem; 
+      line-height:1.4;
     }
     .landing-buttons {
       display: flex; 
@@ -144,12 +141,6 @@
       margin-bottom: 1rem; 
       text-align: center;
     }
-    .plan-box {
-      background: rgba(255,255,255,0.1);
-      padding: 1rem; 
-      border-radius: 10px; 
-      margin-bottom: 1rem;
-    }
 
     /* PLANS MODAL */
     .plans-modal .modal-content {
@@ -215,20 +206,17 @@
 </head>
 <body>
 
+<!-- HEADER -->
 <header>
   <div class="logo">CallTechAI</div>
-  <nav>
-    <a href="#" onclick="showLanding()">Home</a>
-    <a href="#" onclick="openLoginModal()">Log In</a>
-    <a href="#" onclick="openSignUpModal()">Sign Up</a>
-  </nav>
 </header>
 
 <!-- LANDING PAGE -->
 <div class="landing" id="landingPage">
   <h1>CallTechAI</h1>
-  <p style="max-width:500px; margin-top:1rem;">
-    Intelligent Voice Auto-Attendants for Business. Automate customer support and call handling with AI technology.
+  <p>
+    Intelligent Voice Auto-Attendants for Business.<br/>
+    Automate customer support and call handling with AI technology.
   </p>
   <div class="landing-buttons">
     <button onclick="openLoginModal()">Log In</button>
@@ -297,6 +285,13 @@
   <p>Your Plan: <span id="userPlan"></span> 
     <button style="float:right;" onclick="openPlansModal()">Change Plan</button>
   </p>
+  <!-- 7-DAY TRIAL BUTTON -->
+  <div style="margin-bottom:1rem;">
+    <button id="trialButton" style="background:#28a745; display:none;" onclick="activateTrial()">
+      Activate 7-Day Trial
+    </button>
+    <p id="trialStatus" style="margin-top:0.5rem; color:#a8dadc;"></p>
+  </div>
   <button style="background:#dc3545;" onclick="doLogout()">Log Out</button>
 
   <div class="scenario-section" style="margin-top:2rem;">
@@ -481,15 +476,37 @@
     const snap = await getDoc(docRef);
     let plan = snap.exists() && snap.data().plan ? snap.data().plan : "none";
     document.getElementById("userPlan").textContent = plan;
+    // Show or hide trial button
+    const trialBtn = document.getElementById("trialButton");
+    const trialSt = document.getElementById("trialStatus");
     if (plan === "none") {
       document.getElementById("planWarning").textContent = "Please purchase a plan to unlock full scenario features.";
+      trialBtn.style.display = "inline-block";
+      trialSt.textContent = "";
+    } else if (plan === "trial") {
+      document.getElementById("planWarning").textContent = "Trial plan: basic features for 7 days.";
+      trialBtn.style.display = "none";
+      trialSt.textContent = "You have a 7-day trial plan with basic features.";
     } else {
       document.getElementById("planWarning").textContent = "";
+      trialBtn.style.display = "none";
+      trialSt.textContent = "";
     }
   }
 
   /**********************************************
-   * 7) Scenario Setup
+   * 7) Trial Activation
+   **********************************************/
+  window.activateTrial = async function() {
+    if (!currentUser) return alert("Not logged in!");
+    // Set plan to "trial"
+    await setDoc(doc(db, "users", currentUser.uid), { plan: "trial" }, { merge: true });
+    alert("7-day trial activated! Enjoy basic features.");
+    loadPlan();
+  };
+
+  /**********************************************
+   * 8) Scenario Setup
    **********************************************/
   function addStep() {
     steps.push({ userSay: "", botReply: "" });
@@ -549,11 +566,22 @@
   };
 
   /**********************************************
-   * 8) On Load
+   * 9) On Load
    **********************************************/
   document.addEventListener("DOMContentLoaded", () => {
-    showLanding();
+    showLanding(); // Show landing page by default
   });
+
+  // Helpers for modals
+  function closeLoginModal() {
+    document.getElementById("loginModal").style.display = "none";
+  }
+  function closeSignUpModal() {
+    document.getElementById("signUpModal").style.display = "none";
+  }
+  function closePlansModal() {
+    document.getElementById("plansModal").style.display = "none";
+  }
 </script>
 
 </body>
