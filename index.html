@@ -88,7 +88,7 @@
       background-color: #778da9;
       padding: 0.5rem 1rem;
       border-radius: 5px;
-      display: none;
+      display: none; /* показываем только после логина */
     }
     #customLink:hover { background-color: #a8dadc; color: #0a0f1f; }
 
@@ -184,7 +184,7 @@
      *****************************************/
     .hero {
       position: relative;
-      min-height: 70vh; /* вместо фиксированного height:70vh */
+      min-height: 70vh;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -366,6 +366,8 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.4);
       max-height: 90vh;
       overflow-y: auto;
+      /* Видимая рамка */
+      border: 2px solid #778da9;
     }
     .modal-close {
       position: absolute;
@@ -399,7 +401,7 @@
       box-shadow: 0 6px 12px rgba(0,0,0,0.2);
     }
     .modal-plan-card h3 {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin-bottom: 0.5rem;
       font-weight: 700;
     }
@@ -409,7 +411,7 @@
       margin-bottom: 0.8rem;
     }
     .modal-plan-price {
-      font-size: 1.4rem;
+      font-size: 1.3rem;
       margin-bottom: 0.8rem;
       color: #a8dadc;
       font-weight: 700;
@@ -428,6 +430,31 @@
     .modal-plan-button:hover {
       background-color: #778da9;
       box-shadow: 0 4px 7px rgba(0,0,0,0.3);
+    }
+    /* Доп. кнопка “Details” */
+    .show-more-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      text-decoration: underline;
+      cursor: pointer;
+      font-size: 0.9rem;
+      margin-bottom: 0.5rem;
+    }
+    .show-more-btn:hover {
+      color: #a8dadc;
+    }
+    .extra-features {
+      display: none; /* По умолчанию скрыто */
+      text-align: left;
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+    .extra-features ul {
+      list-style-type: disc;
+      margin-left: 1.2rem;
+      margin-top: 0.5rem;
     }
 
     /* Формы внутри модалок: выравнивание */
@@ -539,7 +566,7 @@
         margin-top: 0.5rem;
       }
       .hero {
-        min-height: 60vh; /* Чуть уменьшим на мобильных */
+        min-height: 60vh;
       }
     }
   </style>
@@ -692,7 +719,7 @@
         <input id="loginEmail" type="email" placeholder="Email" />
         <div style="position: relative; width:100%; max-width:300px; margin-bottom:1rem;">
           <input id="loginPassword" type="password" placeholder="Password" style="width:100%;" />
-          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;" 
+          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;"
                 onclick="togglePassword('loginPassword', this)">Show</span>
         </div>
 
@@ -717,16 +744,16 @@
         <input id="signupEmail" type="email" placeholder="Email" required />
         <div style="position: relative; width:100%; max-width:300px; margin-bottom:1rem;">
           <input id="signupPassword" type="password" placeholder="Password" style="width:100%;" required />
-          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;" 
+          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;"
                 onclick="togglePassword('signupPassword', this)">Show</span>
         </div>
         <div style="position: relative; width:100%; max-width:300px; margin-bottom:1rem;">
           <input id="signupPasswordConfirm" type="password" placeholder="Confirm Password" style="width:100%;" required />
-          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;" 
+          <span class="toggle-pw" style="position: absolute; right: 8px; top: 10px; cursor:pointer;"
                 onclick="togglePassword('signupPasswordConfirm', this)">Show</span>
         </div>
 
-        <!-- Принятие политики конфиденциальности -->
+        <!-- Accept Privacy Policy -->
         <div class="checkbox-row">
           <input type="checkbox" id="acceptPolicy" />
           <label for="acceptPolicy">
@@ -747,35 +774,74 @@
       <span class="modal-close" onclick="closePlansModal()">&times;</span>
       <h2>Select a Plan</h2>
       <div class="modal-plans">
+
+        <!-- ESSENTIAL -->
         <div class="modal-plan-card">
-          <h3>Basic</h3>
-          <p>Starter features for small businesses</p>
-          <div class="modal-plan-price">$9.99/mo</div>
-          <button class="modal-plan-button" onclick="choosePlan('Basic')">Select</button>
+          <h3>Essential</h3>
+          <p>Essential features for small businesses</p>
+          <div class="modal-plan-price">$12/mo</div>
+
+          <button class="show-more-btn" onclick="toggleFeatures('essentialFeatures')">Details</button>
+          <div class="extra-features" id="essentialFeatures">
+            <ul>
+              <li>1 language supported</li>
+              <li>Basic call scenarios</li>
+              <li>Limited call analytics</li>
+            </ul>
+          </div>
+
+          <button class="modal-plan-button" onclick="choosePlan('Essential')">Select</button>
         </div>
+
+        <!-- ADVANCED -->
         <div class="modal-plan-card">
           <h3>Advanced</h3>
-          <p>Advanced tools for scaling</p>
-          <div class="modal-plan-price">$19.99/mo</div>
+          <p>Expanded features and CRM integration</p>
+          <div class="modal-plan-price">$29/mo</div>
+
+          <button class="show-more-btn" onclick="toggleFeatures('advancedFeatures')">Details</button>
+          <div class="extra-features" id="advancedFeatures">
+            <ul>
+              <li>Up to 3 languages</li>
+              <li>Customizable scenarios</li>
+              <li>Integration with popular CRMs</li>
+              <li>Extended analytics</li>
+            </ul>
+          </div>
+
           <button class="modal-plan-button" onclick="choosePlan('Advanced')">Select</button>
         </div>
+
+        <!-- PREMIUM -->
         <div class="modal-plan-card">
           <h3>Premium</h3>
-          <p>Everything unlocked</p>
-          <div class="modal-plan-price">$29.99/mo</div>
+          <p>Full automation, analytics, and advanced support</p>
+          <div class="modal-plan-price">$59/mo</div>
+
+          <button class="show-more-btn" onclick="toggleFeatures('premiumFeatures')">Details</button>
+          <div class="extra-features" id="premiumFeatures">
+            <ul>
+              <li>Unlimited languages</li>
+              <li>Advanced scenario builder</li>
+              <li>CRM integration</li>
+              <li>Advanced analytics</li>
+            </ul>
+          </div>
+
           <button class="modal-plan-button" onclick="choosePlan('Premium')">Select</button>
         </div>
+
       </div>
     </div>
   </div>
 
-  <!-- Дополнительные модалки (Account Settings, Billing) -->
+  <!-- Additional Modals (Account Settings, Billing) -->
   <div id="accountSettingsModal" class="modal">
     <div class="modal-content" style="max-width:400px;">
       <span class="modal-close" onclick="closeAccountSettings()">&times;</span>
       <h2>Account Settings</h2>
       <p id="verificationStatus" style="margin-bottom:1rem;"></p>
-      <!-- Пример полей настроек -->
+      <!-- Example settings fields -->
       <label>Display Name</label>
       <input type="text" placeholder="Your Name" />
       <button style="margin-top:1rem;" onclick="saveAccountSettings()">Save</button>
@@ -813,25 +879,29 @@
         userIcon.style.display = "none";
       }
 
-      // Проверяем текущий план
+      // Check current plan
       let plan = localStorage.getItem("currentPlan");
       if (plan) {
-        if (plan === "Базовый") plan = "Basic";
-        if (plan === "Продвинутый") plan = "Advanced";
-        if (plan === "Премиум") plan = "Premium";
-        localStorage.setItem("currentPlan", plan);
         const currentPlanEl = document.getElementById("currentPlan");
         if (currentPlanEl) {
           currentPlanEl.textContent = "You selected plan: " + plan;
         }
       }
 
-      // Проверка триала
+      // Check trial
       const hasTrial = localStorage.getItem("hasTrial");
       const trialInfo = document.getElementById("trialInfo");
       if (hasTrial === "true" && trialInfo) {
         trialInfo.textContent = "Trial is active!";
       }
+    }
+
+    /*****************************************
+     * Toggle “Details” for each plan
+     *****************************************/
+    function toggleFeatures(id) {
+      const block = document.getElementById(id);
+      block.style.display = (block.style.display === "block") ? "none" : "block";
     }
 
     /*****************************************
@@ -997,7 +1067,7 @@
       }
 
       try {
-        // Если remember = true, используем Local Persistence; иначе - Session
+        // If remember = true, use Local Persistence; otherwise Session
         if (remember) {
           await setPersistence(auth, browserLocalPersistence);
         } else {
@@ -1011,7 +1081,7 @@
         loginBtn.textContent = "Success ✅";
         loginBtn.style.backgroundColor = "#4CAF50";
 
-        // Сохраняем пользователя в localStorage
+        // Store user in localStorage
         localStorage.setItem("firebaseUser", JSON.stringify({
           uid: user.uid,
           email: user.email,
@@ -1054,12 +1124,12 @@
         const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
         const user = userCredential.user;
 
-        // Отправляем верификационное письмо
+        // Send verification email
         await sendEmailVerification(user);
 
         signupStatus.innerHTML = `<span style="color: #4CAF50; font-weight:600;">Registration successful! Check your email for verification.</span>`;
 
-        // Запоминаем, что пользователь принял политику
+        // Mark that user accepted policy
         localStorage.setItem("firebaseUser", JSON.stringify({
           uid: user.uid,
           email: user.email,
@@ -1073,7 +1143,6 @@
       }
     };
 
-    // Следим за изменением статуса Firebase (логин/логаут, верифицирован ли email)
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const userData = {
@@ -1081,7 +1150,7 @@
           email: user.email,
           verified: user.emailVerified
         };
-        // Если уже в localStorage есть policyAccepted, перенесём его
+        // If localStorage had policyAccepted, keep it
         const storedUser = localStorage.getItem("firebaseUser");
         if (storedUser) {
           const storedObj = JSON.parse(storedUser);
