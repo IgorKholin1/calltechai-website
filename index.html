@@ -112,7 +112,6 @@
     /*****************************************
      * USER ICON / ACCOUNT DROPDOWN
      *****************************************/
-    /* Заменяем текст Account на иконку профиля с стрелочкой */
     .profile-icon {
       display: inline-flex;
       align-items: center;
@@ -550,7 +549,6 @@
       cursor: pointer;
       color: #fff;
     }
-    /* Show/Hide password link */
     .toggle-pw {
       font-size: 0.8rem;
       color: #a8dadc;
@@ -562,31 +560,6 @@
       color: #fff;
     }
 
-    /*****************************************
-     * MEDIA QUERY
-     *****************************************/
-    @media (max-width: 768px) {
-      header {
-        flex-direction: column;
-        align-items: center;
-      }
-      nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        margin-top: 0.5rem;
-        position: static;
-      }
-      nav a {
-        margin: 0.5rem;
-      }
-      .auth-buttons {
-        margin-left: 0;
-        margin-top: 0.5rem;
-        display: flex;
-        gap: 0.5rem;
-        justify-content: center;
-      }
-    }
   </style>
 </head>
 <body onload="checkLoginState()">
@@ -605,7 +578,6 @@
         <button onclick="openSignUp()">Sign Up</button>
       </div>
 
-      <!-- Заменяем стандартную кнопку Account на иконку с стрелкой -->
       <div id="userIcon" class="profile-icon" onclick="toggleUserDropdown()">
         <img src="images/profileIcon.svg" alt="Profile">
         <span class="down-arrow"></span>
@@ -719,11 +691,66 @@
     <p>&copy; 2025 CallTechAI. All rights reserved. | <a href="#">Privacy Policy</a></p>
   </footer>
 
-  <!-- Контейнер для подгрузки модальных окон (например, через fetch) -->
+  <!-- Контейнер для подгрузки модальных окон -->
   <div id="modalsContainer"></div>
 
   <!-- Контейнер для панели кастомизации -->
   <div id="customContainer"></div>
+
+  <!-- ******************** Модальные окна ******************** -->
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="login-modal">
+    <div class="login-content">
+      <span class="login-close" onclick="closeLogin()">&times;</span>
+      <h2>Log In</h2>
+      <input id="loginEmail" type="email" placeholder="Email" />
+      <input id="loginPassword" type="password" placeholder="Password" />
+      <button id="loginBtn" onclick="doLogin()">Log In</button>
+      <p id="loginStatus" style="margin-top: 1rem;"></p>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signupModal" class="signup-modal">
+    <div class="signup-content">
+      <span class="signup-close" onclick="closeSignUp()">&times;</span>
+      <h2>Sign Up</h2>
+      <input id="signupEmail" type="email" placeholder="Email" />
+      <input id="signupPassword" type="password" placeholder="Password" />
+      <input id="signupPasswordConfirm" type="password" placeholder="Confirm Password" />
+      <button onclick="doSignUp()">Sign Up</button>
+      <p id="signupStatus" style="margin-top: 1rem;"></p>
+    </div>
+  </div>
+
+  <!-- Plans Modal -->
+  <div id="plansModal" class="modal">
+    <div class="modal-content">
+      <span class="modal-close" onclick="closePlansModal()">&times;</span>
+      <h2>Select a Plan</h2>
+      <div class="modal-plans">
+        <div class="modal-plan-card">
+          <h3>Basic</h3>
+          <p>Starter features for small businesses</p>
+          <div class="modal-plan-price">$9.99/mo</div>
+          <button class="modal-plan-button" onclick="choosePlan('Basic')">Select</button>
+        </div>
+        <div class="modal-plan-card">
+          <h3>Advanced</h3>
+          <p>Advanced tools for scaling</p>
+          <div class="modal-plan-price">$19.99/mo</div>
+          <button class="modal-plan-button" onclick="choosePlan('Advanced')">Select</button>
+        </div>
+        <div class="modal-plan-card">
+          <h3>Premium</h3>
+          <p>Everything unlocked</p>
+          <div class="modal-plan-price">$29.99/mo</div>
+          <button class="modal-plan-button" onclick="choosePlan('Premium')">Select</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script>
     /*****************************************
@@ -738,7 +765,7 @@
       if (userJson) {
         customLink.style.display = "inline-block";
         authButtons.style.display = "none";
-        userIcon.style.display = "inline-flex";  // для profile-icon
+        userIcon.style.display = "inline-flex";
       } else {
         customLink.style.display = "none";
         authButtons.style.display = "flex";
@@ -788,10 +815,6 @@
       if (currentPlanEl) {
         currentPlanEl.textContent = "You selected plan: " + planName;
       }
-    }
-    function subscribePlan(planName) {
-      alert("Proceed to checkout for plan: " + planName + " (demo)...");
-      closePlansModal();
     }
     function toggleFeatures(id) {
       const block = document.getElementById(id);
@@ -863,7 +886,6 @@
       accountSettingsModal.style.justifyContent = "center";
       document.body.style.overflow = "hidden";
       document.getElementById("userDropdown").style.display = "none";
-      // Проверка верификации email и вывод уведомления в настройках
       const userJson = localStorage.getItem("firebaseUser");
       const verificationStatus = document.getElementById("verificationStatus");
       if (userJson) {
@@ -935,7 +957,6 @@
         const userCredential = await signInWithEmailAndPassword(auth, email, pass);
         const user = userCredential.user;
 
-        // Сразу показываем успех и закрываем окно через 1.5 сек
         loginStatus.innerHTML = `<span style="color: #4CAF50; font-weight:600;">Success &#10004;</span>`;
         loginBtn.textContent = "Success ✅";
         loginBtn.style.backgroundColor = "#4CAF50";
@@ -977,7 +998,6 @@
         const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
         const user = userCredential.user;
 
-        // Отправляем письмо для верификации
         await sendEmailVerification(user);
 
         signupStatus.innerHTML = `<span style="color: #4CAF50; font-weight:600;">Registration successful! Check your email for verification.</span>`;
