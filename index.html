@@ -2,20 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
-  <title>CallTechAI – Unified Panel with Trial</title>
+  <title>CallTechAI – Unified Control Panel</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet"/>
-
   <style>
     /* RESET */
-    * {
-      margin: 0; 
-      padding: 0; 
-      box-sizing: border-box;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body {
       font-family: "Poppins", sans-serif;
       color: #fff;
@@ -28,8 +23,7 @@
       display: flex;
       flex-direction: column;
     }
-
-    /* HEADER */
+    /* HEADER: Только логотип */
     header {
       display: flex;
       align-items: center;
@@ -41,65 +35,60 @@
       z-index: 1000;
     }
     .logo {
-      font-size: 1.4rem; 
-      font-weight: 700; 
-      letter-spacing: 1px; 
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
       text-transform: uppercase;
     }
-
     /* LANDING PAGE */
     .landing {
-      flex: 1; 
-      display: none; 
-      justify-content: center; 
-      align-items: center; 
+      flex: 1;
+      display: flex;
       flex-direction: column;
-      text-align: center; 
+      justify-content: center;
+      align-items: center;
+      text-align: center;
       padding: 2rem;
     }
     .landing h1 {
-      font-size: 2.4rem; 
-      margin-bottom: 1rem; 
+      font-size: 2.4rem;
+      margin-bottom: 1rem;
       font-weight: 700;
     }
     .landing p {
-      max-width:500px; 
-      margin-top:1rem; 
-      font-size:1rem; 
-      line-height:1.4;
+      max-width: 500px;
+      margin-top: 1rem;
+      font-size: 1rem;
+      line-height: 1.4;
     }
     .landing-buttons {
-      display: flex; 
-      gap: 1rem; 
+      display: flex;
+      gap: 1rem;
       margin-top: 2rem;
     }
-
     /* BUTTONS */
     button {
-      background-color: #415a77; 
-      color: #fff; 
+      background-color: #415a77;
+      color: #fff;
       border: none;
-      padding: 0.8rem 1.5rem; 
-      border-radius: 50px; 
+      padding: 0.8rem 1.5rem;
+      border-radius: 50px;
       cursor: pointer;
-      font-weight: 600; 
+      font-weight: 600;
       box-shadow: 0 3px 5px rgba(0,0,0,0.2);
       transition: background-color 0.3s;
     }
-    button:hover {
-      background-color: #778da9;
-    }
-
+    button:hover { background-color: #778da9; }
     /* MODALS */
     .modal {
-      display: none; 
-      position: fixed; 
-      top: 0; 
+      display: none;
+      position: fixed;
+      top: 0;
       left: 0;
-      width: 100%; 
+      width: 100%;
       height: 100%;
       background: rgba(0,0,0,0.5);
-      align-items: center; 
+      align-items: center;
       justify-content: center;
       z-index: 9999;
     }
@@ -108,108 +97,103 @@
       backdrop-filter: blur(8px);
       border-radius: 15px;
       padding: 2rem;
-      width: 90%; 
+      width: 90%;
       max-width: 400px;
       position: relative;
       box-shadow: 0 5px 10px rgba(0,0,0,0.3);
       text-align: center;
     }
     .modal-close {
-      position: absolute; 
-      top: 1rem; 
-      right: 1rem; 
-      font-size: 1.5rem; 
-      cursor: pointer; 
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      font-size: 1.5rem;
+      cursor: pointer;
       color: #fff;
     }
     .modal-content input {
-      width: 100%; 
-      padding: 0.6rem; 
-      border: none; 
-      border-radius: 5px; 
+      width: 100%;
+      padding: 0.6rem;
+      border: none;
+      border-radius: 5px;
       margin-bottom: 1rem;
     }
-
     /* DASHBOARD */
     .dashboard {
-      flex: 1; 
-      display: none; 
+      flex: 1;
+      display: none;
       padding: 2rem;
     }
     .dashboard h2 {
-      font-size: 1.8rem; 
-      margin-bottom: 1rem; 
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
       text-align: center;
     }
-
     /* PLANS MODAL */
     .plans-modal .modal-content {
       max-width: 500px;
     }
     .plans-list {
-      display: flex; 
-      gap: 1rem; 
-      flex-wrap: wrap; 
-      justify-content: center; 
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
       margin-top: 1rem;
     }
     .plan-card {
-      background: rgba(255,255,255,0.2); 
-      border-radius: 10px; 
-      padding: 1rem; 
-      width: 140px; 
+      background: rgba(255,255,255,0.2);
+      border-radius: 10px;
+      padding: 1rem;
+      width: 140px;
       text-align: center;
     }
-    .plan-card h3 { 
-      font-size: 1.2rem; 
-      margin-bottom: 0.5rem; 
+    .plan-card h3 {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
     }
-    .plan-card .price { 
-      font-size: 1.4rem; 
-      color: #a8dadc; 
-      margin-bottom: 0.5rem; 
+    .plan-card .price {
+      font-size: 1.4rem;
+      color: #a8dadc;
+      margin-bottom: 0.5rem;
     }
     .plan-card button {
-      margin-top: 0.5rem; 
-      border-radius: 20px; 
+      margin-top: 0.5rem;
+      border-radius: 20px;
       width: 100%;
     }
-
+    /* TRIAL BUTTON */
+    #trialButton {
+      background-color: #28a745;
+    }
     /* SCENARIO STEPS */
     .scenario-steps {
       background: rgba(255,255,255,0.1);
-      padding: 1rem; 
-      border-radius: 10px; 
+      padding: 1rem;
+      border-radius: 10px;
       margin-top: 1rem;
     }
     .step {
-      display: flex; 
-      gap: 1rem; 
+      display: flex;
+      gap: 1rem;
       margin-bottom: 0.5rem;
     }
     .step input {
       width: 45%;
     }
-
     footer {
-      text-align: center; 
-      padding: 1rem; 
-      background: rgba(0,0,0,0.2); 
-      margin-top: auto; 
+      text-align: center;
+      padding: 1rem;
+      background: rgba(0,0,0,0.2);
+      margin-top: auto;
       font-size: 0.9rem;
     }
-    footer a { 
-      color: #a8dadc; 
-      text-decoration: none; 
+    footer a {
+      color: #a8dadc;
+      text-decoration: none;
     }
   </style>
 </head>
 <body>
-
-<!-- HEADER -->
-<header>
-  <div class="logo">CallTechAI</div>
-</header>
 
 <!-- LANDING PAGE -->
 <div class="landing" id="landingPage">
@@ -285,26 +269,25 @@
   <p>Your Plan: <span id="userPlan"></span> 
     <button style="float:right;" onclick="openPlansModal()">Change Plan</button>
   </p>
-  <!-- 7-DAY TRIAL BUTTON -->
+  <!-- Пробный период -->
   <div style="margin-bottom:1rem;">
-    <button id="trialButton" style="background:#28a745; display:none;" onclick="activateTrial()">
-      Activate 7-Day Trial
-    </button>
+    <button id="trialButton" style="background:#28a745; display:none;" onclick="activateTrial()">Activate 7-Day Trial</button>
     <p id="trialStatus" style="margin-top:0.5rem; color:#a8dadc;"></p>
   </div>
   <button style="background:#dc3545;" onclick="doLogout()">Log Out</button>
 
+  <!-- Bot Settings (Scenario) -->
   <div class="scenario-section" style="margin-top:2rem;">
     <h3>Bot Settings</h3>
     <p id="planWarning" style="color:yellow;"></p>
     <label>Bot Name</label>
-    <input type="text" id="botName"/>
+    <input type="text" id="botName" placeholder="Enter bot name"/>
 
     <label>Greeting</label>
-    <input type="text" id="botGreeting"/>
+    <input type="text" id="botGreeting" placeholder="Enter greeting message"/>
 
     <label>Fallback</label>
-    <input type="text" id="botFallback"/>
+    <input type="text" id="botFallback" placeholder="Enter fallback message"/>
 
     <h4>Steps (User says → Bot replies)</h4>
     <div class="scenario-steps" id="stepsContainer"></div>
@@ -333,7 +316,7 @@
     getFirestore, doc, setDoc, getDoc
   } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-  // Your actual Firebase config:
+  // Firebase config (your real keys)
   const firebaseConfig = {
     apiKey: "AIzaSyBVYpupWLu8KtaOvC5jnXJE2_bzimIzTyQ",
     authDomain: "calltechai.firebaseapp.com",
@@ -476,7 +459,6 @@
     const snap = await getDoc(docRef);
     let plan = snap.exists() && snap.data().plan ? snap.data().plan : "none";
     document.getElementById("userPlan").textContent = plan;
-    // Show or hide trial button
     const trialBtn = document.getElementById("trialButton");
     const trialSt = document.getElementById("trialStatus");
     if (plan === "none") {
@@ -499,7 +481,6 @@
    **********************************************/
   window.activateTrial = async function() {
     if (!currentUser) return alert("Not logged in!");
-    // Set plan to "trial"
     await setDoc(doc(db, "users", currentUser.uid), { plan: "trial" }, { merge: true });
     alert("7-day trial activated! Enjoy basic features.");
     loadPlan();
@@ -569,19 +550,9 @@
    * 9) On Load
    **********************************************/
   document.addEventListener("DOMContentLoaded", () => {
-    showLanding(); // Show landing page by default
+    // По умолчанию показываем Landing
+    showLanding();
   });
-
-  // Helpers for modals
-  function closeLoginModal() {
-    document.getElementById("loginModal").style.display = "none";
-  }
-  function closeSignUpModal() {
-    document.getElementById("signUpModal").style.display = "none";
-  }
-  function closePlansModal() {
-    document.getElementById("plansModal").style.display = "none";
-  }
 </script>
 
 </body>
