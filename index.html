@@ -6,13 +6,31 @@
   <title>Админ-панель CallTechAI</title>
   <!-- Подключаем Chart.js для аналитики -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
   <style>
-    /* Общий сброс и базовые стили */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body.dark { background: #121826; color: #fff; }
-    body.light { background: #f7f7f7; color: #333; }
-    body { font-family: "Poppins", sans-serif; display: flex; min-height: 100vh; }
-    
+    /* Общий сброс */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    /* Тёмная/светлая тема */
+    body.dark {
+      background: #121826;
+      color: #fff;
+    }
+    body.light {
+      background: #f7f7f7;
+      color: #333;
+    }
+    /* Основная структура: sidebar слева, main справа */
+    body {
+      font-family: "Poppins", sans-serif;
+      display: flex;       /* Горизонтальная ориентация */
+      min-height: 100vh;   /* Высота на весь экран */
+      /* Удалён медиазапрос, чтобы панель ВСЕГДА оставалась слева */
+    }
+
     /* Sidebar (левая панель) */
     .sidebar {
       width: 240px;
@@ -35,11 +53,13 @@
       cursor: pointer;
       transition: background 0.3s;
     }
-    .nav-item.active, .nav-item:hover {
+    .nav-item.active,
+    .nav-item:hover {
       background: #4a5d87;
     }
+    /* Кнопка переключения темы */
     .theme-toggle {
-      margin-top: auto;
+      margin-top: auto; /* прижимает к низу sidebar */
       padding: 10px;
       background: #4a5d87;
       border: none;
@@ -48,20 +68,31 @@
       color: #fff;
       text-align: center;
     }
-    
-    /* Main Content */
+
+    /* Основная область */
     .main {
       flex: 1;
       padding: 30px;
       overflow-y: auto;
     }
-    .content { display: none; }
-    .content.active { display: block; }
-    h1 { font-size: 24px; margin-bottom: 20px; }
-    .section { margin-bottom: 30px; }
-    
+    .content {
+      display: none;
+    }
+    .content.active {
+      display: block;
+    }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+    .section {
+      margin-bottom: 30px;
+    }
+
     /* Dashboard & Bot Management */
-    .bot-list { margin-bottom: 30px; }
+    .bot-list {
+      margin-bottom: 30px;
+    }
     .bot-item {
       padding: 12px;
       background: #2a3246;
@@ -80,10 +111,28 @@
       color: #fff;
       transition: background 0.3s;
     }
-    .bot-item button:hover { background: #6f85b6; }
-    
+    .bot-item button:hover {
+      background: #6f85b6;
+    }
+
+    /* Кнопка сохранения */
+    .save-btn {
+      background: #4a5d87;
+      padding: 10px;
+      border: none;
+      color: #fff;
+      font-weight: bold;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+    }
+
     /* Global Settings, Advanced Settings, Payment, Integrations */
-    .global-settings, .advanced-settings, .payment-settings, .integrations-settings {
+    .global-settings,
+    .advanced-settings,
+    .payment-settings,
+    .integrations-settings {
       max-width: 500px;
       margin-bottom: 30px;
     }
@@ -107,7 +156,7 @@
       border: none;
       border-radius: 5px;
     }
-    
+
     /* Scenario Builder */
     .scenario-builder {
       border: 1px solid #4a5d87;
@@ -124,6 +173,7 @@
       border-radius: 6px;
       cursor: move;
     }
+    /* Редактируемые блоки */
     .message-box[contenteditable="true"] {
       outline: 1px dashed #ffcc00;
     }
@@ -137,7 +187,7 @@
       width: 100%;
       margin-bottom: 20px;
     }
-    
+
     /* Analytics */
     .chart-container {
       max-width: 600px;
@@ -154,7 +204,7 @@
       width: 100%;
       margin-top: 10px;
     }
-    
+
     /* User Management */
     .user-table {
       width: 100%;
@@ -170,24 +220,11 @@
     .user-table th {
       background: #2a3246;
     }
-    
-    /* Адаптация для мобильных устройств */
-    @media (max-width: 768px) {
-      body { flex-direction: column; }
-      .sidebar {
-        width: 100%;
-        flex-direction: row;
-        justify-content: space-around;
-        padding: 10px;
-      }
-      .theme-toggle { margin-top: 0; }
-      .main { padding: 15px; }
-      .nav-item { padding: 8px 10px; font-size: 14px; }
-    }
   </style>
 </head>
+
 <body class="dark">
-  <!-- Sidebar Navigation -->
+  <!-- Sidebar Navigation (слева, без медиазапроса) -->
   <div class="sidebar">
     <h2>CallTechAI Admin</h2>
     <div class="nav-item active" onclick="switchTab('dashboard')">Dashboard</div>
@@ -204,7 +241,8 @@
 
   <!-- Main Content Area -->
   <div class="main">
-    <!-- Dashboard -->
+
+    <!-- DASHBOARD -->
     <div id="dashboard" class="content active section">
       <h1>Dashboard</h1>
       <p>Overview of bots and recent activity.</p>
@@ -221,7 +259,7 @@
       <button class="save-btn" onclick="alert('Create new bot (demo)')">Create New Bot</button>
     </div>
 
-    <!-- Bot Management -->
+    <!-- BOT MANAGEMENT -->
     <div id="bot-management" class="content section">
       <h1>Bot Management</h1>
       <p>Manage and edit your bots.</p>
@@ -237,7 +275,7 @@
       </div>
     </div>
 
-    <!-- Global Settings -->
+    <!-- GLOBAL SETTINGS -->
     <div id="global-settings" class="content section">
       <h1>Global Settings</h1>
       <div class="global-settings">
@@ -255,11 +293,11 @@
       </div>
     </div>
 
-    <!-- Scenario Builder -->
+    <!-- SCENARIO BUILDER -->
     <div id="scenario-builder" class="content section">
       <h1>Scenario Builder</h1>
       <div class="scenario-builder" id="scenarioContainer">
-        <!-- Редактируемые блоки сценария -->
+        <!-- Примеры блоков сценария (редактируемые и draggable) -->
         <div class="message-box" draggable="true" contenteditable="true">User: "Hello"</div>
         <div class="message-box" draggable="true" contenteditable="true">Bot: "Hi! How can I help?"</div>
         <div class="message-box" draggable="true" contenteditable="true">[If user says "Order"]</div>
@@ -268,7 +306,7 @@
       <button class="save-btn" onclick="saveScenario()">Save Scenario</button>
     </div>
 
-    <!-- Analytics -->
+    <!-- ANALYTICS -->
     <div id="analytics" class="content section">
       <h1>Analytics</h1>
       <div class="chart-container">
@@ -277,7 +315,7 @@
       <button class="export-btn" onclick="exportAnalytics()">Export CSV</button>
     </div>
 
-    <!-- Advanced Settings -->
+    <!-- ADVANCED SETTINGS -->
     <div id="advanced" class="content section">
       <h1>Advanced Settings</h1>
       <div class="advanced-settings">
@@ -299,7 +337,7 @@
       </div>
     </div>
 
-    <!-- Payment Settings -->
+    <!-- PAYMENT SETTINGS -->
     <div id="payment" class="content section">
       <h1>Payment Settings</h1>
       <div class="payment-settings">
@@ -322,7 +360,7 @@
       </div>
     </div>
 
-    <!-- Integrations & Notifications -->
+    <!-- INTEGRATIONS & NOTIFICATIONS -->
     <div id="integrations" class="content section">
       <h1>Integrations & Notifications</h1>
       <div class="integrations-settings">
@@ -335,7 +373,7 @@
       </div>
     </div>
 
-    <!-- User Management -->
+    <!-- USER MANAGEMENT -->
     <div id="user-management" class="content section">
       <h1>User Management</h1>
       <table class="user-table">
@@ -371,7 +409,8 @@
       </table>
       <button class="save-btn" onclick="alert('User changes saved (demo)!')">Save User Changes</button>
     </div>
-  </div>
+
+  </div> <!-- /main -->
 
   <script>
     // Функция переключения вкладок
@@ -382,12 +421,24 @@
       event.target.classList.add('active');
     }
 
-    // Функция редактирования бота (демо)
+    // Переключатель темы
+    function toggleTheme() {
+      const body = document.body;
+      if (body.classList.contains("dark")) {
+        body.classList.remove("dark");
+        body.classList.add("light");
+      } else {
+        body.classList.remove("light");
+        body.classList.add("dark");
+      }
+    }
+
+    // Пример редактирования бота
     function editBot(botName) {
       alert("Editing bot: " + botName + " (demo)");
     }
 
-    // Сохранение глобальных настроек (демо)
+    // Сохранение Global Settings (демо)
     function saveGlobalSettings() {
       const settings = {
         twilioKey: document.getElementById("twilioKey").value,
@@ -400,14 +451,12 @@
       alert("Global settings saved (demo)!");
     }
 
-    // Сохранение сценария (демо)
+    // Scenario Builder
     function saveScenario() {
       const scenarioHtml = document.getElementById("scenarioContainer").innerHTML;
       localStorage.setItem("scenario", scenarioHtml);
       alert("Scenario saved (demo)!");
     }
-
-    // Добавление нового блока в Scenario Builder
     function addResponse() {
       let newBox = document.createElement('div');
       newBox.className = 'message-box';
@@ -417,8 +466,6 @@
       document.getElementById("scenarioContainer").appendChild(newBox);
       addDragHandlers(newBox);
     }
-
-    // Drag & Drop обработчики для Scenario Builder
     function addDragHandlers(item) {
       item.addEventListener('dragstart', dragStart);
       item.addEventListener('dragover', dragOver);
@@ -453,22 +500,24 @@
     }
     document.querySelectorAll('.message-box').forEach(item => addDragHandlers(item));
 
-    // Инициализация аналитики через Chart.js
-    const ctx = document.getElementById('analyticsChart').getContext('2d');
-    new Chart(ctx, {
-      type: 'bar',
-      data: {
-        labels: ['Bots Created', 'Scenarios', 'API Calls'],
-        datasets: [{
-          label: 'Usage Stats',
-          data: [5, 8, 15],
-          backgroundColor: ['#4a5d87', '#ffcc00', '#ff5733']
-        }]
-      },
-      options: { responsive: true, maintainAspectRatio: false }
+    // Analytics (Chart.js)
+    document.addEventListener("DOMContentLoaded", () => {
+      const ctx = document.getElementById('analyticsChart');
+      if (ctx) {
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Bots Created', 'Scenarios', 'API Calls'],
+            datasets: [{
+              label: 'Usage Stats',
+              data: [5, 8, 15],
+              backgroundColor: ['#4a5d87', '#ffcc00', '#ff5733']
+            }]
+          },
+          options: { responsive: true, maintainAspectRatio: false }
+        });
+      }
     });
-
-    // Экспорт аналитики в CSV (демо)
     function exportAnalytics() {
       const data = [
         ['Metric', 'Value'],
@@ -477,7 +526,7 @@
         ['API Calls', 15]
       ];
       let csvContent = "data:text/csv;charset=utf-8," 
-          + data.map(e => e.join(",")).join("\n");
+        + data.map(e => e.join(",")).join("\n");
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
@@ -487,21 +536,21 @@
       document.body.removeChild(link);
     }
 
-    // Сохранение продвинутых настроек (демо)
+    // Advanced Settings
     function saveAdvancedSettings() {
       const advanced = {
         autoLearning: document.getElementById("autoLearning").checked,
         autoAnswer: document.getElementById("autoAnswer").checked,
         botTone: document.getElementById("botTone").value,
-        voiceSpeed: document.getElementById("voiceSpeed") ? document.getElementById("voiceSpeed").value : 1,
-        voicePitch: document.getElementById("voicePitch") ? document.getElementById("voicePitch").value : 1,
+        voiceSpeed: document.getElementById("voiceSpeed").value,
+        voicePitch: document.getElementById("voicePitch").value,
         recommendations: document.getElementById("recommendations") ? document.getElementById("recommendations").value : ""
       };
       localStorage.setItem("advancedSettings", JSON.stringify(advanced));
       alert("Advanced settings saved (demo)!");
     }
 
-    // Сохранение настроек платежей (демо)
+    // Payment Settings
     function savePaymentSettings() {
       const payment = {
         stripeKey: document.getElementById("stripeKey").value,
@@ -513,36 +562,24 @@
       alert("Payment settings saved (demo)!");
     }
 
-    // Сохранение настроек интеграций (демо)
+    // Integrations & Notifications
     function saveIntegrations() {
       const integrations = {
         webhookUrl: document.getElementById("webhookUrl").value,
         slackWebhook: document.getElementById("slackWebhook").value,
-        enableNotifications: document.getElementById("enableNotifications") ? document.getElementById("enableNotifications").checked : false
+        enableNotifications: document.getElementById("enableNotifications").checked
       };
       localStorage.setItem("integrations", JSON.stringify(integrations));
       alert("Integrations & Notifications settings saved (demo)!");
     }
 
-    // Переключатель темы
-    function toggleTheme() {
-      const body = document.body;
-      if (body.classList.contains("dark")) {
-        body.classList.remove("dark");
-        body.classList.add("light");
-      } else {
-        body.classList.remove("light");
-        body.classList.add("dark");
-      }
-    }
-
+    // Переход на вкладку "dashboard" при загрузке
     document.addEventListener("DOMContentLoaded", () => {
-      if (!location.hash) window.scrollTo(0, 0);
       switchTab('dashboard');
     });
   </script>
 
-  <!-- Firebase Initialization (демо: используются заполнители) -->
+  <!-- Firebase Initialization (demo) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
     import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
