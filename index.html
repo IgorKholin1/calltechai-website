@@ -6,31 +6,13 @@
   <title>Админ-панель CallTechAI</title>
   <!-- Подключаем Chart.js для аналитики -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
   <style>
-    /* Общий сброс */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    /* Тёмная/светлая тема */
-    body.dark {
-      background: #121826;
-      color: #fff;
-    }
-    body.light {
-      background: #f7f7f7;
-      color: #333;
-    }
-    /* Основная структура: sidebar слева, main справа */
-    body {
-      font-family: "Poppins", sans-serif;
-      display: flex;       /* Горизонтальная ориентация */
-      min-height: 100vh;   /* Высота на весь экран */
-      /* Удалён медиазапрос, чтобы панель ВСЕГДА оставалась слева */
-    }
-
+    /* Общий сброс и базовые стили */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body.dark { background: #121826; color: #fff; }
+    body.light { background: #f7f7f7; color: #333; }
+    body { font-family: "Poppins", sans-serif; display: flex; min-height: 100vh; }
+    
     /* Sidebar (левая панель) */
     .sidebar {
       width: 240px;
@@ -57,9 +39,8 @@
     .nav-item:hover {
       background: #4a5d87;
     }
-    /* Кнопка переключения темы */
     .theme-toggle {
-      margin-top: auto; /* прижимает к низу sidebar */
+      margin-top: auto;
       padding: 10px;
       background: #4a5d87;
       border: none;
@@ -68,31 +49,20 @@
       color: #fff;
       text-align: center;
     }
-
-    /* Основная область */
+    
+    /* Main Content */
     .main {
       flex: 1;
       padding: 30px;
       overflow-y: auto;
     }
-    .content {
-      display: none;
-    }
-    .content.active {
-      display: block;
-    }
-    h1 {
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
-    .section {
-      margin-bottom: 30px;
-    }
-
+    .content { display: none; }
+    .content.active { display: block; }
+    h1 { font-size: 24px; margin-bottom: 20px; }
+    .section { margin-bottom: 30px; }
+    
     /* Dashboard & Bot Management */
-    .bot-list {
-      margin-bottom: 30px;
-    }
+    .bot-list { margin-bottom: 30px; }
     .bot-item {
       padding: 12px;
       background: #2a3246;
@@ -111,28 +81,10 @@
       color: #fff;
       transition: background 0.3s;
     }
-    .bot-item button:hover {
-      background: #6f85b6;
-    }
-
-    /* Кнопка сохранения */
-    .save-btn {
-      background: #4a5d87;
-      padding: 10px;
-      border: none;
-      color: #fff;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 10px;
-    }
-
+    .bot-item button:hover { background: #6f85b6; }
+    
     /* Global Settings, Advanced Settings, Payment, Integrations */
-    .global-settings,
-    .advanced-settings,
-    .payment-settings,
-    .integrations-settings {
+    .global-settings, .advanced-settings, .payment-settings, .integrations-settings {
       max-width: 500px;
       margin-bottom: 30px;
     }
@@ -156,7 +108,7 @@
       border: none;
       border-radius: 5px;
     }
-
+    
     /* Scenario Builder */
     .scenario-builder {
       border: 1px solid #4a5d87;
@@ -173,7 +125,6 @@
       border-radius: 6px;
       cursor: move;
     }
-    /* Редактируемые блоки */
     .message-box[contenteditable="true"] {
       outline: 1px dashed #ffcc00;
     }
@@ -187,7 +138,7 @@
       width: 100%;
       margin-bottom: 20px;
     }
-
+    
     /* Analytics */
     .chart-container {
       max-width: 600px;
@@ -204,7 +155,7 @@
       width: 100%;
       margin-top: 10px;
     }
-
+    
     /* User Management */
     .user-table {
       width: 100%;
@@ -222,27 +173,25 @@
     }
   </style>
 </head>
-
 <body class="dark">
-  <!-- Sidebar Navigation (слева, без медиазапроса) -->
+  <!-- Sidebar Navigation (всегда слева) -->
   <div class="sidebar">
     <h2>CallTechAI Admin</h2>
     <div class="nav-item active" onclick="switchTab('dashboard')">Dashboard</div>
     <div class="nav-item" onclick="switchTab('bot-management')">Bot Management</div>
-    <div class="nav-item" onclick="switchTab('global-settings')">Global Settings</div>
+    <div class="nav-item" onclick="switchTab('global-settings')">System Settings</div>
     <div class="nav-item" onclick="switchTab('scenario-builder')">Scenario Builder</div>
     <div class="nav-item" onclick="switchTab('analytics')">Analytics</div>
-    <div class="nav-item" onclick="switchTab('advanced')">Advanced Settings</div>
-    <div class="nav-item" onclick="switchTab('payment')">Payment Settings</div>
-    <div class="nav-item" onclick="switchTab('integrations')">Integrations & Notifications</div>
+    <div class="nav-item" onclick="switchTab('advanced')">Advanced Options</div>
+    <div class="nav-item" onclick="switchTab('payment')">Payment Config</div>
+    <div class="nav-item" onclick="switchTab('integrations')">Integrations</div>
     <div class="nav-item" onclick="switchTab('user-management')">User Management</div>
     <button class="theme-toggle" onclick="toggleTheme()">Switch Theme</button>
   </div>
 
   <!-- Main Content Area -->
   <div class="main">
-
-    <!-- DASHBOARD -->
+    <!-- Dashboard -->
     <div id="dashboard" class="content active section">
       <h1>Dashboard</h1>
       <p>Overview of bots and recent activity.</p>
@@ -259,7 +208,7 @@
       <button class="save-btn" onclick="alert('Create new bot (demo)')">Create New Bot</button>
     </div>
 
-    <!-- BOT MANAGEMENT -->
+    <!-- Bot Management -->
     <div id="bot-management" class="content section">
       <h1>Bot Management</h1>
       <p>Manage and edit your bots.</p>
@@ -275,29 +224,28 @@
       </div>
     </div>
 
-    <!-- GLOBAL SETTINGS -->
+    <!-- System Settings (ранее Global Settings) -->
     <div id="global-settings" class="content section">
-      <h1>Global Settings</h1>
+      <h1>System Settings</h1>
       <div class="global-settings">
-        <label>Twilio API Key (Account SID & Auth Token):</label>
-        <input type="text" id="twilioKey" value="YOUR_TWILIO_API_KEY" placeholder="Twilio API Key" readonly>
-        <label>OpenAI API Key:</label>
-        <input type="text" id="openaiKey" value="YOUR_OPENAI_API_KEY" placeholder="OpenAI API Key" readonly>
-        <label>Dialogflow API Key:</label>
-        <input type="text" id="dialogflowKey" value="YOUR_DIALOGFLOW_API_KEY" placeholder="Dialogflow API Key" readonly>
-        <label>Firebase API Key:</label>
-        <input type="text" id="firebaseKey" value="YOUR_FIREBASE_API_KEY" placeholder="Firebase API Key" readonly>
-        <label>Speech-to-Text API Key (optional):</label>
-        <input type="text" id="speechKey" value="YOUR_SPEECH_API_KEY" placeholder="Speech-to-Text API Key" readonly>
-        <button class="save-btn" onclick="saveGlobalSettings()">Save Global Settings</button>
+        <label>Service Key 1:</label>
+        <input type="text" id="twilioKey" value="SERVICE_KEY_1" readonly>
+        <label>Service Key 2:</label>
+        <input type="text" id="openaiKey" value="SERVICE_KEY_2" readonly>
+        <label>Service Key 3:</label>
+        <input type="text" id="dialogflowKey" value="SERVICE_KEY_3" readonly>
+        <label>Service Key 4:</label>
+        <input type="text" id="firebaseKey" value="SERVICE_KEY_4" readonly>
+        <label>Service Key 5 (optional):</label>
+        <input type="text" id="speechKey" value="SERVICE_KEY_5" readonly>
+        <button class="save-btn" onclick="saveGlobalSettings()">Save System Settings</button>
       </div>
     </div>
 
-    <!-- SCENARIO BUILDER -->
+    <!-- Scenario Builder -->
     <div id="scenario-builder" class="content section">
       <h1>Scenario Builder</h1>
       <div class="scenario-builder" id="scenarioContainer">
-        <!-- Примеры блоков сценария (редактируемые и draggable) -->
         <div class="message-box" draggable="true" contenteditable="true">User: "Hello"</div>
         <div class="message-box" draggable="true" contenteditable="true">Bot: "Hi! How can I help?"</div>
         <div class="message-box" draggable="true" contenteditable="true">[If user says "Order"]</div>
@@ -306,7 +254,7 @@
       <button class="save-btn" onclick="saveScenario()">Save Scenario</button>
     </div>
 
-    <!-- ANALYTICS -->
+    <!-- Analytics -->
     <div id="analytics" class="content section">
       <h1>Analytics</h1>
       <div class="chart-container">
@@ -315,9 +263,9 @@
       <button class="export-btn" onclick="exportAnalytics()">Export CSV</button>
     </div>
 
-    <!-- ADVANCED SETTINGS -->
+    <!-- Advanced Options (ранее Advanced Settings) -->
     <div id="advanced" class="content section">
-      <h1>Advanced Settings</h1>
+      <h1>Advanced Options</h1>
       <div class="advanced-settings">
         <label><input type="checkbox" id="autoLearning"> Enable Auto Learning</label>
         <label><input type="checkbox" id="autoAnswer"> Enable Auto Answer</label>
@@ -333,18 +281,18 @@
         <input type="range" id="voicePitch" min="0" max="2" step="0.1" value="1">
         <label>Additional Recommendations:</label>
         <textarea id="recommendations" rows="3" placeholder="Enter recommendations..."></textarea>
-        <button class="save-btn" onclick="saveAdvancedSettings()">Save Advanced Settings</button>
+        <button class="save-btn" onclick="saveAdvancedSettings()">Save Advanced Options</button>
       </div>
     </div>
 
-    <!-- PAYMENT SETTINGS -->
+    <!-- Payment Config -->
     <div id="payment" class="content section">
-      <h1>Payment Settings</h1>
+      <h1>Payment Config</h1>
       <div class="payment-settings">
-        <label>Stripe API Key:</label>
-        <input type="text" id="stripeKey" value="YOUR_STRIPE_API_KEY" placeholder="Stripe API Key" readonly>
-        <label>PayPal Client ID:</label>
-        <input type="text" id="paypalId" value="YOUR_PAYPAL_CLIENT_ID" placeholder="PayPal Client ID" readonly>
+        <label>Service Key 6:</label>
+        <input type="text" id="stripeKey" value="SERVICE_KEY_6" readonly>
+        <label>Service Key 7:</label>
+        <input type="text" id="paypalId" value="SERVICE_KEY_7" readonly>
         <label>Subscription Plan:</label>
         <select id="subscriptionPlan">
           <option>Basic</option>
@@ -356,24 +304,24 @@
           <option>Test</option>
           <option>Live</option>
         </select>
-        <button class="save-btn" onclick="savePaymentSettings()">Save Payment Settings</button>
+        <button class="save-btn" onclick="savePaymentSettings()">Save Payment Config</button>
       </div>
     </div>
 
-    <!-- INTEGRATIONS & NOTIFICATIONS -->
+    <!-- Integrations & Notifications -->
     <div id="integrations" class="content section">
       <h1>Integrations & Notifications</h1>
       <div class="integrations-settings">
-        <label>Webhook URL:</label>
+        <label>Service Key 8:</label>
         <input type="text" id="webhookUrl" placeholder="Enter Webhook URL">
-        <label>Slack Webhook URL:</label>
+        <label>Service Key 9:</label>
         <input type="text" id="slackWebhook" placeholder="Enter Slack Webhook URL">
         <label><input type="checkbox" id="enableNotifications"> Enable Notifications</label>
         <button class="save-btn" onclick="saveIntegrations()">Save Integrations</button>
       </div>
     </div>
 
-    <!-- USER MANAGEMENT -->
+    <!-- User Management -->
     <div id="user-management" class="content section">
       <h1>User Management</h1>
       <table class="user-table">
@@ -409,18 +357,17 @@
       </table>
       <button class="save-btn" onclick="alert('User changes saved (demo)!')">Save User Changes</button>
     </div>
-
-  </div> <!-- /main -->
+  </div>
 
   <script>
-    // Функция переключения вкладок
+    // Переключение вкладок
     function switchTab(tabId) {
       document.querySelectorAll('.content').forEach(tab => tab.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
       document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
       event.target.classList.add('active');
     }
-
+    
     // Переключатель темы
     function toggleTheme() {
       const body = document.body;
@@ -432,26 +379,26 @@
         body.classList.add("dark");
       }
     }
-
-    // Пример редактирования бота
+    
+    // Редактирование бота (демо)
     function editBot(botName) {
       alert("Editing bot: " + botName + " (demo)");
     }
-
-    // Сохранение Global Settings (демо)
+    
+    // Сохранение System Settings (демо)
     function saveGlobalSettings() {
       const settings = {
-        twilioKey: document.getElementById("twilioKey").value,
-        openaiKey: document.getElementById("openaiKey").value,
-        dialogflowKey: document.getElementById("dialogflowKey").value,
-        firebaseKey: document.getElementById("firebaseKey").value,
-        speechKey: document.getElementById("speechKey").value
+        serviceKey1: document.getElementById("twilioKey").value,
+        serviceKey2: document.getElementById("openaiKey").value,
+        serviceKey3: document.getElementById("dialogflowKey").value,
+        serviceKey4: document.getElementById("firebaseKey").value,
+        serviceKey5: document.getElementById("speechKey").value
       };
       localStorage.setItem("globalSettings", JSON.stringify(settings));
-      alert("Global settings saved (demo)!");
+      alert("System settings saved (demo)!");
     }
-
-    // Scenario Builder
+    
+    // Scenario Builder: сохранение сценария (демо)
     function saveScenario() {
       const scenarioHtml = document.getElementById("scenarioContainer").innerHTML;
       localStorage.setItem("scenario", scenarioHtml);
@@ -499,24 +446,22 @@
       this.classList.remove('dragging');
     }
     document.querySelectorAll('.message-box').forEach(item => addDragHandlers(item));
-
-    // Analytics (Chart.js)
+    
+    // Analytics: Инициализация графика через Chart.js
     document.addEventListener("DOMContentLoaded", () => {
-      const ctx = document.getElementById('analyticsChart');
-      if (ctx) {
-        new Chart(ctx, {
-          type: 'bar',
-          data: {
-            labels: ['Bots Created', 'Scenarios', 'API Calls'],
-            datasets: [{
-              label: 'Usage Stats',
-              data: [5, 8, 15],
-              backgroundColor: ['#4a5d87', '#ffcc00', '#ff5733']
-            }]
-          },
-          options: { responsive: true, maintainAspectRatio: false }
-        });
-      }
+      const ctx = document.getElementById('analyticsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Bots Created', 'Scenarios', 'API Calls'],
+          datasets: [{
+            label: 'Usage Stats',
+            data: [5, 8, 15],
+            backgroundColor: ['#4a5d87', '#ffcc00', '#ff5733']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
     });
     function exportAnalytics() {
       const data = [
@@ -525,8 +470,7 @@
         ['Scenarios', 8],
         ['API Calls', 15]
       ];
-      let csvContent = "data:text/csv;charset=utf-8," 
-        + data.map(e => e.join(",")).join("\n");
+      let csvContent = "data:text/csv;charset=utf-8," + data.map(e => e.join(",")).join("\n");
       const encodedUri = encodeURI(csvContent);
       const link = document.createElement("a");
       link.setAttribute("href", encodedUri);
@@ -535,8 +479,8 @@
       link.click();
       document.body.removeChild(link);
     }
-
-    // Advanced Settings
+    
+    // Advanced Options: сохранение продвинутых настроек (демо)
     function saveAdvancedSettings() {
       const advanced = {
         autoLearning: document.getElementById("autoLearning").checked,
@@ -544,25 +488,25 @@
         botTone: document.getElementById("botTone").value,
         voiceSpeed: document.getElementById("voiceSpeed").value,
         voicePitch: document.getElementById("voicePitch").value,
-        recommendations: document.getElementById("recommendations") ? document.getElementById("recommendations").value : ""
+        recommendations: document.getElementById("recommendations").value
       };
       localStorage.setItem("advancedSettings", JSON.stringify(advanced));
-      alert("Advanced settings saved (demo)!");
+      alert("Advanced options saved (demo)!");
     }
-
-    // Payment Settings
+    
+    // Payment Settings: сохранение настроек платежей (демо)
     function savePaymentSettings() {
       const payment = {
-        stripeKey: document.getElementById("stripeKey").value,
-        paypalId: document.getElementById("paypalId").value,
+        serviceKey6: document.getElementById("stripeKey").value,
+        serviceKey7: document.getElementById("paypalId").value,
         subscriptionPlan: document.getElementById("subscriptionPlan").value,
         paymentMode: document.getElementById("paymentMode").value
       };
       localStorage.setItem("paymentSettings", JSON.stringify(payment));
-      alert("Payment settings saved (demo)!");
+      alert("Payment config saved (demo)!");
     }
-
-    // Integrations & Notifications
+    
+    // Integrations & Notifications: сохранение настроек (демо)
     function saveIntegrations() {
       const integrations = {
         webhookUrl: document.getElementById("webhookUrl").value,
@@ -570,16 +514,16 @@
         enableNotifications: document.getElementById("enableNotifications").checked
       };
       localStorage.setItem("integrations", JSON.stringify(integrations));
-      alert("Integrations & Notifications settings saved (demo)!");
+      alert("Integrations saved (demo)!");
     }
-
-    // Переход на вкладку "dashboard" при загрузке
+    
+    // При загрузке устанавливаем вкладку Dashboard
     document.addEventListener("DOMContentLoaded", () => {
       switchTab('dashboard');
     });
   </script>
 
-  <!-- Firebase Initialization (demo) -->
+  <!-- Firebase Initialization (демо: используются заполнители) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
     import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
