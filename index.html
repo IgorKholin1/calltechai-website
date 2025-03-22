@@ -20,7 +20,7 @@
       background: #121826;
       color: #fff;
     }
-    /* Sidebar (левая панель) */
+    /* Левая боковая панель (Sidebar) */
     .sidebar {
       width: 240px;
       background: #1c2333;
@@ -45,7 +45,7 @@
     .nav-item:hover {
       background: #4a5d87;
     }
-    /* Main Content */
+    /* Основное рабочее пространство */
     .main {
       flex: 1;
       padding: 30px;
@@ -54,7 +54,7 @@
     .content { display: none; }
     .content.active { display: block; }
     h1 { font-size: 24px; margin-bottom: 20px; }
-    /* Dashboard & Bot Management */
+    /* Раздел Dashboard & Bot Management */
     .bot-list { margin-bottom: 30px; }
     .bot-item {
       padding: 12px;
@@ -75,7 +75,7 @@
       transition: background 0.3s;
     }
     .bot-item button:hover { background: #6f85b6; }
-    /* Global Settings */
+    /* Глобальные настройки */
     .global-settings {
       max-width: 500px;
     }
@@ -123,55 +123,30 @@
       margin: 20px auto;
     }
     /* Advanced Settings */
-    .advanced-settings {
-      max-width: 500px;
-    }
-    .advanced-settings label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    .advanced-settings input[type="checkbox"] {
-      margin-right: 5px;
-    }
-    .advanced-settings select,
-    .advanced-settings input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
-    }
-    /* Payment Settings */
-    .payment-settings {
-      max-width: 500px;
-    }
-    .payment-settings label {
-      display: block;
-      margin-bottom: 5px;
-    }
-    .payment-settings input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
-    }
-    /* Integrations & Notifications */
+    .advanced-settings,
+    .payment-settings,
     .integrations-settings {
       max-width: 500px;
+      margin-bottom: 30px;
     }
+    .advanced-settings label,
+    .payment-settings label,
     .integrations-settings label {
       display: block;
       margin-bottom: 5px;
     }
-    .integrations-settings input {
+    .advanced-settings input[type="checkbox"],
+    .payment-settings input,
+    .integrations-settings input,
+    .advanced-settings select,
+    .payment-settings select {
       width: 100%;
       padding: 10px;
       margin-bottom: 15px;
       border: none;
       border-radius: 5px;
     }
-    /* Общая кнопка сохранения */
+    /* Кнопка сохранения */
     .save-btn {
       background: #4a5d87;
       padding: 10px;
@@ -198,8 +173,7 @@
   </style>
 </head>
 <body>
-
-  <!-- Sidebar Navigation -->
+  <!-- Левая боковая панель -->
   <div class="sidebar">
     <h2>CallTechAI Admin</h2>
     <div class="nav-item active" onclick="switchTab('dashboard')">Dashboard</div>
@@ -212,7 +186,7 @@
     <div class="nav-item" onclick="switchTab('integrations')">Integrations & Notifications</div>
   </div>
 
-  <!-- Main Content Area -->
+  <!-- Основная область -->
   <div class="main">
     <!-- Dashboard -->
     <div id="dashboard" class="content active">
@@ -328,7 +302,6 @@
         <button class="save-btn" onclick="saveIntegrations()">Save Integrations</button>
       </div>
     </div>
-
   </div>
 
   <script>
@@ -411,7 +384,7 @@
     }
     document.querySelectorAll('.message-box').forEach(item => addDragHandlers(item));
 
-    // Инициализация графика аналитики через Chart.js
+    // Инициализация аналитики через Chart.js
     const ctx = document.getElementById('analyticsChart').getContext('2d');
     new Chart(ctx, {
       type: 'bar',
@@ -462,17 +435,16 @@
     }
 
     document.addEventListener("DOMContentLoaded", () => {
-      if (!location.hash) window.scrollTo(0,0);
+      if (!location.hash) window.scrollTo(0, 0);
       switchTab('dashboard');
     });
   </script>
 
-  <!-- Firebase Initialization (без реальных ключей) -->
+  <!-- Firebase Initialization (используются заполнители) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
     import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
 
-    // Здесь используются заполнители; реальные ключи должны быть добавлены через переменные окружения или на сервере
     const firebaseConfig = {
       apiKey: "YOUR_FIREBASE_API_KEY",
       authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
