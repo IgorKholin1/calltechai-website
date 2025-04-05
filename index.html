@@ -2,365 +2,369 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Админ-панель CallTechAI</title>
-  <!-- Подключаем Chart.js для аналитики -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CallTechAI - Полноценный Сайт</title>
+  <!-- Chart.js для аналитики -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Firebase SDK (compat версии для простоты) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore-compat.js"></script>
   <style>
-    /* Общий сброс и базовые стили */
+    /* Общие стили и сброс */
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: "Poppins", sans-serif; }
+    a { text-decoration: none; color: inherit; }
+    
+    /* Темы */
     body.dark { background: #121826; color: #fff; }
     body.light { background: #f7f7f7; color: #333; }
-    body { font-family: "Poppins", sans-serif; display: flex; min-height: 100vh; }
     
-    /* Sidebar (левая панель) */
+    /* Лендинг (первый экран, если не авторизован) */
+    #landingPage {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      height: 100vh; text-align: center; padding: 20px;
+      background: url('https://via.placeholder.com/1600x900') no-repeat center center/cover;
+    }
+    #landingPage h1 { font-size: 48px; margin-bottom: 20px; }
+    #landingPage p { font-size: 20px; margin-bottom: 30px; }
+    #landingPage button {
+      padding: 15px 30px; font-size: 18px; cursor: pointer; border: none;
+      border-radius: 8px; background: #4a5d87; color: #fff; transition: background 0.3s;
+    }
+    #landingPage button:hover { background: #6f85b6; }
+    
+    /* Форма входа/регистрации */
+    .login-container {
+      display: none; /* Скрыта до перехода */
+      flex-direction: column; align-items: center; justify-content: center;
+      height: 100vh; background: #f2f2f2; padding: 20px;
+    }
+    .login-form {
+      width: 300px; border: 1px solid #ccc; padding: 20px; border-radius: 8px;
+      background: #fff;
+    }
+    .login-form h2 { text-align: center; margin-bottom: 20px; }
+    .login-form input {
+      width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 4px;
+    }
+    .login-form button {
+      width: 100%; padding: 10px; margin-top: 10px; cursor: pointer;
+      border: none; border-radius: 4px; background: #4a5d87; color: #fff;
+    }
+    .login-form p { text-align: center; color: red; }
+    
+    /* Админ-панель */
+    .admin-panel { display: none; min-height: 100vh; }
     .sidebar {
-      width: 240px;
-      background: #1c2333;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+      width: 240px; background: #1c2333; padding: 20px; display: flex;
+      flex-direction: column; gap: 15px;
     }
     .sidebar h2 {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 20px;
-      text-align: center;
+      font-size: 22px; font-weight: bold; margin-bottom: 20px; text-align: center;
+      color: #fff;
     }
     .nav-item {
-      padding: 12px 15px;
-      background: #2a3246;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background 0.3s;
+      padding: 12px 15px; background: #2a3246; border-radius: 6px; cursor: pointer;
+      transition: background 0.3s; color: #fff;
     }
-    .nav-item.active,
-    .nav-item:hover {
-      background: #4a5d87;
+    .nav-item.active, .nav-item:hover { background: #4a5d87; }
+    .theme-toggle, .logout-btn {
+      margin-top: auto; padding: 10px; background: #4a5d87;
+      border: none; border-radius: 6px; cursor: pointer; color: #fff; text-align: center;
     }
-    .theme-toggle {
-      margin-top: auto;
-      padding: 10px;
-      background: #4a5d87;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      color: #fff;
-      text-align: center;
-    }
-    
-    /* Main Content */
-    .main {
-      flex: 1;
-      padding: 30px;
-      overflow-y: auto;
-    }
+    .main { flex: 1; padding: 30px; overflow-y: auto; }
     .content { display: none; }
     .content.active { display: block; }
-    h1 { font-size: 24px; margin-bottom: 20px; }
-    .section { margin-bottom: 30px; }
     
-    /* Dashboard & Bot Management */
-    .bot-list { margin-bottom: 30px; }
-    .bot-item {
-      padding: 12px;
-      background: #2a3246;
-      border-radius: 6px;
-      margin-bottom: 10px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .bot-item button {
-      background: #4a5d87;
-      border: none;
-      padding: 8px 12px;
-      border-radius: 4px;
-      cursor: pointer;
-      color: #fff;
-      transition: background 0.3s;
-    }
-    .bot-item button:hover { background: #6f85b6; }
+    /* Дополнительные стили для элементов панели */
+    .dashboard-header { font-size: 32px; margin-bottom: 20px; }
     
-    /* Global Settings, Advanced Settings, Payment, Integrations */
-    .global-settings, .advanced-settings, .payment-settings, .integrations-settings {
-      max-width: 500px;
-      margin-bottom: 30px;
+    /* Тарифы */
+    #pricing {
+      display: flex; justify-content: space-around; flex-wrap: wrap; gap: 20px;
+      padding: 20px;
     }
-    .global-settings label,
-    .advanced-settings label,
-    .payment-settings label,
-    .integrations-settings label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
+    .pricing-card {
+      border: 1px solid #ccc; border-radius: 8px; padding: 20px; width: 300px;
+      background: #fff; text-align: center;
     }
-    .global-settings input,
-    .advanced-settings input[type="text"],
-    .advanced-settings select,
-    .payment-settings input,
-    .payment-settings select,
-    .integrations-settings input {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 15px;
-      border: none;
-      border-radius: 5px;
+    .pricing-card h3 { margin-bottom: 10px; }
+    .pricing-card p { margin-bottom: 20px; }
+    .pricing-card button {
+      padding: 10px 20px; border: none; border-radius: 4px;
+      background: #4a5d87; color: #fff; cursor: pointer;
     }
     
-    /* Scenario Builder */
-    .scenario-builder {
-      border: 1px solid #4a5d87;
-      padding: 15px;
-      border-radius: 6px;
-      background: #1c2333;
-      min-height: 200px;
-      margin-bottom: 20px;
-    }
-    .message-box {
-      background: #2a3246;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 6px;
-      cursor: move;
-    }
-    .message-box[contenteditable="true"] {
-      outline: 1px dashed #ffcc00;
-    }
-    .add-response {
-      background: #4a5d87;
-      padding: 10px;
-      border: none;
-      color: #fff;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-      margin-bottom: 20px;
+    /* Иконка поддержки (чат) */
+    .support-chat {
+      position: fixed; bottom: 20px; right: 20px;
+      background: #4a5d87; color: #fff; border-radius: 50%;
+      width: 60px; height: 60px; display: flex; align-items: center;
+      justify-content: center; font-size: 30px; cursor: pointer;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
     }
     
-    /* Analytics */
-    .chart-container {
-      max-width: 600px;
-      margin: 20px auto;
-    }
-    .export-btn {
-      background: #4a5d87;
-      padding: 10px;
-      border: none;
-      color: #fff;
-      font-weight: bold;
-      border-radius: 6px;
-      cursor: pointer;
-      width: 100%;
-      margin-top: 10px;
-    }
-    
-    /* User Management */
-    .user-table {
-      width: 100%;
-      max-width: 600px;
-      border-collapse: collapse;
-      margin-bottom: 30px;
-    }
-    .user-table th, .user-table td {
-      border: 1px solid #4a5d87;
-      padding: 10px;
-      text-align: left;
-    }
-    .user-table th {
-      background: #2a3246;
+    /* Адаптивность для мобильных устройств */
+    @media (max-width: 768px) {
+      .admin-panel { flex-direction: column; }
+      .sidebar { width: 100%; flex-direction: row; overflow-x: auto; }
+      .sidebar h2 { display: none; }
+      .nav-item { flex: 1; text-align: center; }
+      .main { padding: 20px; }
     }
   </style>
 </head>
 <body class="dark">
-  <!-- Sidebar Navigation (всегда слева) -->
-  <div class="sidebar">
-    <h2>CallTechAI Admin</h2>
-    <div class="nav-item active" onclick="switchTab('dashboard')">Dashboard</div>
-    <div class="nav-item" onclick="switchTab('bot-management')">Bot Management</div>
-    <div class="nav-item" onclick="switchTab('global-settings')">System Settings</div>
-    <div class="nav-item" onclick="switchTab('scenario-builder')">Scenario Builder</div>
-    <div class="nav-item" onclick="switchTab('analytics')">Analytics</div>
-    <div class="nav-item" onclick="switchTab('advanced')">Advanced Options</div>
-    <div class="nav-item" onclick="switchTab('payment')">Payment Config</div>
-    <div class="nav-item" onclick="switchTab('integrations')">Integrations</div>
-    <div class="nav-item" onclick="switchTab('user-management')">User Management</div>
-    <button class="theme-toggle" onclick="toggleTheme()">Switch Theme</button>
+  <!-- Лендинг -->
+  <div id="landingPage">
+    <h1>CallTechAI</h1>
+    <p>Управляйте ботами, автоматизируйте звонки и улучшайте продажи с нашим AI-ассистентом.</p>
+    <button onclick="goToLogin()">Попробовать бесплатно</button>
   </div>
-
-  <!-- Main Content Area -->
-  <div class="main">
-    <!-- Dashboard -->
-    <div id="dashboard" class="content active section">
-      <h1>Dashboard</h1>
-      <p>Overview of bots and recent activity.</p>
-      <div class="bot-list">
-        <div class="bot-item">
-          <span>Bot #1: Chat Assistant</span>
-          <button onclick="editBot('Chat Assistant')">Edit</button>
+  
+  <!-- Форма входа/регистрации -->
+  <div id="loginContainer" class="login-container">
+    <div class="login-form">
+      <h2>Вход / Регистрация</h2>
+      <input type="email" id="email" placeholder="Email">
+      <input type="password" id="password" placeholder="Пароль">
+      <button id="loginButton">Войти</button>
+      <button id="registerButton">Зарегистрироваться</button>
+      <p id="authMessage"></p>
+    </div>
+  </div>
+  
+  <!-- Админ-панель -->
+  <div id="adminPanel" class="admin-panel">
+    <!-- Боковая панель навигации -->
+    <div class="sidebar">
+      <h2>CallTechAI Admin</h2>
+      <div class="nav-item active" onclick="switchTab('dashboard')">Dashboard</div>
+      <div class="nav-item" onclick="switchTab('bot-management')">Bot Management</div>
+      <div class="nav-item" onclick="switchTab('customization')">Bot Customization</div>
+      <div class="nav-item" onclick="switchTab('pricing')">Тарифы</div>
+      <div class="nav-item" onclick="switchTab('global-settings')">System Settings</div>
+      <div class="nav-item" onclick="switchTab('scenario-builder')">Scenario Builder</div>
+      <div class="nav-item" onclick="switchTab('analytics')">Analytics</div>
+      <div class="nav-item" onclick="switchTab('advanced')">Advanced Options</div>
+      <div class="nav-item" onclick="switchTab('payment')">Payment Config</div>
+      <div class="nav-item" onclick="switchTab('integrations')">Integrations</div>
+      <div class="nav-item" onclick="switchTab('user-management')">User Management</div>
+      <button class="theme-toggle" onclick="toggleTheme()">Switch Theme</button>
+      <button class="logout-btn" onclick="logout()">Logout</button>
+    </div>
+    
+    <!-- Основной контент -->
+    <div class="main">
+      <!-- Dashboard -->
+      <div id="dashboard" class="content active">
+        <h1 class="dashboard-header">Dashboard</h1>
+        <p>Добро пожаловать, <span id="userEmailDisplay"></span>! Здесь вы можете управлять вашими ботами и просматривать аналитику.</p>
+      </div>
+      
+      <!-- Bot Management -->
+      <div id="bot-management" class="content">
+        <h1>Bot Management</h1>
+        <p>Управляйте и редактируйте ваших ботов.</p>
+        <div id="botList">
+          <div class="bot-item">
+            <span>Bot #1: Chat Assistant</span>
+            <button onclick="alert('Редактирование бота (демо)')">Edit</button>
+          </div>
+          <div class="bot-item">
+            <span>Bot #2: Support Bot</span>
+            <button onclick="alert('Редактирование бота (демо)')">Edit</button>
+          </div>
         </div>
-        <div class="bot-item">
-          <span>Bot #2: Support Bot</span>
-          <button onclick="editBot('Support Bot')">Edit</button>
+        <button onclick="alert('Создание нового бота (демо)')">Создать нового бота</button>
+      </div>
+      
+      <!-- Bot Customization -->
+      <div id="customization" class="content">
+        <h1>Bot Customization</h1>
+        <p>Настройте параметры вашего бота:</p>
+        <div>
+          <label>Имя бота:</label>
+          <input type="text" id="botName" placeholder="Введите имя бота">
+          <label>Приветствие:</label>
+          <input type="text" id="botGreeting" placeholder="Введите приветствие">
+          <label>Fallback-фраза:</label>
+          <input type="text" id="botFallback" placeholder="Введите fallback-фразу">
+          <label>Язык бота:</label>
+          <select id="botLanguage">
+            <option value="ru">Русский</option>
+            <option value="en">English</option>
+            <option value="es">Español</option>
+          </select>
+          <button onclick="saveBotCustomization()">Сохранить настройки</button>
         </div>
       </div>
-      <button class="save-btn" onclick="alert('Create new bot (demo)')">Create New Bot</button>
-    </div>
-
-    <!-- Bot Management -->
-    <div id="bot-management" class="content section">
-      <h1>Bot Management</h1>
-      <p>Manage and edit your bots.</p>
-      <div class="bot-list">
-        <div class="bot-item">
-          <span>Chat Assistant</span>
-          <button onclick="editBot('Chat Assistant')">Edit</button>
+      
+      <!-- Pricing / Тарифы -->
+      <div id="pricing" class="content">
+        <h1>Тарифы</h1>
+        <div class="pricing-card">
+          <h3>Basic</h3>
+          <p>Бесплатно. Базовая версия бота с ограниченным функционалом.</p>
+          <button onclick="selectPlan('Basic')">Выбрать Basic</button>
         </div>
-        <div class="bot-item">
-          <span>Support Bot</span>
-          <button onclick="editBot('Support Bot')">Edit</button>
+        <div class="pricing-card">
+          <h3>Pro</h3>
+          <p>Расширенные функции, кастомизация и интеграции.</p>
+          <button onclick="selectPlan('Pro')">Выбрать Pro</button>
+        </div>
+        <div class="pricing-card">
+          <h3>Ultimate</h3>
+          <p>Полный пакет: кастомизация, расширенные сценарии и интеграции.</p>
+          <button onclick="selectPlan('Ultimate')">Выбрать Ultimate</button>
         </div>
       </div>
-    </div>
-
-    <!-- System Settings (ранее Global Settings) -->
-    <div id="global-settings" class="content section">
-      <h1>System Settings</h1>
-      <div class="global-settings">
-        <label>Service Key 1:</label>
+      
+      <!-- System Settings -->
+      <div id="global-settings" class="content">
+        <h1>System Settings</h1>
+        <p>Настройка ключей и интеграций сервиса.</p>
+        <label>Twilio Service Key:</label>
         <input type="text" id="twilioKey" value="SERVICE_KEY_1" readonly>
-        <label>Service Key 2:</label>
+        <label>OpenAI Key:</label>
         <input type="text" id="openaiKey" value="SERVICE_KEY_2" readonly>
-        <label>Service Key 3:</label>
+        <label>Dialogflow Key:</label>
         <input type="text" id="dialogflowKey" value="SERVICE_KEY_3" readonly>
-        <label>Service Key 4:</label>
+        <label>Firebase Key:</label>
         <input type="text" id="firebaseKey" value="SERVICE_KEY_4" readonly>
-        <label>Service Key 5 (optional):</label>
+        <label>Speech Service Key:</label>
         <input type="text" id="speechKey" value="SERVICE_KEY_5" readonly>
-        <button class="save-btn" onclick="saveGlobalSettings()">Save System Settings</button>
+        <button onclick="saveGlobalSettings()">Сохранить настройки</button>
       </div>
-    </div>
-
-    <!-- Scenario Builder -->
-    <div id="scenario-builder" class="content section">
-      <h1>Scenario Builder</h1>
-      <div class="scenario-builder" id="scenarioContainer">
-        <div class="message-box" draggable="true" contenteditable="true">User: "Hello"</div>
-        <div class="message-box" draggable="true" contenteditable="true">Bot: "Hi! How can I help?"</div>
-        <div class="message-box" draggable="true" contenteditable="true">[If user says "Order"]</div>
+      
+      <!-- Scenario Builder -->
+      <div id="scenario-builder" class="content">
+        <h1>Scenario Builder</h1>
+        <p>Создайте сценарии для ваших ботов.</p>
+        <div id="scenarioContainer" class="scenario-builder" style="border:1px solid #4a5d87; padding:15px; border-radius:6px; background:#1c2333; min-height:200px; margin-bottom:20px;">
+          <div class="message-box" draggable="true" contenteditable="true" style="background:#2a3246; padding:10px; margin-bottom:10px; border-radius:6px;">User: "Hello"</div>
+          <div class="message-box" draggable="true" contenteditable="true" style="background:#2a3246; padding:10px; margin-bottom:10px; border-radius:6px;">Bot: "Hi! How can I help?"</div>
+        </div>
+        <button onclick="addResponse()" style="background:#4a5d87; padding:10px; border:none; color:#fff; border-radius:6px; cursor:pointer; width:100%; margin-bottom:20px;">+ Добавить ответ</button>
+        <button onclick="saveScenario()" style="background:#4a5d87; padding:10px; border:none; color:#fff; border-radius:6px; cursor:pointer; width:100%;">Сохранить сценарий</button>
       </div>
-      <button class="add-response" onclick="addResponse()">+ Add Response</button>
-      <button class="save-btn" onclick="saveScenario()">Save Scenario</button>
-    </div>
-
-    <!-- Analytics -->
-    <div id="analytics" class="content section">
-      <h1>Analytics</h1>
-      <div class="chart-container">
-        <canvas id="analyticsChart"></canvas>
+      
+      <!-- Analytics -->
+      <div id="analytics" class="content">
+        <h1>Analytics</h1>
+        <p>Статистика использования сервиса.</p>
+        <div class="chart-container" style="max-width:600px; margin:20px auto;">
+          <canvas id="analyticsChart"></canvas>
+        </div>
+        <button onclick="exportAnalytics()" style="background:#4a5d87; padding:10px; border:none; color:#fff; font-weight:bold; border-radius:6px; cursor:pointer; width:100%; margin-top:10px;">Экспортировать CSV</button>
       </div>
-      <button class="export-btn" onclick="exportAnalytics()">Export CSV</button>
-    </div>
-
-    <!-- Advanced Options (ранее Advanced Settings) -->
-    <div id="advanced" class="content section">
-      <h1>Advanced Options</h1>
-      <div class="advanced-settings">
-        <label><input type="checkbox" id="autoLearning"> Enable Auto Learning</label>
-        <label><input type="checkbox" id="autoAnswer"> Enable Auto Answer</label>
+      
+      <!-- Advanced Options -->
+      <div id="advanced" class="content">
+        <h1>Advanced Options</h1>
+        <p>Дополнительные настройки сервиса.</p>
+        <label><input type="checkbox" id="autoLearning"> Включить Auto Learning</label><br>
+        <label><input type="checkbox" id="autoAnswer"> Включить Auto Answer</label><br>
         <label>Tone of Bot:</label>
         <select id="botTone">
           <option>Formal</option>
           <option>Friendly</option>
           <option>Humorous</option>
-        </select>
+        </select><br>
         <label>Voice Speed:</label>
-        <input type="range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1">
+        <input type="range" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1"><br>
         <label>Voice Pitch:</label>
-        <input type="range" id="voicePitch" min="0" max="2" step="0.1" value="1">
+        <input type="range" id="voicePitch" min="0" max="2" step="0.1" value="1"><br>
         <label>Additional Recommendations:</label>
-        <textarea id="recommendations" rows="3" placeholder="Enter recommendations..."></textarea>
-        <button class="save-btn" onclick="saveAdvancedSettings()">Save Advanced Options</button>
+        <textarea id="recommendations" rows="3" placeholder="Enter recommendations..."></textarea><br>
+        <button onclick="saveAdvancedSettings()">Сохранить дополнительные настройки</button>
       </div>
-    </div>
-
-    <!-- Payment Config -->
-    <div id="payment" class="content section">
-      <h1>Payment Config</h1>
-      <div class="payment-settings">
-        <label>Service Key 6:</label>
+      
+      <!-- Payment Config -->
+      <div id="payment" class="content">
+        <h1>Payment Config</h1>
+        <p>Настройки платежной системы.</p>
+        <label>Stripe Key:</label>
         <input type="text" id="stripeKey" value="SERVICE_KEY_6" readonly>
-        <label>Service Key 7:</label>
+        <label>PayPal ID:</label>
         <input type="text" id="paypalId" value="SERVICE_KEY_7" readonly>
         <label>Subscription Plan:</label>
         <select id="subscriptionPlan">
           <option>Basic</option>
-          <option>Advanced</option>
-          <option>Premium</option>
+          <option>Pro</option>
+          <option>Ultimate</option>
         </select>
         <label>Payment Mode:</label>
         <select id="paymentMode">
           <option>Test</option>
           <option>Live</option>
         </select>
-        <button class="save-btn" onclick="savePaymentSettings()">Save Payment Config</button>
+        <button onclick="savePaymentSettings()">Сохранить платежные настройки</button>
       </div>
-    </div>
-
-    <!-- Integrations & Notifications -->
-    <div id="integrations" class="content section">
-      <h1>Integrations & Notifications</h1>
-      <div class="integrations-settings">
-        <label>Service Key 8:</label>
+      
+      <!-- Integrations -->
+      <div id="integrations" class="content">
+        <h1>Integrations & Notifications</h1>
+        <p>Настройте интеграции и уведомления.</p>
+        <label>Webhook URL:</label>
         <input type="text" id="webhookUrl" placeholder="Enter Webhook URL">
-        <label>Service Key 9:</label>
+        <label>Slack Webhook:</label>
         <input type="text" id="slackWebhook" placeholder="Enter Slack Webhook URL">
-        <label><input type="checkbox" id="enableNotifications"> Enable Notifications</label>
-        <button class="save-btn" onclick="saveIntegrations()">Save Integrations</button>
+        <label><input type="checkbox" id="enableNotifications"> Включить уведомления</label>
+        <button onclick="saveIntegrations()">Сохранить интеграции</button>
       </div>
-    </div>
-
-    <!-- User Management -->
-    <div id="user-management" class="content section">
-      <h1>User Management</h1>
-      <table class="user-table">
-        <thead>
-          <tr>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>client1@example.com</td>
-            <td>
-              <select>
-                <option>Client</option>
-                <option>Admin</option>
-              </select>
-            </td>
-            <td><button onclick="alert('Update role (demo)')">Update</button></td>
-          </tr>
-          <tr>
-            <td>client2@example.com</td>
-            <td>
-              <select>
-                <option>Client</option>
-                <option>Admin</option>
-              </select>
-            </td>
-            <td><button onclick="alert('Update role (demo)')">Update</button></td>
-          </tr>
-        </tbody>
-      </table>
-      <button class="save-btn" onclick="alert('User changes saved (demo)!')">Save User Changes</button>
+      
+      <!-- User Management -->
+      <div id="user-management" class="content">
+        <h1>User Management</h1>
+        <p>Управление пользователями.</p>
+        <table class="user-table" style="width:100%; max-width:600px; border-collapse: collapse; margin-bottom:30px;">
+          <thead>
+            <tr>
+              <th style="border:1px solid #4a5d87; padding:10px; text-align:left; background:#2a3246; color:#fff;">Email</th>
+              <th style="border:1px solid #4a5d87; padding:10px; text-align:left; background:#2a3246; color:#fff;">Role</th>
+              <th style="border:1px solid #4a5d87; padding:10px; text-align:left; background:#2a3246; color:#fff;">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="border:1px solid #4a5d87; padding:10px;">client1@example.com</td>
+              <td style="border:1px solid #4a5d87; padding:10px;">
+                <select>
+                  <option>Client</option>
+                  <option>Admin</option>
+                </select>
+              </td>
+              <td style="border:1px solid #4a5d87; padding:10px;"><button onclick="alert('Обновление роли (демо)')">Обновить</button></td>
+            </tr>
+            <tr>
+              <td style="border:1px solid #4a5d87; padding:10px;">client2@example.com</td>
+              <td style="border:1px solid #4a5d87; padding:10px;">
+                <select>
+                  <option>Client</option>
+                  <option>Admin</option>
+                </select>
+              </td>
+              <td style="border:1px solid #4a5d87; padding:10px;"><button onclick="alert('Обновление роли (демо)')">Обновить</button></td>
+            </tr>
+          </tbody>
+        </table>
+        <button onclick="alert('Сохранение изменений пользователей (демо)')">Сохранить изменения</button>
+      </div>
     </div>
   </div>
-
+  
+  <!-- Иконка поддержки (чат) -->
+  <div class="support-chat" onclick="openSupportChat()">?</div>
+  
   <script>
-    // Переключение вкладок
+    // Функция для поддержки: показывает контактные данные
+    function openSupportChat() {
+      alert("Свяжитесь с поддержкой: support@calltechai.com");
+    }
+    
+    // Функция переключения вкладок в админ-панели
     function switchTab(tabId) {
       document.querySelectorAll('.content').forEach(tab => tab.classList.remove('active'));
       document.getElementById(tabId).classList.add('active');
@@ -368,7 +372,7 @@
       event.target.classList.add('active');
     }
     
-    // Переключатель темы
+    // Функция переключения темы
     function toggleTheme() {
       const body = document.body;
       if (body.classList.contains("dark")) {
@@ -380,45 +384,124 @@
       }
     }
     
-    // Редактирование бота (демо)
-    function editBot(botName) {
-      alert("Editing bot: " + botName + " (demo)");
+    // Firebase конфигурация (замени на свои данные)
+    const firebaseConfig = {
+      apiKey: "YOUR_FIREBASE_API_KEY",
+      authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
+      projectId: "YOUR_FIREBASE_PROJECT_ID",
+      storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
+      messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
+      appId: "YOUR_FIREBASE_APP_ID",
+      measurementId: "YOUR_FIREBASE_MEASUREMENT_ID"
+    };
+    // Инициализация Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    
+    // Элементы для авторизации
+    const landingPage = document.getElementById('landingPage');
+    const loginContainer = document.getElementById('loginContainer');
+    const adminPanel = document.getElementById('adminPanel');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.getElementById('loginButton');
+    const registerButton = document.getElementById('registerButton');
+    const authMessage = document.getElementById('authMessage');
+    const userEmailDisplay = document.getElementById('userEmailDisplay');
+    
+    // Переход с лендинга к форме авторизации
+    function goToLogin() {
+      landingPage.style.display = 'none';
+      loginContainer.style.display = 'flex';
     }
     
-    // Сохранение System Settings (демо)
-    function saveGlobalSettings() {
-      const settings = {
-        serviceKey1: document.getElementById("twilioKey").value,
-        serviceKey2: document.getElementById("openaiKey").value,
-        serviceKey3: document.getElementById("dialogflowKey").value,
-        serviceKey4: document.getElementById("firebaseKey").value,
-        serviceKey5: document.getElementById("speechKey").value
-      };
-      localStorage.setItem("globalSettings", JSON.stringify(settings));
-      alert("System settings saved (demo)!");
+    // Вход
+    loginButton.addEventListener('click', () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      auth.signInWithEmailAndPassword(email, password)
+        .then(() => { authMessage.textContent = ''; })
+        .catch(error => { authMessage.textContent = error.message; });
+    });
+    
+    // Регистрация
+    registerButton.addEventListener('click', () => {
+      const email = emailInput.value;
+      const password = passwordInput.value;
+      auth.createUserWithEmailAndPassword(email, password)
+        .then(userCredential => {
+          const uid = userCredential.user.uid;
+          // При регистрации устанавливаем тариф Basic
+          db.collection('users').doc(uid).set({
+            email: email,
+            tier: 'Basic'
+          });
+          authMessage.textContent = '';
+        })
+        .catch(error => { authMessage.textContent = error.message; });
+    });
+    
+    // Мониторинг состояния авторизации
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        loginContainer.style.display = 'none';
+        landingPage.style.display = 'none';
+        adminPanel.style.display = 'flex';
+        userEmailDisplay.textContent = user.email;
+      } else {
+        landingPage.style.display = 'flex';
+        adminPanel.style.display = 'none';
+      }
+    });
+    
+    // Выход
+    function logout() {
+      auth.signOut();
     }
     
-    // Scenario Builder: сохранение сценария (демо)
+    // Функция сохранения настроек бота (Customization)
+    function saveBotCustomization() {
+      const botName = document.getElementById('botName').value;
+      const botGreeting = document.getElementById('botGreeting').value;
+      const botFallback = document.getElementById('botFallback').value;
+      const botLanguage = document.getElementById('botLanguage').value;
+      const uid = auth.currentUser.uid;
+      db.collection('users').doc(uid).update({
+        botCustomization: { name: botName, greeting: botGreeting, fallback: botFallback, language: botLanguage }
+      }).then(() => {
+        alert("Настройки бота сохранены!");
+      }).catch(error => {
+        alert("Ошибка: " + error.message);
+      });
+    }
+    
+    // Функции для Scenario Builder
     function saveScenario() {
-      const scenarioHtml = document.getElementById("scenarioContainer").innerHTML;
-      localStorage.setItem("scenario", scenarioHtml);
-      alert("Scenario saved (demo)!");
+      const scenarioHtml = document.getElementById('scenarioContainer').innerHTML;
+      const uid = auth.currentUser.uid;
+      db.collection('users').doc(uid).update({ scenario: scenarioHtml })
+      .then(() => { alert("Сценарий сохранён!"); })
+      .catch(error => { alert("Ошибка: " + error.message); });
     }
+    
     function addResponse() {
       let newBox = document.createElement('div');
       newBox.className = 'message-box';
       newBox.setAttribute('draggable', 'true');
       newBox.setAttribute('contenteditable', 'true');
       newBox.textContent = 'Bot: "New response..."';
-      document.getElementById("scenarioContainer").appendChild(newBox);
+      document.getElementById('scenarioContainer').appendChild(newBox);
       addDragHandlers(newBox);
     }
+    
     function addDragHandlers(item) {
       item.addEventListener('dragstart', dragStart);
       item.addEventListener('dragover', dragOver);
       item.addEventListener('drop', drop);
       item.addEventListener('dragend', dragEnd);
     }
+    
     let dragSrcEl = null;
     function dragStart(e) {
       dragSrcEl = this;
@@ -447,22 +530,65 @@
     }
     document.querySelectorAll('.message-box').forEach(item => addDragHandlers(item));
     
-    // Analytics: Инициализация графика через Chart.js
-    document.addEventListener("DOMContentLoaded", () => {
-      const ctx = document.getElementById('analyticsChart').getContext('2d');
-      new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['Bots Created', 'Scenarios', 'API Calls'],
-          datasets: [{
-            label: 'Usage Stats',
-            data: [5, 8, 15],
-            backgroundColor: ['#4a5d87', '#ffcc00', '#ff5733']
-          }]
-        },
-        options: { responsive: true, maintainAspectRatio: false }
-      });
-    });
+    // Сохранение глобальных настроек (System Settings)
+    function saveGlobalSettings() {
+      const settings = {
+        twilioKey: document.getElementById("twilioKey").value,
+        openaiKey: document.getElementById("openaiKey").value,
+        dialogflowKey: document.getElementById("dialogflowKey").value,
+        firebaseKey: document.getElementById("firebaseKey").value,
+        speechKey: document.getElementById("speechKey").value
+      };
+      const uid = auth.currentUser.uid;
+      db.collection('users').doc(uid).update({ globalSettings: settings })
+      .then(() => { alert("Настройки сохранены!"); })
+      .catch(error => { alert("Ошибка: " + error.message); });
+    }
+    
+    // Сохранение продвинутых настроек (Advanced Options)
+    function saveAdvancedSettings() {
+      const advanced = {
+        autoLearning: document.getElementById("autoLearning").checked,
+        autoAnswer: document.getElementById("autoAnswer").checked,
+        botTone: document.getElementById("botTone").value,
+        voiceSpeed: document.getElementById("voiceSpeed").value,
+        voicePitch: document.getElementById("voicePitch").value,
+        recommendations: document.getElementById("recommendations").value
+      };
+      const uid = auth.currentUser.uid;
+      db.collection('users').doc(uid).update({ advancedSettings: advanced })
+      .then(() => { alert("Дополнительные настройки сохранены!"); })
+      .catch(error => { alert("Ошибка: " + error.message); });
+    }
+    
+    // Сохранение платежных настроек (Payment Config)
+    function savePaymentSettings() {
+      const payment = {
+        stripeKey: document.getElementById("stripeKey").value,
+        paypalId: document.getElementById("paypalId").value,
+        subscriptionPlan: document.getElementById("subscriptionPlan").value,
+        paymentMode: document.getElementById("paymentMode").value
+      };
+      const uid = auth.currentUser.uid;
+      db.collection('users').doc(uid).update({ paymentSettings: payment })
+      .then(() => { alert("Платежные настройки сохранены!"); })
+      .catch(error => { alert("Ошибка: " + error.message); });
+    }
+    
+    // Сохранение интеграций (Integrations)
+    function saveIntegrations() {
+      const integrations = {
+        webhookUrl: document.getElementById("webhookUrl").value,
+        slackWebhook: document.getElementById("slackWebhook").value,
+        enableNotifications: document.getElementById("enableNotifications").checked
+      };
+      const uid = auth.currentUser.uid;
+      db.collection('users').doc(uid).update({ integrations: integrations })
+      .then(() => { alert("Интеграции сохранены!"); })
+      .catch(error => { alert("Ошибка: " + error.message); });
+    }
+    
+    // Экспорт аналитики в CSV
     function exportAnalytics() {
       const data = [
         ['Metric', 'Value'],
@@ -480,65 +606,33 @@
       document.body.removeChild(link);
     }
     
-    // Advanced Options: сохранение продвинутых настроек (демо)
-    function saveAdvancedSettings() {
-      const advanced = {
-        autoLearning: document.getElementById("autoLearning").checked,
-        autoAnswer: document.getElementById("autoAnswer").checked,
-        botTone: document.getElementById("botTone").value,
-        voiceSpeed: document.getElementById("voiceSpeed").value,
-        voicePitch: document.getElementById("voicePitch").value,
-        recommendations: document.getElementById("recommendations").value
-      };
-      localStorage.setItem("advancedSettings", JSON.stringify(advanced));
-      alert("Advanced options saved (demo)!");
+    // Выбор тарифа (Pricing)
+    function selectPlan(plan) {
+      const uid = auth.currentUser.uid;
+      db.collection('users').doc(uid).update({ tier: plan })
+      .then(() => { alert("Выбран тариф: " + plan); })
+      .catch(error => { alert("Ошибка: " + error.message); });
     }
     
-    // Payment Settings: сохранение настроек платежей (демо)
-    function savePaymentSettings() {
-      const payment = {
-        serviceKey6: document.getElementById("stripeKey").value,
-        serviceKey7: document.getElementById("paypalId").value,
-        subscriptionPlan: document.getElementById("subscriptionPlan").value,
-        paymentMode: document.getElementById("paymentMode").value
-      };
-      localStorage.setItem("paymentSettings", JSON.stringify(payment));
-      alert("Payment config saved (demo)!");
-    }
-    
-    // Integrations & Notifications: сохранение настроек (демо)
-    function saveIntegrations() {
-      const integrations = {
-        webhookUrl: document.getElementById("webhookUrl").value,
-        slackWebhook: document.getElementById("slackWebhook").value,
-        enableNotifications: document.getElementById("enableNotifications").checked
-      };
-      localStorage.setItem("integrations", JSON.stringify(integrations));
-      alert("Integrations saved (demo)!");
-    }
-    
-    // При загрузке устанавливаем вкладку Dashboard
+    // Инициализация графика Analytics
     document.addEventListener("DOMContentLoaded", () => {
-      switchTab('dashboard');
+      const ctx = document.getElementById('analyticsChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['Bots Created', 'Scenarios', 'API Calls'],
+          datasets: [{
+            label: 'Usage Stats',
+            data: [5, 8, 15],
+            backgroundColor: ['#4a5d87', '#ffcc00', '#ff5733']
+          }]
+        },
+        options: { responsive: true, maintainAspectRatio: false }
+      });
     });
-  </script>
-
-  <!-- Firebase Initialization (демо: используются заполнители) -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-app.js";
-    import { getFirestore } from "https://www.gstatic.com/firebasejs/9.22.1/firebase-firestore.js";
-    const firebaseConfig = {
-      apiKey: "YOUR_FIREBASE_API_KEY",
-      authDomain: "YOUR_FIREBASE_AUTH_DOMAIN",
-      projectId: "YOUR_FIREBASE_PROJECT_ID",
-      storageBucket: "YOUR_FIREBASE_STORAGE_BUCKET",
-      messagingSenderId: "YOUR_FIREBASE_MESSAGING_SENDER_ID",
-      appId: "YOUR_FIREBASE_APP_ID",
-      measurementId: "YOUR_FIREBASE_MEASUREMENT_ID"
-    };
-    const app = initializeApp(firebaseConfig);
-    window.db = getFirestore(app);
-    console.log("Firebase initialized (demo)");
+    
+    // По умолчанию активировать Dashboard
+    document.addEventListener("DOMContentLoaded", () => { switchTab('dashboard'); });
   </script>
 </body>
 </html>
