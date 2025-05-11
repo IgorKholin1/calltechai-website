@@ -1,0 +1,54 @@
+.panel {
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+}
+
+.panel h2 {
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+.panel h3 {
+  margin-top: 30px;
+  font-size: 20px;
+}
+
+.panel label {
+  display: block;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.panel input, .panel select {
+  width: 100%;
+  padding: 8px;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.intent {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.intent input {
+  flex: 1;
+}
+
+.panel button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #6c63ff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
