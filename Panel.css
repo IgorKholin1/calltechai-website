@@ -1,54 +1,68 @@
-.panel {
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 30px;
-  background: #fff;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+.panel-wrapper {
+  display: flex;
+  height: 100vh;
   font-family: sans-serif;
 }
 
-.panel h2 {
+.side-menu {
+  width: 200px;
+  background: #f2f2f2;
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.side-menu button {
+  margin-bottom: 10px;
+  padding: 10px;
+  background: none;
+  border: none;
+  text-align: left;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.panel-content {
+  flex: 1;
+  padding: 30px;
+  background: #fff;
+}
+
+.panel-content h2 {
   margin-bottom: 20px;
-  font-size: 24px;
 }
 
-.panel h3 {
-  margin-top: 30px;
-  font-size: 20px;
-}
-
-.panel label {
+.panel-content label {
   display: block;
   margin-top: 15px;
   font-weight: bold;
 }
 
-.panel input, .panel select {
+.panel-content input, .panel-content select {
   width: 100%;
   padding: 8px;
   margin-top: 5px;
-  margin-bottom: 10px;
+  border-radius: 4px;
   border: 1px solid #ccc;
-  border-radius: 6px;
 }
 
-.intent {
+.intent-row {
   display: flex;
   gap: 10px;
   margin-bottom: 10px;
 }
 
-.intent input {
+.intent-row input {
   flex: 1;
 }
 
-.panel button {
-  margin-top: 20px;
+.save-btn {
+  margin-top: 30px;
   padding: 10px 20px;
   background: #6c63ff;
   color: white;
   border: none;
-  border-radius: 6px;
+  border-radius: 5px;
   cursor: pointer;
 }
