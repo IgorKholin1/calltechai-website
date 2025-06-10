@@ -31,5 +31,31 @@
       });
     }
   </script>
+  <script src="https://sdk.twilio.com/js/client/v1.13/twilio.min.js"></script>
+<script>
+  async function makeCall() {
+    try {
+      const response = await fetch('/token'); // Получаем токен
+      const data = await response.json();
+
+      const device = new Twilio.Device(data.token, {
+        codecPreferences: ['opus', 'pcmu'],
+        debug: true
+      });
+
+      device.on('ready', () => {
+        device.connect(); // совершаем звонок
+      });
+
+      device.on('error', (error) => {
+        console.error('Twilio error:', error);
+      });
+    } catch (err) {
+      console.error('Ошибка при вызове:', err);
+    }
+  }
+
+  document.getElementById('callButton').addEventListener('click', makeCall);
+</script>
 </body>
 </html>
