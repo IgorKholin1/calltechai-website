@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Call Voice Bot</title>
+  <script src="https://sdk.twilio.com/js/client/v1.13/twilio.min.js"></script>
+</head>
+<body>
+  <h2>Click to Call the Assistant</h2>
+  <button onclick="callBot()">📞 Call Now</button>
+
+  <script>
+    let device;
+
+    async function callBot() {
+      const response = await fetch('/token');
+      const data = await response.json();
+
+      device = new Twilio.Device(data.token, {
+        codecPreferences: ["opus", "pcmu"],
+        fakeLocalDTMF: true,
+        enableRingingState: true,
+      });
+
+      device.on('ready', () => {
+        device.connect({ To: 'bot' });
+      });
+
+      device.on('error', error => {
+        console.error('Twilio Error:', error);
+      });
+    }
+  </script>
+</body>
+</html>
