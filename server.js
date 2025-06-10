@@ -1,40 +1,19 @@
-const tokenRoute = require('./routes/token');
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
-const twilio = require('twilio');
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 
 const app = express();
-const PORT = process.env.PORT || 3000;
-
-// Middlewares
 app.use(cors());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.json());
 
-// Token route for Twilio Client Web
-app.get('/token', (req, res) => {
-  const AccessToken = twilio.jwt.AccessToken;
-  const VoiceGrant = AccessToken.VoiceGrant;
+const tokenRoutes = require("./routes/tokenRoutes");
+const voiceRoutes = require("./routes/voiceRoutes");
 
-  const token = new AccessToken(
-    process.env.TWILIO_ACCOUNT_SID,
-    process.env.TWILIO_API_KEY_SID,
-    process.env.TWILIO_API_KEY_SECRET,
-    { ttl: 3600 }
-  );
+app.use("/token", tokenRoutes);
+app.use("/voice", voiceRoutes);
 
-  const voiceGrant = new VoiceGrant({
-    outgoingApplicationSid: process.env.TWILIO_TWIML_APP_SID
-  });
-
-  token.addGrant(voiceGrant);
-  token.identity = 'browser-user';
-
-  res.send({ token: token.toJwt() });
-});
-
-// Start server
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`✅ Server running at http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
+});
 });
