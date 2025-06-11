@@ -50,9 +50,9 @@
           debug: true
         });
 
-        device.on('ready', () => {
-          device.connect();
-        });
+       device.on('ready', () => {
+  device.connect({ To: '+14127252844' });
+});
 
         device.on('error', error => {
           console.error('Twilio error:', error);
