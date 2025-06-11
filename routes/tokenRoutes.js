@@ -7,7 +7,7 @@ const apiKey = process.env.TWILIO_API_KEY_SID;
 const apiSecret = process.env.TWILIO_API_KEY_SECRET;
 const appSid = process.env.TWILIO_TWIML_APP_SID;
 
-router.get('/token', (req, res) => {
+router.get('/', (req, res) => {
   const AccessToken = twilio.jwt.AccessToken;
   const VoiceGrant = AccessToken.VoiceGrant;
 
