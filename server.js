@@ -9,7 +9,7 @@ app.use(express.json());
 const tokenRoutes = require("./routes/tokenRoutes");
 const voiceRoutes = require("./routes/voiceRoutes");
 
-app.use("/", tokenRoutes);
+app.use("/api", tokenRoutes);
 app.use("/voice", voiceRoutes);
 
 const PORT = process.env.PORT || 3000;
