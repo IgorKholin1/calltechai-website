@@ -44,31 +44,32 @@
   console.log('Кнопка нажата');
   try {
     const response = await fetch('https://calltechai-server.onrender.com/api/token');
-        const data = await response.json();
+    const data = await response.json();
 
-        const device = new Twilio.Device(data.token, {
-          codecPreferences: ['opus', 'pcmu'],
-          debug: true
-        });
+    const device = new Twilio.Device(data.token, {
+      codecPreferences: ['opus', 'pcmu'],
+      debug: true
+    });
 
-       device.on('ready', () => {
-  device.connect({ To: '+14127252844' });
-         device.on('connect', (conn) => {
-  console.log('✅ Call connected', conn);
-});
+    device.on('ready', () => {
+      device.connect({ To: '+14127252844' });
+      device.on('connect', conn => {
+        console.log('✅ Call connected', conn);
+      });
+    });
 
-device.on('disconnect', () => {
-  console.log('❌ Call ended');
-});
+    device.on('disconnect', () => {
+      console.log('❌ Call ended');
+    });
 
-        device.on('error', error => {
-          console.error('Twilio error:', error);
-        });
+    device.on('error', error => {
+      console.error('Twilio error:', error);
+    });
 
-      } catch (error) {
-        console.error('Ошибка при попытке сделать вызов:', error);
-      }
-    }
+  } catch (error) {
+    console.error('Ошибка при попытке сделать вызов:', error);
+  }
+}
 
     document.getElementById('callButton').addEventListener('click', makeCall);
   </script>
