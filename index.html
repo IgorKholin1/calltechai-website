@@ -52,7 +52,7 @@
     });
 
     device.on('ready', () => {
-      device.connect({ To: '+14127252844' });
+      device.connect();
       device.on('connect', conn => {
         console.log('✅ Call connected', conn);
       });
