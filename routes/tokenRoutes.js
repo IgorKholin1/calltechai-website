@@ -11,10 +11,16 @@ router.get('/', (req, res) => {
   const AccessToken = twilio.jwt.AccessToken;
   const VoiceGrant = AccessToken.VoiceGrant;
 
-  const token = new AccessToken(accountSid, apiKey, apiSecret, { ttl: 3600 });
-  const voiceGrant = new VoiceGrant({ outgoingApplicationSid: appSid });
+  const token = new AccessToken(accountSid, apiKey, apiSecret, {
+    identity: 'browser-user',
+    ttl: 3600,
+  });
+
+  const voiceGrant = new VoiceGrant({
+    outgoingApplicationSid: appSid,
+  });
+
   token.addGrant(voiceGrant);
-  token.identity = 'browser-user';
 
   res.send({ token: token.toJwt() });
 });
